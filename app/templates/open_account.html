@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Opening</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+</head>
+<body>
+    <div class="container">
+        <h2>Account Opening Form</h2>
+        <form id="accountForm" action="{{ url_for('open_account') }}" method="post" enctype="multipart/form-data">
+            <div class="form-box">
+                <label for="first_name">First Name:</label><br>
+                <input type="text" id="first_name" name="first_name" required><br>
+
+                <label for="last_name">Last Name:</label><br>
+                <input type="text" id="last_name" name="last_name" required><br>
+
+                <label for="dob">Date of Birth:</label><br>
+                <input type="date" id="dob" name="dob" required><br>
+
+                <label for="address">Address:</label><br>
+                <textarea id="address" name="address" rows="4" required></textarea><br>
+
+                <label for="profile_picture">Profile Picture:</label><br>
+                <input type="file" id="profile_picture" name="profile_picture" accept="image/*" required><br>
+
+                <label for="signature">Signature:</label><br>
+                <input type="file" id="signature" name="signature" accept="image/*" required><br>
+
+                <label for="mobile_number">Mobile Number:</label><br>
+                <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" required><br>
+
+                <label for="aadhaar_number">Aadhaar Number:</label><br>
+                <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" required><br>
+
+                <label for="pan_number">PAN Number:</label><br>
+                <input type="text" id="pan_number" name="pan_number" required><br>
+
+                <input type="submit" value="Open Account" onclick="return confirmAccountOpening()">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function confirmAccountOpening() {
+            var firstName = document.getElementById("first_name").value;
+            var lastName = document.getElementById("last_name").value;
+            var dob = document.getElementById("dob").value;
+            var address = document.getElementById("address").value;
+            var mobileNumber = document.getElementById("mobile_number").value;
+            var aadhaarNumber = document.getElementById("aadhaar_number").value;
+            var panNumber = document.getElementById("pan_number").value;
+
+            var confirmationMessage = "Are you sure you want to open an account with the following details?\n\n";
+            confirmationMessage += "First Name: " + firstName + "\n";
+            confirmationMessage += "Last Name: " + lastName + "\n";
+            confirmationMessage += "Date of Birth: " + dob + "\n";
+            confirmationMessage += "Address: " + address + "\n";
+            confirmationMessage += "Mobile Number: " + mobileNumber + "\n";
+            confirmationMessage += "Aadhaar Number: " + aadhaarNumber + "\n";
+            confirmationMessage += "PAN Number: " + panNumber + "\n";
+
+            return confirm(confirmationMessage);
+        }
+    </script>
+</body>
+</html>
+

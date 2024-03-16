@@ -1,0 +1,31 @@
+x<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Accounts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>All Users</h1>
+    <table>
+        <tr>
+            <th>Account Number</th>
+            <th>Name</th>
+            <th>Account Type</th>
+            <th>Balance</th>
+            <th>View Details</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.account_number }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.account_type }}</td>
+            <td>{{ user.balance }}</td>
+            <td><a href="{{ url_for('view_user_details', account_number=user.account_number) }}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+

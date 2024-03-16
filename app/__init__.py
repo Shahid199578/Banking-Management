@@ -13,5 +13,9 @@ db = SQLAlchemy(app)
 from . import views
 
 # Import models (if necessary)
-# from . import models
+from . import models
+
+# Ensure all models are created in the database
+with app.app_context():
+    db.create_all()
 
