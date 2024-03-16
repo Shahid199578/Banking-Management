@@ -7,7 +7,7 @@ import os
 # Define routes
 
 # Specify the path to the uploads folder under the app directory
-UPLOAD_FOLDER = os.path.join(app.root_path, 'uploads')
+UPLOAD_FOLDER = os.path.join(app.root_path, '../static', 'uploads')
 
 # Configure the upload folder in app.config
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -55,7 +55,7 @@ def open_account():
         profile_picture.save(profile_picture_path)
         signature.save(signature_path)
 
-        # Create a new account object with the form data
+        # Create a new user object with the form data
         new_user = Users(
             first_name=first_name,
             last_name=last_name,
@@ -71,12 +71,28 @@ def open_account():
         try:
             db.session.add(new_user)
             db.session.commit()
+
+            # Create a new account object for the user
+            new_account = Account(
+                name=f"{first_name} {last_name}",
+                account_type="Regular",
+                balance=0
+            )
+            db.session.add(new_account)
+            db.session.commit()
+
+            # Update the account number in the Users table
+            new_user.account_number = new_account.account_number
+            db.session.commit()
+
             return redirect(url_for('all_accounts'))
         except Exception as e:
             return f"Error occurred while saving user: {e}"
 
     # If the request method is GET, render the form template
     return render_template('open_account.html')
+
+
 
 @app.route('/all_users')
 def all_users():

@@ -45,6 +45,15 @@
             <td>PAN Number:</td>
             <td>{{ user.pan_number }}</td>
         </tr>
+      	<tr>
+	<td>Profile Picture:</td>
+    	<td><img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Profile Picture"></td>
+	</tr>
+	<tr>
+    	<td>Signature:</td>
+    	<td><img src="{{ url_for('static', filename='uploads/' + user.signature) }}" alt="Signature"></td>
+	</tr>
+
     </table>
 </body>
 </html>
