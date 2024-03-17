@@ -3,58 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Details</title>
+    <title>Account Opening</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-HvZBz54UfnftCB3Vq8nWJc19zlMVi0r1vjLRZ8Na+nzkg+Lbk5BfCboabF90LTNvMU4FvN8z2SK/vYOb3Epz4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
 </head>
 <body>
-    <h1>User Details</h1>
-    <table>
-        <tr>
-            <th>Field</th>
-            <th>Value</th>
-        </tr>
-        <tr>
-            <td>First Name:</td>
-            <td>{{ user.first_name }}</td>
-        </tr>
-        <tr>
-            <td>Last Name:</td>
-            <td>{{ user.last_name }}</td>
-        </tr>
-        <tr>
-            <td>Date of Birth:</td>
-            <td>{{ user.dob }}</td>
-        </tr>
-        <tr>
-            <td>Address:</td>
-            <td>{{ user.address }}</td>
-        </tr>
-        <tr>
-            <td>Mobile Number:</td>
-            <td>{{ user.mobile_number }}</td>
-        </tr>
-        <tr>
-            <td>Aadhaar Number:</td>
-            <td>{{ user.aadhaar_number }}</td>
-        </tr>
-	<tr>
-            <td>Account Number:</td>
-            <td>{{ user.account_number }}</td>
-        </tr>
-        <tr>
-            <td>PAN Number:</td>
-            <td>{{ user.pan_number }}</td>
-        </tr>
-      	<tr>
-	<td>Profile Picture:</td>
-    	<td><img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Profile Picture"></td>
-	</tr>
-	<tr>
-    	<td>Signature:</td>
-    	<td><img src="{{ url_for('static', filename='uploads/' + user.signature) }}" alt="Signature"></td>
-	</tr>
+{% include 'navbar.html' %}
 
-    </table>
+    <div class="container">
+        <h2>User Details</h2>
+        <form id="accountForm" action="{{ url_for('open_account') }}" method="post" enctype="multipart/form-data">
+            <div class="form-box">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="first_name">First Name:</label>
+                            <td>{{ user.first_name }}</td>
+                        </td>
+                        <td>
+                            <label for="last_name">Last Name:</label>
+                            <td>{{ user.last_name }}</td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="dob">Date of Birth:</label>
+                            <td>{{ user.dob }}</td>
+                        </td>
+                        <td>
+                            <label for="pan_number">PAN Number:</label>
+                            <td>{{ user.pan_number }}</td>
+                        </td>
+                    </tr>
+                   <tr>
+		   <td colspan= "2">
+              
+                    <label for="address">Address:</label></td>
+		   <td colspan= "2">{{ user.address }}
+              	   </td></tr>
+		  		  
+                       <tr> <td colspan= "2">Account Number:</td>
+                        <td colspan= "2">{{ user.account_number }}</td>
+                   
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label for="mobile_number">Mobile Number:</label><br>
+                            <td>{{ user.mobile_number }}</td>
+                        </td>
+                        <td>
+                            <label for="aadhaar_number">Aadhaar Number:</label><br>
+                            <td>{{ user.aadhaar_number }}</td>
+                        </td>
+                    </tr>
+                    <tr>
+                       <th>
+                        <p><label for="profile_picture">Profile Picture:</label>
+                        <td><img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Profile Picture"></td>
+                        </th>
+                        
+                       <th><label for="signature">Signature:</label><br>
+                        <td><img src="{{ url_for('static', filename='uploads/' + user.signature) }}" alt="Signature"></td>
+
+                       </th>
+                    </tr>
+                </table>
+                
+            </div>
+        </form>
+	<div class="navigation-buttons">
+            <!-- Add icons as buttons for navigation -->
+          <table>
+	  <tr><td>  <a href="{{ url_for('edit_user', user_id=user.account_number) }}" class="button"><i class="fas fa-edit"></i> Edit</a></td>
+           <td> <a href="{{ url_for('withdraw', account_number=user.account_number) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a></td>
+           <td> <a href="{{ url_for('deposit', account_number=user.account_number) }}" class="button"><i class="fas fa-money-check-alt"></i> Deposit</a></td>
+	   </tr>
+        </div>
+
+    </div>
 </body>
 </html>
 

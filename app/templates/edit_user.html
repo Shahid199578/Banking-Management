@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+</head>
+<body>
+{% include 'navbar.html' %}
+
+    <div class="container">
+        <h2>Edit User</h2>
+        <form id="accountForm" action="{{ url_for('edit_user', user_id=user.account_number) }}" method="post" enctype="multipart/form-data">
+            <div class="form-box">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="account_number">Account Number:</label>
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="account_number" name="account_number" value="{{ user.account_number }}" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="first_name">First Name:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                        </td>
+                        <td>
+                            <label for="last_name">Last Name:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="dob">Date of Birth:</label>
+                        </td>
+                        <td>
+                            <input type="date" id="dob" name="dob" value="{{ user.dob }}" required>
+                        </td>
+                        <td>
+                            <label for="pan_number">PAN Number:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="pan_number" name="pan_number" value="{{ user.pan_number }}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="address">Address:</label>
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="address" name="address" value="{{ user.address }}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="mobile_number">Mobile Number:</label>
+                        </td>
+                        <td>
+                            <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" value="{{ user.mobile_number }}" required>
+                        </td>
+                        <td>
+                            <label for="aadhaar_number">Aadhaar Number:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" value="{{ user.aadhaar_number }}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label for="profile_picture">Profile Picture:</label>
+                            <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Profile Picture" class="image-preview">
+                            <input type="file" id="profile_picture" name="profile_picture" accept="image/*" style="display: none;">
+                            <label for="profile_picture" class="file-label"><button type="button" class="change-button" onclick="document.getElementById('profile_picture').click()">Change</button></label>
+                        </td>
+                        <td colspan="2">
+                            <label for="signature">Signature:</label>
+                            <img src="{{ url_for('static', filename='uploads/' + user.signature) }}" alt="Signature" class="image-preview">
+                            <input type="file" id="signature" name="signature" accept="image/*" style="display: none;">
+                            <label for="signature" class="file-label"><button type="button" class="change-button" onclick="document.getElementById('signature').click()">Change</button></label>
+                        </td>
+                    </tr>
+		   </table>
+                  <input type="submit" class="button" value="Update">  
+
+        	  <table>
+		   <tr><td> <a href="{{ url_for('withdraw', account_number=user.account_number) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a></td>
+       		   <td><a href="{{ url_for('deposit', account_number=user.account_number) }}" class="button"><i class="fas fa-money-check-alt"></i> Deposit</a></td>
+       		</tr>
+		</table>
+	 </div>
+       </form>
+    </div>
+</body>
+</html>
+

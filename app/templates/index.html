@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank Management System</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"> 
 </head>
 <body>
-    <h1>Welcome to Bank Management System</h1>
-    <p><a href="{{ url_for('all_accounts') }}">View All Accounts</a></p>
-    <p><a href="{{ url_for('all_users') }}">View All Users</a></p>
-    <p><a href="{{ url_for('open_account') }}">Open New Account</a></p>
-    <p><a href="{{ url_for('dashboard') }}">Dashboard</a></p>
+{% include 'navbar.html' %}
+
+    <div class="container">
+        <table class="button-table">
+            <tr>
+                <td colspan="2"><h1>Welcome to Bank Management System</h1></td>
+            </tr>
+            <tr>
+                <td><a href="{{ url_for('all_accounts') }}" class="button">View All Accounts</a></td>
+                <td><a href="{{ url_for('all_users') }}" class="button">View All Users</a></td>
+            </tr>
+            <tr>
+                <td><a href="{{ url_for('open_account') }}" class="button">Open New Account</a></td>
+                <td><a href="{{ url_for('dashboard') }}" class="button">Dashboard</a></td>
+           
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
 

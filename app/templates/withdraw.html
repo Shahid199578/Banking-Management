@@ -1,0 +1,25 @@
+<!-- withdraw.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdrawal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+{% include 'navbar.html' %}
+
+    <div class="container">
+        <h2>Withdraw Amount for {{ user.first_name }} {{ user.last_name }}</h2>
+        <p>Aadhaar Number: {{ user.aadhaar_number }}</p>
+        <p>Current Balance: {{ user.balance }}</p>
+        <form method="POST" action="{{ url_for('withdraw', account_number=user.account_number) }}">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required>
+            <input type="submit" value="Withdraw" class="button">
+        </form>
+    </div>
+</body>
+</html>
+

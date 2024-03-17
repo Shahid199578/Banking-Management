@@ -8,42 +8,100 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
 </head>
 <body>
+{% include 'navbar.html' %}
+
     <div class="container">
         <h2>Account Opening Form</h2>
         <form id="accountForm" action="{{ url_for('open_account') }}" method="post" enctype="multipart/form-data">
             <div class="form-box">
-                <label for="first_name">First Name:</label><br>
-                <input type="text" id="first_name" name="first_name" required><br>
+                <table>
+                    <tr>
+                        <td>
+                            <label for="first_name">First Name:</label>
+                            <input type="text" id="first_name" name="first_name" required>
+                        </td>
+                        <td>
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" id="last_name" name="last_name" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" id="dob" name="dob" required>
+                        </td>
+                        <td>
+                            <label for="pan_number">PAN Number:</label>
+                            <input type="text" id="pan_number" name="pan_number" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label for="address">Address:</label><br>
+                            <textarea id="address" name="address" rows="4" required></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                       <th>
+                        <p><label for="profile_picture">Profile Picture:</label>
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" required>
+                        </th>
+                        
+                       <th><label for="signature">Signature:</label><br>
+                        <input type="file" id="signature" name="signature" accept="image/*" required>
 
-                <label for="last_name">Last Name:</label><br>
-                <input type="text" id="last_name" name="last_name" required><br>
+                       </th>
+                    </tr>
+                    <tr>
+                       <td>
+                         <img id="profile_picture_preview" src="#" alt="Profile Picture Preview" style="max-width: 75px; max-height: 100px;">
+                        </td>
+                       <td><img id="signature_preview" src="#" alt="Signature Preview" style="max-width: 75px; max-height: 100px;">
 
-                <label for="dob">Date of Birth:</label><br>
-                <input type="date" id="dob" name="dob" required><br>
-
-                <label for="address">Address:</label><br>
-                <textarea id="address" name="address" rows="4" required></textarea><br>
-
-                <label for="profile_picture">Profile Picture:</label><br>
-                <input type="file" id="profile_picture" name="profile_picture" accept="image/*" required><br>
-
-                <label for="signature">Signature:</label><br>
-                <input type="file" id="signature" name="signature" accept="image/*" required><br>
-
-                <label for="mobile_number">Mobile Number:</label><br>
-                <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" required><br>
-
-                <label for="aadhaar_number">Aadhaar Number:</label><br>
-                <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" required><br>
-
-                <label for="pan_number">PAN Number:</label><br>
-                <input type="text" id="pan_number" name="pan_number" required><br>
-
-                <input type="submit" value="Open Account" onclick="return confirmAccountOpening()">
+                       </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="mobile_number">Mobile Number:</label><br>
+                            <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" required><br>
+                        </td>
+                        <td>
+                            <label for="aadhaar_number">Aadhaar Number:</label><br>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" required><br>
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" class="button" value="Open Account" onclick="return confirmAccountOpening()">
             </div>
         </form>
     </div>
+<script>
+        // Function to preview image
+        function previewImage(input, imageID) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function(e) {
+                    $('#' + imageID).attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]); // Read the data as a URL
+            }
+        }
+
+        // Trigger preview when file input changes
+        $("#profile_picture").change(function() {
+            previewImage(this, 'profile_picture_preview');
+        });
+
+        $("#signature").change(function() {
+            previewImage(this, 'signature_preview');
+        });
+
+        function confirmAccountOpening() {
+            // Your existing confirmation logic
+        }
+    </script>
     <script>
         function confirmAccountOpening() {
             var firstName = document.getElementById("first_name").value;

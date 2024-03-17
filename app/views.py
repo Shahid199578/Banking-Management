@@ -97,9 +97,9 @@ def open_account():
 @app.route('/all_users')
 def all_users():
     # Fetch all users from the database
-    user = Users.query.all()
+    users = Users.query.all()
     # Render the HTML template and pass the users
-    return render_template('all_users.html', user=user)
+    return render_template('all_users.html', users=users)
 
 @app.route('/view_user_details/<account_number>', methods=['GET', 'POST'])
 def view_user_details(account_number):
@@ -111,3 +111,90 @@ def view_user_details(account_number):
         return redirect(url_for('view_user_details', account_number=account_number))
     return render_template('view_user_details.html', user=user)
 
+@app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    user = Users.query.get_or_404(user_id)
+    
+    if request.method == 'POST':
+        # Update user details based on form data
+        user.first_name = request.form.get('first_name')
+        user.last_name = request.form.get('last_name')
+        user.dob = request.form.get('dob')
+        user.address = request.form.get('address')
+        user.mobile_number = request.form.get('mobile_number')
+        user.aadhaar_number = request.form.get('aadhaar_number')
+        user.pan_number = request.form.get('pan_number')
+        
+        # Handle file uploads for profile picture
+        if 'profile_picture' in request.files:
+            profile_picture = request.files['profile_picture']
+            if profile_picture.filename:
+                filename = secure_filename(profile_picture.filename)
+                profile_picture.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                user.profile_picture = filename
+        
+        # Handle file uploads for signature
+        if 'signature' in request.files:
+            signature = request.files['signature']
+            if signature.filename:
+                filename = secure_filename(signature.filename)
+                signature.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                user.signature = filename
+        
+        # Commit changes to the database
+        db.session.commit()
+        # Update corresponding account information based on account number
+        account = Account.query.filter_by(account_number=user.account_number).first()
+        if account:
+            account.name = f"{user.first_name} {user.last_name}"
+            db.session.commit()
+        
+        # Redirect to the user details page
+        return redirect(url_for('view_user_details', account_number=user.account_number))
+    
+    # If the request method is GET, render the edit form
+    return render_template('edit_user.html', user=user)
+
+
+
+@app.route('/withdraw/<int:account_number>', methods=['GET', 'POST'])
+def withdraw(account_number):
+    user = Users.query.filter_by(account_number=account_number).first()
+    if not user:
+        return "User not found"
+    
+    account = Account.query.filter_by(account_number=user.account_number).first()
+    if not account:
+        return "Account not found"
+    
+    if request.method == 'POST':
+        amount = float(request.form['amount'])
+        if amount <= account.balance:  # Check if the withdrawal amount is less than or equal to the current balance
+            account.balance -= amount  # Deduct the withdrawal amount from the account's balance
+            db.session.commit()
+            return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+        else:
+            return "Insufficient balance"
+    
+    return render_template('withdraw.html', user=user)
+
+@app.route('/deposit/<int:account_number>', methods=['GET', 'POST'])
+def deposit(account_number):
+    user = Users.query.filter_by(account_number=account_number).first()
+    if not user:
+        return "User not found"
+    
+    account = Account.query.filter_by(account_number=user.account_number).first()
+    if not account:
+        return "Account not found"
+    
+    if request.method == 'POST':
+        amount = float(request.form['amount'])
+        if amount > 0:  # Ensure that the deposited amount is positive
+            account.balance += amount  # Add the deposited amount to the account's balance
+            db.session.commit()
+            return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+        else:
+            return "Invalid deposit amount"
+    
+    return render_template('deposit.html', user=user)

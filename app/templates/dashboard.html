@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
 <body>
+{% include 'navbar.html' %}
+
+    <div class="container">
     <h1>Dashboard</h1>
-    <p>Total Accounts: {{ total_accounts }}</p>
-    <p>Total Balance: {{ total_balance }}</p>
+   <table>
+   <tr>
+	<th>Total Accounts:</th>
+	<th>Total Balance</th>
+   </tr>
+   <tr>    
+    	<td><a href="{{ url_for('all_accounts') }}">{{ total_accounts }}</a></td>
+	<td> {{ total_balance }}</td>
+   </tr>
+   </table>
 </body>
 </html>
 
