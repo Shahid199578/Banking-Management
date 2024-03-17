@@ -22,15 +22,17 @@ class Users(db.Model):
 
 
 
-class AccountStatement(db.Model):
+class Transactions(db.Model):
     __tablename__ = 'account_statement'
     
     account_number = db.Column(db.Integer, db.ForeignKey('account.account_number'), primary_key=True)
-    date = db.Column(db.Date, primary_key=True)
+    date = db.Column(db.Date, nullable=False, primary_key=True)
     description = db.Column(db.Text, nullable=False)
-    amount = db.Column(db.Numeric(10, 2), nullable=False)
+    amount = db.Column(db.Numeric(10, 2), nullable=True)
     balance = db.Column(db.Numeric(10, 2), nullable=False)
-
-
+    withdraw = db.Column(db.Numeric(10, 2), default=0)  # Add withdrawal column with default value 0
+    deposit = db.Column(db.Numeric(10, 2), default=0)  # Add deposit column with default value 0
+    reference_number = db.Column(db.String(20))
     def __repr__(self):
-        return f"<AccountStatement(account_number={self.account_number}, date={self.date}, description={self.description}, amount={self.amount}, balance={self.balance}, id={self.id})>"
+        return f"Transaction(account_number={self.account_number}, date={self.date}, description={self.description}, amount={self.amount}, balance={self.balance}, withdraw={self.withdraw}, deposit={self.deposit}, reference_number={self.reference_number})"
+

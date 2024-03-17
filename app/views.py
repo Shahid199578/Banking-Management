@@ -1,8 +1,13 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 from app import app, db
-from .models import Users, Account
+from .models import Users, Account, Transactions
 import os
+import random
+
+# Function to generate a random 15-digit number
+def generate_random_15_digit_number():
+    return random.randint(10**14, 10**15 - 1)
 
 # Define routes
 
@@ -156,7 +161,7 @@ def edit_user(user_id):
     return render_template('edit_user.html', user=user)
 
 
-
+'''
 @app.route('/withdraw/<int:account_number>', methods=['GET', 'POST'])
 def withdraw(account_number):
     user = Users.query.filter_by(account_number=account_number).first()
@@ -169,14 +174,32 @@ def withdraw(account_number):
     
     if request.method == 'POST':
         amount = float(request.form['amount'])
+        transaction_type ='Withdraw'
         if amount <= account.balance:  # Check if the withdrawal amount is less than or equal to the current balance
             account.balance -= amount  # Deduct the withdrawal amount from the account's balance
+            updated_balance = account.balance
             db.session.commit()
+
+        try:    # Save transaction details
+            new_transaction = Transactions(
+                account_number=user.account_number,
+                description=f'{transaction_type} of {amount}',
+                #amount=amount,
+		balance = updated_balance,
+		withdraw=amount
+            )
+            db.session.add(new_transaction)
+            db.session.commit()
+            flash(f'{transaction_type} successful. Reference number: {new_transaction.Reference_number}', 'success')
             return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+        except Exception as e:
+            db.session.rollback()
+            flash('Transaction failed. Please try again later.', 'error')
+	    return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
         else:
-            return "Insufficient balance"
+            flash('Insufficient balance' , 'error')
     
-    return render_template('withdraw.html', user=user)
+    return render_template('withdraw.html', user=user, account=account)
 
 @app.route('/deposit/<int:account_number>', methods=['GET', 'POST'])
 def deposit(account_number):
@@ -190,11 +213,112 @@ def deposit(account_number):
     
     if request.method == 'POST':
         amount = float(request.form['amount'])
+        transaction_type='Deposit'
         if amount > 0:  # Ensure that the deposited amount is positive
             account.balance += amount  # Add the deposited amount to the account's balance
+            updated_balance = account.balance
             db.session.commit()
-            return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
-        else:
-            return "Invalid deposit amount"
+
+        try:    # Save transaction details
+            new_transaction = Transactions(
+                account_number=user.account_number,
+                description=f'{transaction_type} of {amount}',
+               # amount=amount,
+		balance=updated_balance,
+		deposit=amount
+            )
+            db.session.add(new_transaction)
+            db.session.commit()
+            flash(f'{transaction_type} successful. Reference number: {new_transaction.Reference_number}', 'success')
+	    return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+        except Exception as e:
+           db.session.rollback()
+           flash('Transaction failed. Please try again later.', 'error')
+           return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+	else:
+            flash('Invalid deposit amount', 'error')
     
-    return render_template('deposit.html', user=user)
+    return render_template('deposit.html', user=user, account=account)
+'''
+@app.route('/withdraw/<int:account_number>', methods=['GET', 'POST'])
+def withdraw(account_number):
+    user = Users.query.filter_by(account_number=account_number).first()
+    if not user:
+        return "User not found"
+    
+    account = Account.query.filter_by(account_number=user.account_number).first()
+    if not account:
+        return "Account not found"
+    
+    if request.method == 'POST':
+        amount = float(request.form['amount'])
+        transaction_type ='Withdraw'
+        if amount <= account.balance:  # Check if the withdrawal amount is less than or equal to the current balance
+            account.balance -= amount  # Deduct the withdrawal amount from the account's balance
+            updated_balance = account.balance
+	    reference_number = generate_random_15_digit_number()
+
+	    try:
+                # Save transaction details
+                new_transaction = Transactions(
+                    account_number=user.account_number,
+                    description=f'{transaction_type} of {amount}',
+                    #amount=amount,
+                    balance=updated_balance,
+                    withdraw=amount,
+		   reference_number=reference_number
+                )
+                db.session.add(new_transaction)
+                db.session.commit()
+                flash(f'{transaction_type} successful. Reference number: {new_transaction.Reference_number}', 'success')
+                return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+            except Exception as e:
+                db.session.rollback()
+                flash('Transaction failed. Please try again later.', 'error')
+                return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+        else:
+            flash('Insufficient balance', 'error')
+    
+    return render_template('withdraw.html', user=user, account=account)
+
+@app.route('/deposit/<int:account_number>', methods=['GET', 'POST'])
+def deposit(account_number):
+    user = Users.query.filter_by(account_number=account_number).first()
+    if not user:
+        return "User not found"
+    
+    account = Account.query.filter_by(account_number=user.account_number).first()
+    if not account:
+        return "Account not found"
+    
+    if request.method == 'POST':
+        amount = float(request.form['amount'])
+        transaction_type='Deposit'
+        if amount > 0:  # Ensure that the deposited amount is positive
+            account.balance += amount  # Add the deposited amount to the account's balance
+            updated_balance = account.balance
+	    reference_number = generate_random_15_digit_number()
+
+            try:
+                # Save transaction details
+                new_transaction = Transactions(
+                    account_number=user.account_number,
+                    description=f'{transaction_type} of {amount}',
+                    # amount=amount,
+                    balance=updated_balance,
+                    deposit=amount,
+		    reference_number=reference_number
+                )
+                db.session.add(new_transaction)
+                db.session.commit()
+                flash(f'{transaction_type} successful. Reference number: {new_transaction.Reference_number}', 'success')
+                return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+            except Exception as e:
+                db.session.rollback()
+                flash('Transaction failed. Please try again later.', 'error')
+                return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+        else:
+            flash('Invalid deposit amount', 'error')
+    
+    return render_template('deposit.html', user=user, account=account)
+
