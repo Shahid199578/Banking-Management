@@ -263,10 +263,9 @@ def withdraw(account_number):
                 new_transaction = Transactions(
                     account_number=user.account_number,
                     description=f'{transaction_type} of {amount}',
-                    #amount=amount,
                     balance=updated_balance,
                     withdraw=amount,
-		   reference_number=reference_number
+		    reference_number=reference_number
                 )
                 db.session.add(new_transaction)
                 db.session.commit()
@@ -304,7 +303,6 @@ def deposit(account_number):
                 new_transaction = Transactions(
                     account_number=user.account_number,
                     description=f'{transaction_type} of {amount}',
-                    # amount=amount,
                     balance=updated_balance,
                     deposit=amount,
 		    reference_number=reference_number
