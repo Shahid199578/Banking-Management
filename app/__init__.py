@@ -19,3 +19,6 @@ from . import models
 with app.app_context():
     db.create_all()
 
+
+import secrets
+app.secret_key = secrets.token_hex(16)  # Generate a 32-character hexadecimal string (16 bytes)

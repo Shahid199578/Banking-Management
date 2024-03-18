@@ -176,25 +176,15 @@ def withdraw(account_number):
         if amount <= account.balance:  # Check if the withdrawal amount is less than or equal to the current balance
             account.balance -= amount  # Deduct the withdrawal amount from the account's balance
             updated_balance = account.balance
-<<<<<<< HEAD
             reference_number = generate_random_15_digit_number()
             try:
-=======
-	    reference_number = generate_random_15_digit_number()
-
-	    try:
->>>>>>> origin/master
                 # Save transaction details
                 new_transaction = Transactions(
                     account_number=user.account_number,
                     description=f'{transaction_type} of {amount}',
                     balance=updated_balance,
                     withdraw=amount,
-<<<<<<< HEAD
 		            reference_number=reference_number
-=======
-		    reference_number=reference_number
->>>>>>> origin/master
                 )
                 db.session.add(new_transaction)
                 db.session.commit()
