@@ -5,6 +5,9 @@ from .models import Users, Account, Transactions
 import os
 import random
 
+
+app.config['PERMANENT_SESSION_LIFETIME'] = 3600
+
 # Function to generate a random 15-digit number
 def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
@@ -13,7 +16,7 @@ def generate_random_15_digit_number():
 
 # Specify the path to the uploads folder under the app directory
 UPLOAD_FOLDER = os.path.join(app.root_path, '../static', 'uploads')
-
+log_file_path = os.path.join(app.root_path, 'logs', 'app.log')
 # Configure the upload folder in app.config
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -174,30 +177,24 @@ def withdraw(account_number):
         amount = float(request.form['amount'])
         transaction_type ='Withdraw'
         if amount <= account.balance:  # Check if the withdrawal amount is less than or equal to the current balance
-            account.balance -= amount  # Deduct the withdrawal amount from the account's balance
-            updated_balance = account.balance
             reference_number = generate_random_15_digit_number()
-            try:
-                # Save transaction details
-                new_transaction = Transactions(
+            new_transaction = Transactions(
                     account_number=user.account_number,
                     description=f'{transaction_type} of {amount}',
-                    balance=updated_balance,
+                    balance=account.balance - amount,
                     withdraw=amount,
 		            reference_number=reference_number
                 )
-                db.session.add(new_transaction)
-                db.session.commit()
-                flash(f'{transaction_type} successful. Reference number: {new_transaction.reference_number}', 'success')
-                return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
-            except Exception as e:
-                db.session.rollback()
-                flash('Transaction failed. Please try again later.', 'error')
-                return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+            print("Before committing transaction")
+            db.session.add(new_transaction)
+            db.session.commit()
+            print("After committing transaction")
+            flash(f'{transaction_type} successful. Reference number: {new_transaction.reference_number}', 'success')
+            return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
         else:
             flash('Insufficient balance', 'error')
-    
-    return render_template('withdraw.html', user=user, account=account)
+            return render_template('withdraw.html', user=user, account=account)
+    return render_template('withdraw.html', user=user, account=account)  # Render the template for GET requests
 
 @app.route('/deposit/<int:account_number>', methods=['GET', 'POST'])
 def deposit(account_number):
@@ -227,13 +224,15 @@ def deposit(account_number):
                 )
                 db.session.add(new_transaction)
                 db.session.commit()
-                flash(f'{transaction_type} successful. Reference number: {new_transaction.reference_number}', 'success')
+                flash('{transaction_type} successful. Reference number: {new_transaction.reference_number}', 'success')
                 return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
             except Exception as e:
+                print(f"Exception occurred: {str(e)}")
                 db.session.rollback()
                 flash('Transaction failed. Please try again later.', 'error')
-                return redirect(url_for('all_accounts'))  # Redirect to dashboard or another appropriate page
+                return redirect(request.referrer)  # Redirect to dashboard or another appropriate page
         else:
             flash('Invalid deposit amount', 'error')
-    
+
     return render_template('deposit.html', user=user, account=account)
+

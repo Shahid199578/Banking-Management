@@ -19,7 +19,28 @@
             <input type="number" id="amount" name="amount" required>
             <input type="submit" value="Withdraw" class="button">
         </form>
-    </div>
-</body>
-</html>
 
+   <!-- Flash messages section -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+   
+    </div>
+    <script>
+        // Check if alert message exists in the URL and display it
+        const urlParams = new URLSearchParams(window.location.search);
+        const alertMessage = urlParams.get('alert_message');
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+    </script>
+
+
+ </body>
+</html>

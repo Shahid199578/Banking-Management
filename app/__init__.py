@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -8,7 +7,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://bank:Bank#9911@localhost/bank'  # Replace with your MySQL connection string
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable modification tracking (optional but recommended)
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 # Import views
 from . import views
 
@@ -21,4 +19,4 @@ with app.app_context():
 
 
 import secrets
-app.secret_key = secrets.token_hex(16)  # Generate a 32-character hexadecimal string (16 bytes)
+app.secret_key = "my_key"  # Generate a 32-character hexadecimal string (16 bytes)app.secret_key = secrets.token_hex(16)
