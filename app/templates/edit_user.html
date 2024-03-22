@@ -73,27 +73,30 @@
                             <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" value="{{ user.aadhaar_number }}" required>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label for="profile_picture">Profile Picture:</label>
-                            <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Profile Picture" class="image-preview">
-                            <input type="file" id="profile_picture" name="profile_picture" accept="image/*" style="display: none;">
-                            <label for="profile_picture" class="file-label"><button type="button" class="change-button" onclick="document.getElementById('profile_picture').click()">Change</button></label>
-                        </td>
-                        <td colspan="2">
-                            <label for="signature">Signature:</label>
-                            <img src="{{ url_for('static', filename='uploads/' + user.signature) }}" alt="Signature" class="image-preview">
-                            <input type="file" id="signature" name="signature" accept="image/*" style="display: none;">
-                            <label for="signature" class="file-label"><button type="button" class="change-button" onclick="document.getElementById('signature').click()">Change</button></label>
-                        </td>
-                    </tr>
+                          <table>
+                            <thead><tr>
+                    <th>
+                    
+                      <label for="profile_picture">Profile Picture:</label></th>
+                             <th>
+                               <label for="signature">Signature:</label></th></tr></thead>
+<tbody>
+<tr>
+  <td>
+	  <table><tr><td>
+<img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Profile Picture" class="image-preview" width="30" height="50"></td>
+<input type="file" id="profile_picture" name="profile_picture" accept="image/*" style="display: none;">
+ <td><label for="profile_picture" class="file-label"><button type="button" class="change-button" onclick="document.getElementById('profile_picture').click()">Change</button></label></td></tr></table></td>
+ <td><table>
+		 <tr><td><img src="{{ url_for('static', filename='uploads/' + user.signature) }}" alt="Signature" class="image-preview"
+				 width="30" height="50"></td>
+                                <input type="file" id="signature" name="signature" accept="image/*" style="display: none;">
+<td><label for="signature" class="file-label"><button type="button" class="change-button" onclick="document.getElementById('signature').click()">Change</button></label></td></tr></table></td>
+</tr>
+  </tbody>
+         </table>
 		   </table>
                   <input type="submit" class="button" value="Update">  
-
-        	  <table>
-		   <tr><td> <a href="{{ url_for('withdraw', account_number=user.account_number) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a></td>
-       		   <td><a href="{{ url_for('deposit', account_number=user.account_number) }}" class="button"><i class="fas fa-money-check-alt"></i> Deposit</a></td>
-       		</tr>
 		</table>
 	 </div>
        </form>

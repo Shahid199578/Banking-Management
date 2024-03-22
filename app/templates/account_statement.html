@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <title>Account Statement</title>
 </head>
 <body>
-    <h1>Account Statement for Account Number: {{ account_number }}</h1>
+    <h1>Account Statement for Account Number: {{ account.account_number }}</h1>
     <table>
         <thead>
             <tr>
@@ -16,19 +17,17 @@
                 <th>Withdraw</th>
                 <th>Amount</th>
                 <th>Balance</th>
-                <!-- Add more table headers if needed -->
             </tr>
         </thead>
         <tbody>
-            {% for statement in statements %}
+            {% for transaction in account_statement %}
             <tr>
-                <td>{{ statement.date }}</td>
-                <td>{{ statement.description }}</td>
-                <td>{{ statement.deposit }}</td>
-                <td>{{ statement.withdraw }}</td>
-                <td>{{ statement.amount }}</td>
-                <td>{{ statement.balance }}</td>
-                <!-- Add more table cells for additional statement details -->
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.deposit }}</td>
+                <td>{{ transaction.withdraw }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.balance }}</td>
             </tr>
             {% endfor %}
         </tbody>
