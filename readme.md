@@ -77,7 +77,7 @@ This is a banking application built with Flask that allows users to perform vari
 
 - **`flask_app.wsgi`**: WSGI script file for deploying Flask app.
 - **`setup_flask_app.sh`**: Script for setting up Flask app environment.
-- **`/etc/apache2/sites-available/flask_app.conf**`: cofigure this as per your requirement i.e. `localhost`.
+- **`/etc/apache2/sites-available/flask_app.conf`**: cofigure this as per your requirement i.e. `localhost`.
 
 ## Usage
 
