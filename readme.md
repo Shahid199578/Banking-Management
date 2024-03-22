@@ -77,13 +77,13 @@ This is a banking application built with Flask that allows users to perform vari
 
 - **`flask_app.wsgi`**: WSGI script file for deploying Flask app.
 - **`setup_flask_app.sh`**: Script for setting up Flask app environment.
+- **`/etc/apache2/sites-available/flask_app.conf**`: cofigure this as per your requirement i.e. `localhost`.
 
 ## Usage
 
 1. Clone the repository.
 2. Set up the Flask environment using `setup_flask_app.sh`.
-3. Run the Flask application using `flask_app.wsgi`.
-4. Access the application in your web browser.
+3. Access the application in your web browser.
 
 ## Contributing
 
