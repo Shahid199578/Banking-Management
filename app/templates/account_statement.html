@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Statement</title>
+</head>
+<body>
+    <h1>Account Statement for Account Number: {{ account_number }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Deposit</th>
+                <th>Withdraw</th>
+                <th>Amount</th>
+                <th>Balance</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for statement in statements %}
+            <tr>
+                <td>{{ statement.date }}</td>
+                <td>{{ statement.description }}</td>
+                <td>{{ statement.deposit }}</td>
+                <td>{{ statement.withdraw }}</td>
+                <td>{{ statement.amount }}</td>
+                <td>{{ statement.balance }}</td>
+                <!-- Add more table cells for additional statement details -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
