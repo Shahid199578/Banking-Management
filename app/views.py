@@ -1,7 +1,7 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
 from werkzeug.utils import secure_filename
 from app import app, db
-from .models import Users, Account, Transactions
+from .models import Users, Account, Transactions, AdminUser
 import os
 import random
 from sqlalchemy import update
@@ -14,6 +14,32 @@ from .open_account import open_account
 # Function to generate a random 15-digit number
 def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        # Example authentication logic
+        user = AdminUser.query.filter_by(username=username, password=password).first()
+        if user:
+            # Store user's authentication status in session
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+        else:
+            # Authentication failed
+            return render_template('login.html', message='Invalid credentials')
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    # Clear user's session to log them out
+    session.clear()
+    return redirect(url_for('login'))
+
+
 
 # Define routes
 
@@ -29,9 +55,12 @@ def index():
 
 @app.route('/dashboard')
 def dashboard():
-    total_accounts = Account.query.count()
-    total_balance = db.session.query(db.func.sum(Account.balance)).scalar() or 0
-    return render_template('dashboard.html', total_accounts=total_accounts, total_balance=total_balance)
+    if 'logged_in' in session:
+        total_accounts = Account.query.count()
+        total_balance = db.session.query(db.func.sum(Account.balance)).scalar() or 0
+        return render_template('dashboard.html', total_accounts=total_accounts, total_balance=total_balance, username=session['username'])
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/all_accounts')
 def all_accounts():
