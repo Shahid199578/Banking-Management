@@ -46,7 +46,8 @@ This is a banking application built with Flask that allows users to perform vari
 │   │   └── withdraw.html          
 │   ├── views.py            
 │   └── withdraw.py         
-├── flask_app.wsgi          
+├── flask_app.wsgi
+├── create_database_and_tables.sql          
 ├── setup_flask_app.sh     
 └── static                  
     ├── css                 
@@ -77,6 +78,7 @@ This is a banking application built with Flask that allows users to perform vari
 
 - **`flask_app.wsgi`**: WSGI script file for deploying Flask app.
 - **`setup_flask_app.sh`**: Script for setting up Flask app environment.
+- **`create_database_and_tables.sql`**: for Database enviroment setup.
 - **`/etc/apache2/sites-available/flask_app.conf`**: cofigure this as per your requirement i.e. `localhost`.
 
 ## Usage
