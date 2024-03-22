@@ -1,8 +1,17 @@
-CREATE DATABASE bank;
-CREATE USER 'bank'@'localhost' IDENTIFIED BY 'Bank#9911';
+-- Create Database
+CREATE DATABASE IF NOT EXISTS bank;
+
+-- Create User
+CREATE USER IF NOT EXISTS 'bank'@'localhost' IDENTIFIED BY 'Bank#9911';
+
+-- Grant Privileges
 GRANT ALL PRIVILEGES ON `bank`.* TO 'bank'@'localhost';
-use bank; 
-CREATE TABLE account_statement (
+
+-- Switch to the 'bank' Database
+USE bank;
+
+-- Create Table account_statement
+CREATE TABLE IF NOT EXISTS account_statement (
     account_number INT(10) UNSIGNED ZEROFILL NOT NULL,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     description TEXT NOT NULL,
@@ -15,14 +24,16 @@ CREATE TABLE account_statement (
     INDEX (account_number)
 );
 
-CREATE TABLE account (
+-- Create Table account
+CREATE TABLE IF NOT EXISTS account (
     account_number INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     account_type VARCHAR(50) NOT NULL,
     balance FLOAT NOT NULL DEFAULT 0.0
 );
 
-CREATE TABLE users (
+-- Create Table users
+CREATE TABLE IF NOT EXISTS users (
     account_number INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100),
     last_name VARCHAR(100),

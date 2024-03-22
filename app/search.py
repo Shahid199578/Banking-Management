@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
-from .models import Users
-
+from app import app, db
+from .models import Users, Account, Transactions
 search_bp = Blueprint('search', __name__)
 
 @search_bp.route('/search', methods=['GET'])
@@ -14,5 +14,13 @@ def search():
         Users.aadhaar_number.contains(query) |
         Users.pan_number.contains(query)
     ).all()
-    return render_template('search.html', users=users)
+
+    # Fetch corresponding account details for each user
+    accounts = {}
+    for user in users:
+        account = Account.query.filter_by(account_number=user.account_number).first()
+        if account:
+            accounts[user.account_number] = account
+
+    return render_template('search.html', users=users, account=account)
 
