@@ -29,7 +29,7 @@
                 <td>
                     <a href="{{ url_for('deposit', account_number=account.account_number) }}" class="button">Deposit</a>
                     <a href="{{ url_for('withdraw', account_number=account.account_number) }}" class="button">Withdraw</a>
-                    <a href="{{ url_for('view_user_details', account_number=account.account_number) }}" class="button">View Details</a>
+		    <a href="{{ url_for('statement.account_statement', account_number=account.account_number) }}" class="button">View Statement</a>
                 </td>
             </tr>
             {% endfor %}
