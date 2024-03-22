@@ -7,6 +7,7 @@
     <title>Account Statement</title>
 </head>
 <body>
+{% include 'navbar.html' %}
     <h1>Account Statement for Account Number: {{ account.account_number }}</h1>
     <table>
         <thead>
@@ -15,7 +16,6 @@
                 <th>Description</th>
                 <th>Deposit</th>
                 <th>Withdraw</th>
-                <th>Amount</th>
                 <th>Balance</th>
             </tr>
         </thead>
@@ -26,7 +26,6 @@
                 <td>{{ transaction.description }}</td>
                 <td>{{ transaction.deposit }}</td>
                 <td>{{ transaction.withdraw }}</td>
-                <td>{{ transaction.amount }}</td>
                 <td>{{ transaction.balance }}</td>
             </tr>
             {% endfor %}
