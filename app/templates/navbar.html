@@ -1,24 +1,66 @@
+<!-- navbar.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Accounts</title>
+    <title>Navigation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
-    <!-- Link to your CSS file -->
- 
 </head>
 <body>
     <nav>
         <table>
             <tr>
+		<th><a class="button" href="{{ url_for('index') }}">Home</a></th>
                 <th><a class="button" href="{{ url_for('all_accounts') }}">All Accounts</a></th>
                 <th><a class="button" href="{{ url_for('all_users') }}">All Users</a></th>
                 <th><a class="button" href="{{ url_for('open_account') }}">Open New Account</a></th>
                 <th><a class="button" href="{{ url_for('dashboard') }}">Dashboard</a></th>
                 <!-- Add more navigation links as needed -->
+
+                <!-- Search form -->
+                <th>
+                    <form class="search-form" action="{{ url_for('search.search') }}" method="GET">
+                        <input type="text" name="query" placeholder="Search...">
+                        <button type="submit">Search</button>
+                    </form>
+                </th>
             </tr>
         </table>
     </nav>
+    <div id="search-results"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#search-form').submit(function(event) {
+                event.preventDefault(); // Prevent form submission
+                var query = $('#query').val();
+
+                // Make AJAX request to search route
+                $.ajax({
+                    url: '/search',
+                    type: 'GET',
+                    data: { query: query },
+                    success: function(response) {
+                        // Update search results on the page
+                        var users = response.users;
+                        var html = '<ul>';
+                        for (var i = 0; i < users.length; i++) {
+                            var user = users[i];
+                            html += '<li>' + user.account_number + ' - ' + user.first_name + ' ' + user.last_name + '</li>';
+                            // Add more user attributes as needed
+                        }
+                        html += '</ul>';
+                        $('#search-results').html(html);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
+

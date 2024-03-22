@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Search Results</title>
+</head>
+<body>
+{% include 'navbar.html' %}
+    <h1>Search Results</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Account Number</th>
+                <th>Name</th>
+                <th>Mobile Number</th>
+                <th>Aadhaar Number</th>
+                <th>PAN Number</th>
+                <!-- Add more table headers for additional user details -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.account_number }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.mobile_number }}</td>
+                <td>{{ user.aadhaar_number }}</td>
+                <td>{{ user.pan_number }}</td>
+                <!-- Add more table cells for additional user details -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

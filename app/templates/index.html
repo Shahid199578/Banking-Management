@@ -23,6 +23,12 @@
                 <td><a href="{{ url_for('dashboard') }}" class="button">Dashboard</a></td>
            
             </tr>
+	    <th>
+		    <form class="search-form" action="{{ url_for('search.search') }}" method="GET">
+			    <input type="text" name="query" placeholder="Search...">
+			    <button type="submit">Search</button>
+                    </form>
+                </th>
         </table>
     </div>
 </body>

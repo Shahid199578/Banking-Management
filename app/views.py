@@ -7,7 +7,7 @@ import random
 from sqlalchemy import update
 from .deposit import deposit
 from .withdraw import withdraw
-
+from . import search
 
 
 # Function to generate a random 15-digit number
@@ -166,3 +166,4 @@ def edit_user(user_id):
     return render_template('edit_user.html', user=user)
 app.route('/deposit/<int:account_number>', methods=['GET', 'POST'])(deposit)
 app.route('/withdraw/<int:account_number>', methods=['GET', 'POST'])(withdraw)
+app.register_blueprint(search.search_bp)
