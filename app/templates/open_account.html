@@ -65,10 +65,13 @@
                             <label for="mobile_number">Mobile Number:</label><br>
                             <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" required><br>
                         </td>
+		 
                         <td>
                             <label for="aadhaar_number">Aadhaar Number:</label><br>
                             <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" required><br>
                         </td>
+		    </tr>
+			<tr>
 			<td>
                             <label for="account_type">Account Type:</label><br>
                             <select id="account_type" name="account_type" required>
@@ -81,7 +84,7 @@
                             <label for="balance">Initial Balance:</label><br>
                             <input type="number" id="balance" name="balance" min="0" step="0.01" required><br>
                         </td>
-                    </tr>
+			</tr>
                 </table>
                 <input type="submit" class="button" value="Open Account" onclick="return confirmAccountOpening()">
             </div>
@@ -134,7 +137,7 @@
             confirmationMessage += "Mobile Number: " + mobileNumber + "\n";
             confirmationMessage += "Aadhaar Number: " + aadhaarNumber + "\n";
             confirmationMessage += "PAN Number: " + panNumber + "\n";
-	    confirmationMessage += "Account type: " + accounttype + "\n";
+	    confirmationMessage += "Account type: " + accountType + "\n";
 	    confirmationMessage += "Initial Balance: " + balance + "\n";
 
             return confirm(confirmationMessage);
