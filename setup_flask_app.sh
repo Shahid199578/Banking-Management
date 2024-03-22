@@ -22,9 +22,6 @@ MYSQL_ROOT_PASSWORD="Shahid"
 mysql -u root <<-EOF
   SET GLOBAL validate_password.policy = LOW;
   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
-  CREATE DATABASE bank;
-  CREATE USER 'bank'@'localhost' IDENTIFIED BY 'Bank#9911';
-  GRANT ALL PRIVILEGES ON \`bank\`.* TO 'bank'@'localhost';
   FLUSH PRIVILEGES;
   EXIT;
 EOF
@@ -74,6 +71,9 @@ cat > /etc/apache2/sites-available/flask_app.conf << EOF
 </VirtualHost>
 EOF
 
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<EOF
+source /var/www/html/flask_app/create_database_and_tables.sql;
+EOF
 # Enable the newly created virtual host
 a2ensite flask_app
 
