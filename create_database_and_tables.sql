@@ -34,4 +34,9 @@ CREATE TABLE users (
     profile_picture VARCHAR(255),
     signature VARCHAR(255)
 );
-
+CREATE TABLE `AdminUser` (
+  id int NOT NULL,
+  username varchar(50) NOT NULL,
+  password varchar(100) NOT NULL,
+  is_admin tinyint(1) DEFAULT '0'
+)
