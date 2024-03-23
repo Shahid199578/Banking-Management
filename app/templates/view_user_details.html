@@ -16,6 +16,12 @@
         <form id="accountForm" action="{{ url_for('open_account') }}" method="post" enctype="multipart/form-data">
             <div class="form-box">
                 <table>
+		    <tr>
+                <td>Account Number:</td>
+                <td>{{ user.account_number }}</td>
+                <td>Balance:</td>
+                <td>{{ account.balance }}</td>
+            </tr>
                     <tr>
                         <td>
                             <label for="first_name">First Name:</label>
@@ -42,12 +48,6 @@
                     <label for="address">Address:</label></td>
 		   <td colspan= "2">{{ user.address }}
               	   </td></tr>
-		  		  
-                       <tr> <td colspan= "2">Account Number:</td>
-                        <td colspan= "2">{{ user.account_number }}</td>
-                   
-                    </tr>
-                    
                     <tr>
                         <td>
                             <label for="mobile_number">Mobile Number:</label><br>

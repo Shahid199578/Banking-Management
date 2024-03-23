@@ -9,7 +9,6 @@ def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
 
 
-
 def deposit(account_number):
     user = Users.query.filter_by(account_number=account_number).first()
     if not user:

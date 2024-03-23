@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from werkzeug.utils import secure_filename
-from app import app, db
+from app import app, db, encrypt, decrypt
 from .models import Users, Account, Transactions, AdminUser
 import os
 import random
@@ -10,10 +10,29 @@ from .withdraw import withdraw
 from . import search
 from . import statement
 from .open_account import open_account
+from functools import wraps
+import hashlib
+
 
 # Function to generate a random 15-digit number
 def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Apply login_required to all routes except login and logout
+@app.before_request
+def require_login():
+    if request.endpoint and request.endpoint != 'login' and request.endpoint != 'logout':
+        if 'logged_in' not in session:
+            return redirect(url_for('login', next=request.url))
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -21,13 +40,19 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        hashed_password = hashlib.sha1(password.encode()).hexdigest()
         # Example authentication logic
-        user = AdminUser.query.filter_by(username=username, password=password).first()
+        user = AdminUser.query.filter_by(username=username, password=hashed_password).first()
         if user:
             # Store user's authentication status in session
             session['logged_in'] = True
             session['username'] = username
-            return redirect(url_for('dashboard'))
+    
+            next_url = request.args.get('next')
+            if not next_url:
+                next_url = url_for('index')
+            return redirect(next_url)
+        
         else:
             # Authentication failed
             return render_template('login.html', message='Invalid credentials')
@@ -54,15 +79,14 @@ def index():
     return render_template('index.html')
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
-    if 'logged_in' in session:
-        total_accounts = Account.query.count()
-        total_balance = db.session.query(db.func.sum(Account.balance)).scalar() or 0
-        return render_template('dashboard.html', total_accounts=total_accounts, total_balance=total_balance, username=session['username'])
-    else:
-        return redirect(url_for('login'))
-
+    total_accounts = Account.query.count()
+    total_balance = db.session.query(db.func.sum(Account.balance)).scalar() or 0
+    return render_template('dashboard.html', total_accounts=total_accounts, total_balance=total_balance, username=session['username'])
+    
 @app.route('/all_accounts')
+@login_required
 def all_accounts():
     accounts = Account.query.all()
     return render_template('all_accounts.html', accounts=accounts)
@@ -70,23 +94,31 @@ def all_accounts():
 app.route('/open_account', methods=['GET', 'POST'])(open_account)
 
 @app.route('/all_users')
+@login_required
 def all_users():
     # Fetch all users from the database
     users = Users.query.all()
     # Render the HTML template and pass the users
-    return render_template('all_users.html', users=users)
+    return render_template('all_users.html', users=users, encrypt=encrypt)
 
 @app.route('/view_user_details/<account_number>', methods=['GET', 'POST'])
+@login_required
 def view_user_details(account_number):
+
     user = Users.query.filter_by(account_number=account_number).first()
     if not user:
         return "User not found"
+    account = Account.query.filter_by(account_number=user.account_number).first()
+    if not account:
+        return "Account not found"
     if request.method == 'POST':
         # Update user details
         return redirect(url_for('view_user_details', account_number=account_number))
-    return render_template('view_user_details.html', user=user)
+    
+    return render_template('view_user_details.html', user=user, account=account)
 
 @app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
 def edit_user(user_id):
     user = Users.query.get_or_404(user_id)
     

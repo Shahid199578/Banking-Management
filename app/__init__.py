@@ -1,5 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import secrets
+import hashlib
+
+
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -7,11 +11,20 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://bank:Bank#9911@localhost/bank'  # Replace with your MySQL connection string
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable modification tracking (optional but recommended)
 db = SQLAlchemy(app)
-# Import views
-from . import views
 
-# Import models (if necessary)
-from . import models
+# Encryption and decryption functions
+def encrypt(text):
+    return hashlib.sha1(text.encode()).hexdigest()
+
+def decrypt(text):
+    # Since SHA1 is a one-way hash function, decryption is not possible
+    # You can consider using a different encryption algorithm if decryption is needed
+    return None
+
+
+# Import views and models
+from . import views, models
+
 
 # Ensure all models are created in the database
 with app.app_context():
@@ -19,4 +32,4 @@ with app.app_context():
 
 
 import secrets
-app.secret_key = "my_key"  # Generate a 32-character hexadecimal string (16 bytes)app.secret_key = secrets.token_hex(16)
+app.secret_key = secrets.token_hex(16)

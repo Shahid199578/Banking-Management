@@ -26,10 +26,10 @@
                         <button type="submit">Search</button>
                     </form>
                 </th>
-		<th>{% if 'username' in session %}
-            <th><a href="{{ url_for('logout') }}">Logout</a></th>
+		{% if 'username' in session %}
+            <th><a class="button" href="{{ url_for('logout') }}">Logout</a></th>
         {% else %}
-	<th><a href="{{ url_for('login') }}">Login</a></th>
+	<th><a class="button" href="{{ url_for('login') }}">Login</a></th>
         {% endif %} 
             </tr>
         </table>
