@@ -12,6 +12,7 @@ apt install apache2 libapache2-mod-wsgi-py3 python3 python3-pip git mysql-server
 # Install Python packages
 pip install Flask Flask-SQLAlchemy Flask-Migrate mysql-connector-python
 pip3 install mysqlclient
+pip install flask-login
 
 # Secure MySQL installation
 # You can use expect or mysql_config_editor to automate the secure installation steps, but here we'll directly provide the commands
