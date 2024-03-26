@@ -41,11 +41,16 @@ CREATE TABLE `AdminUser` (
   is_admin tinyint(1) DEFAULT '0'
 );
 
+-- Sample entry for the AdminUser table
+INSERT INTO AdminUser (username, password, is_admin) VALUES ('user1', SHA1('password'), 0);
+
 -- Sample entry for the account table
 INSERT INTO account (name, account_type, balance) VALUES
 ('John Doe', 'Savings', 5000.00),
 ('Jane Smith', 'Current', 10000.00),
 ('Alice Johnson', 'Savings', 7500.00);
+
+
 
 -- Sample entry for the users table
 INSERT INTO users (first_name, last_name, dob, address, mobile_number, aadhaar_number, pan_number, profile_picture, signature) VALUES
