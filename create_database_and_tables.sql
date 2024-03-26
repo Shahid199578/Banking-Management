@@ -8,8 +8,8 @@ CREATE TABLE account_statement (
     description TEXT NOT NULL,
     amount DECIMAL(10,2),
     balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    withdraw DECIMAL(10,2),
-    deposit DECIMAL(10,2),
+    withdraw DECIMAL(10,2) DEFAULT 0.00,
+    deposit DECIMAL(10,2) DEFAULT 0.00,
     reference_number VARCHAR(20),
     PRIMARY KEY (account_number, date),
     INDEX (account_number)
@@ -45,22 +45,21 @@ CREATE TABLE `AdminUser` (
 INSERT INTO AdminUser (username, password, is_admin) VALUES ('user1', SHA1('password'), 0);
 
 -- Sample entry for the account table
-INSERT INTO account (name, account_type, balance) VALUES
-('John Doe', 'Savings', 5000.00),
-('Jane Smith', 'Current', 10000.00),
-('Alice Johnson', 'Savings', 7500.00);
+INSERT INTO account (account_number, name, account_type, balance) VALUES
+(1821014501, 'John Doe', 'Savings', 5000.00),
+(1821014502, 'Jane Smith', 'Current', 10000.00),
+(1821014501, 'Alice Johnson', 'Savings', 7500.00);
 
 
 
 -- Sample entry for the users table
-INSERT INTO users (first_name, last_name, dob, address, mobile_number, aadhaar_number, pan_number, profile_picture, signature) VALUES
-('John', 'Doe', '1990-05-15', '123 Main St, City, Country', '+1234567890', '1234 5678 9012', 'ABCDE1234F', 'profile_pic.jpg', 'signature.jpg'),
-('Jane', 'Smith', '1985-09-25', '456 Elm St, City, Country', '+1987654321', '5678 9012 3456', 'FGHIJ5678K', 'profile_pic.jpg', 'signature.jpg'),
-('Alice', 'Johnson', '1995-02-10', '789 Oak St, City, Country', '+1122334455', '9012 3456 7890', 'LMNOP6789Q', 'profile_pic.jpg', 'signature.jpg');
+INSERT INTO users (account_number, first_name, last_name, dob, address, mobile_number, aadhaar_number, pan_number, profile_picture, signature) VALUES
+(1821014501, 'John', 'Doe', '1990-05-15', '123 Main St, City, Country', '+1234567890', '1234 5678 9012', 'ABCDE1234F', 'profile_pic.jpg', 'signature.jpg'),
+(1821014502, 'Jane', 'Smith', '1985-09-25', '456 Elm St, City, Country', '+1987654321', '5678 9012 3456', 'FGHIJ5678K', 'profile_pic.jpg', 'signature.jpg'),
+(1821014503, 'Alice', 'Johnson', '1995-02-10', '789 Oak St, City, Country', '+1122334455', '9012 3456 7890', 'LMNOP6789Q', 'profile_pic.jpg', 'signature.jpg');
 
 -- Sample entry for the account_statement table
 INSERT INTO account_statement (account_number, description, amount, balance, withdraw, deposit, reference_number) VALUES
-(1821014501, 'Initial Deposit', 5000.00, 5000.00, NULL, NULL, 'REF123456'),
-(1821014502, 'Withdrawal', 200.00, 4800.00, 200.00, NULL, 'REF789012'),
-(1821014503, 'Initial Deposit', 10000.00, 10000.00, NULL, NULL, 'REF345678'),
-(1821014504, 'Initial Deposit', 7500.00, 7500.00, NULL, NULL, 'REF901234');
+(1821014501, 'Initial Deposit', 5000.00, 5000.00, 0, 0, 'REF123456'),
+(1821014502, 'Initial Deposit', 10000.00, 10000.00, 0, 0, 'REF345678'),
+(1821014503, 'Initial Deposit', 7500.00, 7500.00, 0, 0, 'REF901234');
