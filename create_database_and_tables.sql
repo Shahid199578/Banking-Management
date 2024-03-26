@@ -35,14 +35,11 @@ CREATE TABLE users (
     signature VARCHAR(255)
 );
 CREATE TABLE `AdminUser` (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   username varchar(50) NOT NULL,
   password varchar(100) NOT NULL,
   is_admin tinyint(1) DEFAULT '0'
 );
-
--- Inserting sample admin user with hashed password
-INSERT INTO AdminUser (username, password, is_admin) VALUES ('user1', SHA1('password'), 0);
 
 -- Sample entry for the account table
 INSERT INTO account (name, account_type, balance) VALUES
