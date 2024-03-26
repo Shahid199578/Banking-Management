@@ -91,6 +91,13 @@ def all_accounts():
     accounts = Account.query.all()
     return render_template('all_accounts.html', accounts=accounts)
 
+
+@app.route('/all_transaction')
+@login_required
+def all_transaction():
+    transaction = Transactions.query.all()
+    return render_template('all_transaction.html', transaction=transaction)
+
 app.route('/open_account', methods=['GET', 'POST'])(open_account)
 
 @app.route('/all_users')
