@@ -35,7 +35,7 @@ CREATE TABLE users (
     signature VARCHAR(255)
 );
 CREATE TABLE `AdminUser` (
-  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   username varchar(50) NOT NULL,
   password varchar(100) NOT NULL,
   is_admin tinyint(1) DEFAULT '0'
