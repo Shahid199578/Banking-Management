@@ -48,7 +48,7 @@ INSERT INTO AdminUser (username, password, is_admin) VALUES ('user1', SHA1('pass
 INSERT INTO account (account_number, name, account_type, balance) VALUES
 (1821014501, 'John Doe', 'Savings', 5000.00),
 (1821014502, 'Jane Smith', 'Current', 10000.00),
-(1821014501, 'Alice Johnson', 'Savings', 7500.00);
+(1821014503, 'Alice Johnson', 'Savings', 7500.00);
 
 
 
