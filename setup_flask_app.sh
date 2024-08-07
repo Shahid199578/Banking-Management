@@ -7,7 +7,11 @@ apt update
 apt upgrade -y
 
 # Install necessary packages
-apt install apache2 libapache2-mod-wsgi-py3 python3 python3-pip git mysql-server pkg-config -y
+apt install software-properties-common
+add-apt-repository ppa:deadsnakes/ppa
+apt install apache2 phpmyadmin libapache2-mod-wsgi-py3 python3.9 python3-pip git mysql-server pkg-config -y
+ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-enabled/phpmyadmin.conf
+
 
 # Install Python packages
 pip install Flask Flask-SQLAlchemy Flask-Migrate mysql-connector-python
