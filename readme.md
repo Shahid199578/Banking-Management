@@ -1,6 +1,3 @@
-Here’s the updated `README.md` that includes the `--build` option for building the Docker containers:
-
-```markdown
 # Flask App with MySQL
 
 This project demonstrates a Flask application connected to a MySQL database, all containerized using Docker. It provides a simple web interface for managing data stored in MySQL.
@@ -50,7 +47,7 @@ This command will create and start the services defined in the `docker-compose.y
 Once the containers are up and running, the Flask application will be accessible at:
 
 ```
-http://localhost:80
+http://localhost:5000
 ```
 
 You can access the application in your web browser.
@@ -84,8 +81,3 @@ The `create_database_and_tables.sql` script is automatically executed when the M
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 ```
-
-### Key Change
-- In the **Build and Start the Containers** section, the command now includes `--build` to ensure that the images are rebuilt if there are any changes to the Dockerfile or other related files.
-
-Feel free to make any additional adjustments or let me know if you need further modifications!
