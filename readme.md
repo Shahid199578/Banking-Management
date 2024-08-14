@@ -80,4 +80,4 @@ The `create_database_and_tables.sql` script is automatically executed when the M
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
+
