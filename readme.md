@@ -27,7 +27,8 @@ This project demonstrates a Flask application connected to a MySQL database, all
    cd flask_app
    ```
 
-2. Ensure Docker and Docker Compose are installed on your system. You can follow the [official Docker installation guide](https://docs.docker.com/get-docker/) if needed.
+2.For installation instructions, please refer to [installation.md](installation.md).
+3. Ensure Docker and Docker Compose are installed on your system. You can follow the [official Docker installation guide](https://docs.docker.com/get-docker/) if needed.
 
 ## Docker Setup
 
