@@ -7,10 +7,11 @@ This project demonstrates a Flask application connected to a MySQL database, all
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Docker Setup](#docker-setup)
-- [Running the Application](#running-the-application)
 - [Environment Variables](#environment-variables)
-- [Stopping and Removing Containers](#stopping-and-removing-containers)
 - [Database Initialization](#database-initialization)
+- [Build and Start the Containers](#build-and-start-the-containers)
+- [Running the Application](#running-the-application)
+- [Stopping and Removing Containers](#stopping-and-removing-containers)
 - [License](#license)
 
 ## Requirements
@@ -32,26 +33,6 @@ This project demonstrates a Flask application connected to a MySQL database, all
 
 This project includes a `docker-compose.yml` file to define and run the application and MySQL as services.
 
-### Build and Start the Containers
-
-To build and start the Docker containers, run:
-
-```bash
-docker-compose up --build -d
-```
-
-This command will create and start the services defined in the `docker-compose.yml` file, rebuilding the images if there have been any changes.
-
-## Running the Application
-
-Once the containers are up and running, the Flask application will be accessible at:
-
-```
-http://localhost:5000
-```
-
-You can access the application in your web browser.
-
 ## Environment Variables
 
 The application requires the following environment variables to connect to the MySQL database:
@@ -63,6 +44,32 @@ The application requires the following environment variables to connect to the M
 
 These variables are defined in the `docker-compose.yml` file.
 
+## Database Initialization
+
+The `create_database_and_tables.sql` script is automatically executed when the MySQL container starts for the first time.
+
+## Build and Start the Containers
+
+To build and start the Docker containers, run:
+
+```bash
+docker-compose up --build -d
+```
+
+This command will create and start the services defined in the `docker-compose.yml` file, rebuilding the images if there have been any changes.
+
+
+
+## Running the Application
+
+Once the containers are up and running, the Flask application will be accessible at:
+
+```
+http://localhost:5000
+```
+
+You can access the application in your web browser.
+
 ## Stopping and Removing Containers
 
 To stop and remove the containers, run:
@@ -71,12 +78,7 @@ To stop and remove the containers, run:
 docker-compose down
 ```
 
-This command will stop the running containers and remove them along with the associated networks.
-
-## Database Initialization
-
-The `create_database_and_tables.sql` script is automatically executed when the MySQL container starts for the first time. Make sure this script contains the necessary SQL commands to create your database schema and any initial data required by the application.
-
+This command will stop and remove the running containers along with the associated networks.
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
