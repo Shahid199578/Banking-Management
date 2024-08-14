@@ -23,11 +23,12 @@ This project demonstrates a Flask application connected to a MySQL database, all
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/flask_app.git
-   cd flask_app
+   git clone https://github.com/Shahid199578/Banking-Management.git
+   cd Banking-Management
    ```
 
-2.For installation instructions, please refer to [installation.md](installation.md).
+2. For installation instructions, please refer to [docker-compose.md](docker-compose.md).
+
 3. Ensure Docker and Docker Compose are installed on your system. You can follow the [official Docker installation guide](https://docs.docker.com/get-docker/) if needed.
 
 ## Docker Setup
