@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./create_database_and_tables.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Shahid
+      - MYSQL_DATABASE=flask_app
+    expose:
+      - 3306
+      - 33060
+
+  web:
+    depends_on:
+      - db
+    build: .
+    volumes:
+      - .:/app
+    command: flask run --host=0.0.0.0
+    ports:
+      - "80:5000"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=flask_app
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=Shahid
+
+volumes:
+  db_data:

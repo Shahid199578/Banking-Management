@@ -1,14 +1,5 @@
--- Create Database
-CREATE DATABASE IF NOT EXISTS bank;
-
--- Create User
-CREATE USER IF NOT EXISTS 'bank'@'localhost' IDENTIFIED BY 'Bank#9911';
-
--- Grant Privileges
-GRANT ALL PRIVILEGES ON `bank`.* TO 'bank'@'localhost';
-
 -- Switch to the 'bank' Database
-USE bank;
+USE flask_app;
 
 -- Create Table account_statement
 CREATE TABLE IF NOT EXISTS account_statement (

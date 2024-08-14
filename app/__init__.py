@@ -8,7 +8,7 @@ import hashlib
 app = Flask(__name__)
 
 # Configure SQLAlchemy for MySQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://bank:Bank#9911@localhost/bank'  # Replace with your MySQL connection string
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Shahid@db/flask_app'  # Replace with your MySQL connection string
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable modification tracking (optional but recommended)
 db = SQLAlchemy(app)
 

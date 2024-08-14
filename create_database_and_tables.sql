@@ -1,7 +1,4 @@
-CREATE DATABASE bank;
-CREATE USER 'bank'@'localhost' IDENTIFIED BY 'Bank#9911';
-GRANT ALL PRIVILEGES ON `bank`.* TO 'bank'@'localhost';
-use bank; 
+use flask_app; 
 CREATE TABLE account_statement (
     account_number INT(10) UNSIGNED ZEROFILL NOT NULL,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

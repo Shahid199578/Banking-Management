@@ -1,97 +1,91 @@
-# Banking Application
+Here’s the updated `README.md` that includes the `--build` option for building the Docker containers:
 
-This is a banking application built with Flask that allows users to perform various banking operations such as opening accounts, making deposits, withdrawals, and searching for account details.
+```markdown
+# Flask App with MySQL
 
-## Features
+This project demonstrates a Flask application connected to a MySQL database, all containerized using Docker. It provides a simple web interface for managing data stored in MySQL.
 
-- User Registration: Users can register accounts with their personal information.
-- Account Opening: Registered users can open new accounts.
-- Deposits and Withdrawals: Users can deposit and withdraw funds from their accounts.
-- Search Functionality: Users can search for account details using account numbers, names, mobile numbers, Aadhaar numbers, etc.
-- Admin Panel: Admins can manage user accounts and transactions.
+## Table of Contents
 
-## Technologies Used
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Docker Setup](#docker-setup)
+- [Running the Application](#running-the-application)
+- [Environment Variables](#environment-variables)
+- [Stopping and Removing Containers](#stopping-and-removing-containers)
+- [Database Initialization](#database-initialization)
+- [License](#license)
 
-- Flask: A micro web framework for Python.
-- SQLAlchemy: SQL toolkit and Object-Relational Mapping (ORM) library for Python.
-- MySQL: A relational database management system.
-- HTML/CSS: For the front-end user interface.
-- JavaScript: For dynamic client-side behavior.
-- jQuery: A JavaScript library for simplifying HTML document traversal and manipulation.
+## Requirements
 
-#Project Structure
+- Docker
+- Docker Compose
 
-```
-.
-├── app                     
-│   ├── __init__.py         
-│   ├── deposit.py          
-│   ├── models.py           
-│   ├── search.py           
-│   ├── static              
-│   │   ├── css             
-│   │   ├── js              
-│   │   └── uploads         
-│   ├── templates           
-│   │   ├── all_accounts.html      
-│   │   ├── all_users.html         
-│   │   ├── dashboard.html         
-│   │   ├── deposit.html           
-│   │   ├── edit_user.html         
-│   │   ├── index.html             
-│   │   ├── navbar.html            
-│   │   ├── open_account.html      
-│   │   ├── search.html            
-│   │   ├── view_user_details.html 
-│   │   └── withdraw.html          
-│   ├── views.py            
-│   └── withdraw.py         
-├── flask_app.wsgi
-├── create_database_and_tables.sql          
-├── setup_flask_app.sh     
-└── static                  
-    ├── css                 
-    ├── js                  
-    └── uploads             
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/flask_app.git
+   cd flask_app
+   ```
+
+2. Ensure Docker and Docker Compose are installed on your system. You can follow the [official Docker installation guide](https://docs.docker.com/get-docker/) if needed.
+
+## Docker Setup
+
+This project includes a `docker-compose.yml` file to define and run the application and MySQL as services.
+
+### Build and Start the Containers
+
+To build and start the Docker containers, run:
+
+```bash
+docker-compose up --build -d
 ```
 
-## Description
+This command will create and start the services defined in the `docker-compose.yml` file, rebuilding the images if there have been any changes.
 
-### `app` Directory
+## Running the Application
 
-- **`__init__.py`**: Initialization file for the Flask application.
-- **`deposit.py`**: Flask route and logic for handling deposits.
-- **`models.py`**: SQLAlchemy models for database tables.
-- **`search.py`**: Flask route and logic for search functionality.
-- **`static`**: Directory containing static assets such as CSS, JavaScript, and uploaded files.
-- **`templates`**: HTML templates for rendering pages.
-- **`views.py`**: Flask route definitions and view functions.
-- **`withdraw.py`**: Flask route and logic for handling withdrawals.
+Once the containers are up and running, the Flask application will be accessible at:
 
-### `static` Directory
+```
+http://localhost:80
+```
 
-- **`css`**: Directory for CSS stylesheets.
-- **`js`**: Directory for JavaScript files.
-- **`uploads`**: Directory for file uploads.
+You can access the application in your web browser.
 
-## Setup and Deployment
+## Environment Variables
 
-- **`flask_app.wsgi`**: WSGI script file for deploying Flask app.
-- **`setup_flask_app.sh`**: Script for setting up Flask app environment.
-- **`create_database_and_tables.sql`**: for Database enviroment setup.
-- **`/etc/apache2/sites-available/flask_app.conf`**: cofigure this as per your requirement i.e. `localhost`.
+The application requires the following environment variables to connect to the MySQL database:
 
-## Usage
+- `MYSQL_HOST`: The hostname of the MySQL server (default is `db`).
+- `MYSQL_DATABASE`: The name of the database (default is `flask_app`).
+- `MYSQL_USER`: The MySQL user (default is `root`).
+- `MYSQL_PASSWORD`: The MySQL user password (set to `Shahid`).
 
-1. Clone the repository.
-2. Set up the Flask environment using `setup_flask_app.sh`.
-3. Access the application in your web browser.
+These variables are defined in the `docker-compose.yml` file.
 
-## Contributing
+## Stopping and Removing Containers
 
-Contributions are welcome! Please fork the repository and create a pull request with your proposed changes.
+To stop and remove the containers, run:
+
+```bash
+docker-compose down
+```
+
+This command will stop the running containers and remove them along with the associated networks.
+
+## Database Initialization
+
+The `create_database_and_tables.sql` script is automatically executed when the MySQL container starts for the first time. Make sure this script contains the necessary SQL commands to create your database schema and any initial data required by the application.
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+```
 
+### Key Change
+- In the **Build and Start the Containers** section, the command now includes `--build` to ensure that the images are rebuilt if there are any changes to the Dockerfile or other related files.
+
+Feel free to make any additional adjustments or let me know if you need further modifications!
