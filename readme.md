@@ -43,7 +43,12 @@ The application requires the following environment variables to connect to the M
 - `MYSQL_DATABASE`: The name of the database (default is `flask_app`).
 - `MYSQL_USER`: The MySQL user (default is `root`).
 - `MYSQL_PASSWORD`: The MySQL user password (set to `Shahid`).
-
+  
+> Note: If you want to change the MySQL user password, you should also need to update the password in the following line in app/__init__.py:
+>
+> ```python
+> app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Shahid@db/flask_app'
+> 
 These variables are defined in the `docker-compose.yml` file.
 
 ## Database Initialization
