@@ -72,7 +72,7 @@ This command will create and start the services defined in the `docker-compose.y
 Once the containers are up and running, the Flask application will be accessible at:
 
 ```
-http://localhost:5000
+http://localhost:80
 ```
 
 You can access the application in your web browser.
