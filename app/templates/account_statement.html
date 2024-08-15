@@ -13,21 +13,25 @@
     <table>
         <thead>
             <tr>
+                <th>Transaction Number</th>
                 <th>Date</th>
                 <th>Description</th>
                 <th>Deposit</th>
                 <th>Withdraw</th>
                 <th>Balance</th>
+                
             </tr>
         </thead>
         <tbody>
             {% for transaction in account_statement %}
             <tr>
+                <td>{{ transaction.reference_number }}</td>
                 <td>{{ transaction.date }}</td>
                 <td>{{ transaction.description }}</td>
                 <td>{{ transaction.deposit }}</td>
                 <td>{{ transaction.withdraw }}</td>
                 <td>{{ transaction.balance }}</td>
+                
             </tr>
             {% endfor %}
         </tbody>

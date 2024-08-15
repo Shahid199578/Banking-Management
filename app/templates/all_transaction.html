@@ -13,6 +13,7 @@
 <table>
     <thead>
         <tr>
+            <th>Transaction Number</th>
             <th>Date</th>
             <th>Description</th>
             <th>Deposit</th>
@@ -20,6 +21,7 @@
         </tr>
 	{% for transaction in transaction %}
         <tr>
+            <td>{{ transaction.reference_number }}</td>
             <td>{{ transaction.date }}</td>
             <td>{{ transaction.description }}</td>
             <td>{{ transaction.deposit }}</td>

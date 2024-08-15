@@ -27,13 +27,18 @@ def login_required(f):
     return decorated_function
 
 # Apply login_required to all routes except login and logout
+#@app.before_request
+#def require_login():
+ #   if request.endpoint and request.endpoint != 'login' and request.endpoint != 'logout':
+  #      if 'logged_in' not in session:
+   #         return redirect(url_for('login', next=request.url))
+
 @app.before_request
 def require_login():
     if request.endpoint and request.endpoint != 'login' and request.endpoint != 'logout':
-        if 'logged_in' not in session:
+        # Allow access to static files without login
+        if not request.path.startswith('/static/') and 'logged_in' not in session:
             return redirect(url_for('login', next=request.url))
-
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -69,8 +74,15 @@ def logout():
 # Define routes
 
 # Specify the path to the uploads folder under the app directory
-UPLOAD_FOLDER = os.path.join(app.root_path, '../static', 'uploads')
+UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
 log_file_path = os.path.join(app.root_path, 'logs', 'app.log')
+
+# Create the uploads directory if it doesn't exist
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+if not os.path.exists(log_file_path):
+    os.makedirs(log_file_path)
+
 # Configure the upload folder in app.config
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
