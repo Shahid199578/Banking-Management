@@ -1,5 +1,3 @@
-* styles.css */
-
 /* Reset default browser styles */
 * {
     margin: 0;
@@ -24,13 +22,9 @@ body {
 }
 
 /* Style heading elements */
-h1 {
-    text-align: center; /* Center align the heading */
-    margin-bottom: 20px; /* Add space below the heading */
-}
-h2 {
-    text-align: center; /* Center align the heading */
-    margin-bottom: 20px; /* Add space below the heading */
+h1, h2 {
+    text-align: center; /* Center align the headings */
+    margin-bottom: 20px; /* Add space below the headings */
 }
 
 /* Style the table */
@@ -48,6 +42,7 @@ table th, table td {
 
 table th {
     background-color: #f2f2f2;
+    font-weight: bold; /* Make header text bold */
 }
 
 table tr:nth-child(even) {
@@ -57,6 +52,28 @@ table tr:nth-child(even) {
 table td:hover {
     background-color: #ddd;
 }
+
+/* Styles for image containers */
+.image-container {
+    width: 100px; /* Set your desired width */
+    height: 100px; /* Set your desired height */
+    overflow: hidden; /* Hide overflow */
+    display: flex; /* Center the image */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    border: 1px solid #ddd; /* Add border to image container */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background for image container */
+}
+
+/* Image styles */
+.image-container img {
+    width: 100%; /* Make the image fill the container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the box, cropping as necessary */
+}
+
+/* Button styles */
 .button {
     display: block; /* Make the links block-level elements */
     width: 100%; /* Set the width to 100% */
@@ -67,7 +84,14 @@ table td:hover {
     color: #fff; /* White text color */
     text-decoration: none; /* Remove underline */
     border-radius: 5px; /* Add some rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
 }
+
+.button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Change button styles */
 .change-button {
     background-color: #007bff;
     color: white;
@@ -75,8 +99,9 @@ table td:hover {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
 }
 
 .change-button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker blue on hover */
 }
