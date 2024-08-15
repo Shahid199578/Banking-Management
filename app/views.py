@@ -63,6 +63,7 @@ def login():
             return render_template('login.html', message='Invalid credentials')
     return render_template('login.html')
 
+
 @app.route('/logout')
 def logout():
     # Clear user's session to log them out
