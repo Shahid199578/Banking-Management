@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Account Opening</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+</head>
+<body>
+{% include 'navbar.html' %}
+
+    <div class="container">
+        <h2>Loan Account Opening Form</h2>
+        <form id="loanAccountForm" action="{{ url_for('create_loan_account') }}" method="post" enctype="multipart/form-data">
+            <div class="form-box">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="first_name">First Name:</label>
+                            <input type="text" id="first_name" name="first_name" required>
+                        </td>
+                        <td>
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" id="last_name" name="last_name" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" id="dob" name="dob" required>
+                        </td>
+                        <td>
+                            <label for="pan_number">PAN Number:</label>
+                            <input type="text" id="pan_number" name="pan_number" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label for="address">Address:</label><br>
+                            <textarea id="address" name="address" rows="4" required></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="mobile_number">Mobile Number:</label><br>
+                            <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" required><br>
+                        </td>
+                        <td>
+                            <label for="aadhaar_number">Aadhaar Number:</label><br>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="loan_amount">Loan Amount:</label>
+                            <input type="number" id="loan_amount" name="loan_amount" min="0" required>
+                        </td>
+                        <td>
+                            <label for="interest_rate">Interest Rate (%):</label>
+                            <input type="number" id="interest_rate" name="interest_rate" step="0.01" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="tenure">Tenure (months):</label>
+                            <input type="number" id="tenure" name="tenure" min="1" required>
+                        </td>
+                        <td>
+                            <label for="account_type">Account Type (months):</label>
+                            <select id="account_type" name="account_type" required>
+                                <option value="Regular">Loan</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="profile_picture">Profile Picture:</label>
+                            <input type="file" id="profile_picture" name="profile_picture" accept="image/*" required>
+                        </td>
+                        <td>
+                            <label for="signature">Signature:</label>
+                            <input type="file" id="signature" name="signature" accept="image/*" required>
+                        </td>
+                        <td></td> <!-- Placeholder for table alignment -->
+                    </tr>
+                    <tr>
+                        <td>
+                            <img id="profile_picture_preview" src="#" alt="Profile Picture Preview" style="max-width: 75px; max-height: 100px;">
+                        </td>
+                        <td>
+                            <img id="signature_preview" src="#" alt="Signature Preview" style="max-width: 75px; max-height: 100px;">
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" class="button" value="Open Loan Account" onclick="return confirmLoanAccountOpening()">
+            </div>
+        </form>
+    </div>
+<script>
+        // Function to preview image
+        function previewImage(input, imageID) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#' + imageID).attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]); // Read the data as a URL
+            }
+        }
+
+        // Trigger preview when file input changes
+        $("#profile_picture").change(function() {
+            previewImage(this, 'profile_picture_preview');
+        });
+
+        $("#signature").change(function() {
+            previewImage(this, 'signature_preview');
+        });
+
+        function confirmLoanAccountOpening() {
+            var firstName = document.getElementById("first_name").value;
+            var lastName = document.getElementById("last_name").value;
+            var dob = document.getElementById("dob").value;
+            var address = document.getElementById("address").value;
+            var mobileNumber = document.getElementById("mobile_number").value;
+            var aadhaarNumber = document.getElementById("aadhaar_number").value;
+            var panNumber = document.getElementById("pan_number").value;
+            var loanAmount = document.getElementById("loan_amount").value;
+            var interestRate = document.getElementById("interest_rate").value;
+            var tenure = document.getElementById("tenure").value;
+
+            var confirmationMessage = "Are you sure you want to open a loan account with the following details?\n\n";
+            confirmationMessage += "First Name: " + firstName + "\n";
+            confirmationMessage += "Last Name: " + lastName + "\n";
+            confirmationMessage += "Date of Birth: " + dob + "\n";
+            confirmationMessage += "Address: " + address + "\n";
+            confirmationMessage += "Mobile Number: " + mobileNumber + "\n";
+            confirmationMessage += "Aadhaar Number: " + aadhaarNumber + "\n";
+            confirmationMessage += "PAN Number: " + panNumber + "\n";
+            confirmationMessage += "Loan Amount: " + loanAmount + "\n";
+            confirmationMessage += "Interest Rate: " + interestRate + "%\n";
+            confirmationMessage += "Tenure: " + tenure + " months\n";
+
+            return confirm(confirmationMessage);
+        }
+    </script>
+</body>
+</html>

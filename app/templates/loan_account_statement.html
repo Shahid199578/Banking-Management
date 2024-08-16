@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Loan Account Statement</title>
+</head>
+<body>
+{% include 'navbar.html' %}
+<h1>Loan Account Statement for Account Number: {{ account.account_number }}</h1><br>
+<h2>Remaining Loan Amount: {{ remaining_loan_amount | round(2) if remaining_loan_amount is not none else 'N/A' }}</h2>
+
+<!-- EMI Summary -->
+<h3>EMI Summary</h3>
+<table>
+    <tr>
+        <th>Monthly EMI</th>
+        <th>Remaining Tenure (Months)</th>
+        <th>Last EMI Submitted</th>
+    </tr>
+    <tr>
+        <td>{{ emi | round(2) if emi is not none else 'N/A' }}</td>
+        <td>{{ tenure if tenure > 0 else 'N/A' }}</td>
+        <td>{{ last_emi.amount if last_emi else 'N/A' }}</td>
+    </tr>
+</table>
+
+<!-- Loan Transaction Table -->
+<h3>Loan Transaction History</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Transaction Number</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Loan Amount</th>
+            <th>Interest Rate (%)</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in loan_transactions %}
+        <tr>
+            <td>{{ transaction.reference_number }}</td>
+            <td>{{ transaction.date.strftime('%Y-%m-%d') if transaction.date else 'N/A' }}</td>
+            <td>{{ transaction.description }}</td>
+            <td>{{ transaction.loan_amount | round(2) if transaction.loan_amount else 'N/A' }}</td>
+            <td>{{ transaction.interest_rate | round(2) if transaction.interest_rate else 'N/A' }}</td>
+            <td>{{ transaction.balance | round(2) if transaction.balance else 'N/A' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

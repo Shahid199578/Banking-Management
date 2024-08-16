@@ -12,14 +12,11 @@ def generate_random_15_digit_number():
 
 # Specify the path to the uploads folder under the app directory
 UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
-log_file_path = os.path.join(app.root_path, 'logs', 'app.log')
 
 # Create the uploads directory if it doesn't exist
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-if not os.path.exists(log_file_path):
-    os.makedirs(log_file_path)
-    
+
 # Configure the upload folder in app.config
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -38,35 +35,30 @@ def open_account():
         aadhaar_number = request.form.get('aadhaar_number')
         pan_number = request.form.get('pan_number')
         account_type = request.form.get('account_type')
-        initial_balance = float(request.form.get('balance'))
+
+        # Check if the account type is 'Loan' and set initial_balance accordingly
+        if account_type == "Loan":
+            initial_balance = 0  # Set to 0 as it won't be used for loan accounts
+        else:
+            initial_balance = float(request.form.get('balance'))
 
         # Ensure both profile picture and signature are uploaded
         if not (profile_picture and signature):
-            return "Error: Profile picture and signature files are required."
-        
-        # Retrieve the full name
+            flash("Error: Profile picture and signature files are required.", 'error')
+            return redirect(url_for('open_account'))
+
+        # Retrieve the full name for file naming
         full_name = f"{first_name}_{last_name}"
 
         # Generate unique filenames for uploaded files
         profile_picture_filename = f"{full_name}_profile_picture_{secure_filename(profile_picture.filename)}"
         signature_filename = f"{full_name}_signature_{secure_filename(signature.filename)}"
 
-        # Generate unique filenames for uploaded files
-        #profile_picture_filename = secure_filename(profile_picture.filename)
-        #signature_filename = secure_filename(signature.filename)
-
-
-
         # Save the uploaded files
         profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], profile_picture_filename)
         signature_path = os.path.join(app.config['UPLOAD_FOLDER'], signature_filename)
 
-        #print file location for debugging
-        print(f"Saving profile picture to: {profile_picture_path}")
-        print(f"Saving signature to: {signature_path}")
-
-        #saving file
-
+        # Save files to the specified paths
         profile_picture.save(profile_picture_path)
         signature.save(signature_path)
 
@@ -101,25 +93,48 @@ def open_account():
             new_user.account_number = new_account.account_number
             db.session.commit()
 
-            # Create a transaction record for the initial deposit
-            initial_deposit = Transactions(
-                account_number=new_account.account_number,
-                date=datetime.now(),
-                description="Initial deposit",
-                amount=initial_balance,
-                balance=initial_balance,
-                deposit=initial_balance,
-                reference_number=generate_random_15_digit_number()
-            )
+            # Create initial deposit transaction if not a loan
+            if account_type != "Loan":
+                initial_deposit = Transactions(
+                    account_number=new_account.account_number,
+                    date=datetime.now(),
+                    description="Initial deposit",
+                    amount=initial_balance,
+                    balance=initial_balance,
+                    deposit=initial_balance,
+                    reference_number=generate_random_15_digit_number()
+                )
 
-            db.session.add(initial_deposit)
-            db.session.commit()
+                db.session.add(initial_deposit)
+                db.session.commit()
+            else:
+                # Handle loan account specifics
+                loan_amount = float(request.form.get('loan_amount'))  # Get loan amount
+                interest_rate = float(request.form.get('interest_rate'))  # Get interest rate
+                tenure = int(request.form.get('tenure'))  # Get tenure
+
+                # Create a loan record in Transactions (modify as needed)
+                loan_transaction = Transactions(
+                    account_number=new_account.account_number,
+                    date=datetime.now(),
+                    description="Loan granted",
+                    amount=loan_amount,
+                    balance=loan_amount,  # or balance update logic
+                    loan_amount=loan_amount,
+                    interest_rate=interest_rate,
+                    tenure=tenure,
+                    reference_number=generate_random_15_digit_number()
+                )
+
+                db.session.add(loan_transaction)
+                db.session.commit()
 
             flash('Account opened successfully', 'success')
             return redirect(url_for('all_accounts'))
         except Exception as e:
+            app.logger.error(f"Error occurred while opening the account: {e}")  # Log the error
             flash(f"Error occurred while opening the account: {e}", 'error')
+            db.session.rollback()  # Rollback in case of an error
 
     # If the request method is GET, render the form template
     return render_template('open_account.html')
-

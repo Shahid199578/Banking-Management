@@ -13,22 +13,34 @@
 <table>
     <thead>
         <tr>
+            <th>Account Number</th>
             <th>Transaction Number</th>
             <th>Date</th>
             <th>Description</th>
             <th>Deposit</th>
-            <th>Withdraw</th>
         </tr>
-	{% for transaction in transaction %}
+    </thead>
+    <tbody>
+        {% for transaction in transaction %}
         <tr>
+            <td>{{ transaction.account_number }}</td>
             <td>{{ transaction.reference_number }}</td>
             <td>{{ transaction.date }}</td>
             <td>{{ transaction.description }}</td>
-            <td>{{ transaction.deposit }}</td>
-            <td>{{ transaction.withdraw }}</td>
+            <td>
+                {% if transaction.description == 'Initial Deposit' %}
+                    Initial Deposit: {{ transaction.amount }}
+                {% elif transaction.deposit %}
+                    +{{ transaction.deposit }}
+                {% elif transaction.withdraw %}
+                    -{{ transaction.withdraw }}
+                {% elif transaction.loan_amount %}
+                    Loan: {{ transaction.loan_amount }}
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
+    </tbody>
 </table>
 </body>
 </html>
-

@@ -35,6 +35,10 @@ class Transactions(db.Model):
     withdraw = db.Column(db.Numeric(10, 2), default=0)  # Add withdrawal column with default value 0
     deposit = db.Column(db.Numeric(10, 2), default=0)  # Add deposit column with default value 0
     reference_number = db.Column(db.String(20))
+    loan_amount = db.Column(db.Float, nullable=True)  # Add this line
+    loan_type = db.Column(db.String(50), nullable=True)  # Add loan type column
+    interest_rate = db.Column(db.Numeric(10, 2), nullable=True)  # Add interest rate column
+    tenure = db.Column(db.Numeric(10, 2), nullable=True)  # Add tenure column
 
 
 class AdminUser(db.Model, UserMixin):
@@ -45,4 +49,3 @@ class AdminUser(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
     def __repr__(self):
         return f"User('{self.username}')"
-

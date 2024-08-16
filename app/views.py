@@ -7,9 +7,12 @@ import random
 from sqlalchemy import update
 from .deposit import deposit
 from .withdraw import withdraw
+from .emi_payment import emi_payment
+from .loan_account_statement import loan_account_statement
 from . import search
 from . import statement
 from .open_account import open_account
+#from .create_loan_account import create_loan_account
 from functools import wraps
 import hashlib
 
@@ -81,8 +84,6 @@ log_file_path = os.path.join(app.root_path, 'logs', 'app.log')
 # Create the uploads directory if it doesn't exist
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-if not os.path.exists(log_file_path):
-    os.makedirs(log_file_path)
 
 # Configure the upload folder in app.config
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -113,6 +114,7 @@ def all_transaction():
 
 app.route('/open_account', methods=['GET', 'POST'])(open_account)
 
+
 @app.route('/all_users')
 @login_required
 def all_users():
@@ -124,18 +126,26 @@ def all_users():
 @app.route('/view_user_details/<account_number>', methods=['GET', 'POST'])
 @login_required
 def view_user_details(account_number):
-
     user = Users.query.filter_by(account_number=account_number).first()
     if not user:
         return "User not found"
+    
     account = Account.query.filter_by(account_number=user.account_number).first()
     if not account:
         return "Account not found"
-    if request.method == 'POST':
-        # Update user details
-        return redirect(url_for('view_user_details', account_number=account_number))
     
+    if request.method == 'POST':
+        # Update user details logic can be implemented here (if needed)
+        return redirect(url_for('view_user_details', account_number=account_number))
+
+    # Render the standard user details page if the account is not a loan
     return render_template('view_user_details.html', user=user, account=account)
+
+
+
+
+app.route('/loan_account_statement/<int:account_number>', methods=['GET' , 'POST'])(loan_account_statement)
+
 
 @app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
 @login_required
@@ -183,5 +193,6 @@ def edit_user(user_id):
     return render_template('edit_user.html', user=user)
 app.route('/deposit/<int:account_number>', methods=['GET', 'POST'])(deposit)
 app.route('/withdraw/<int:account_number>', methods=['GET', 'POST'])(withdraw)
+app.route('/emi_payment/<int:account_number>', methods=['GET', 'POST'])(emi_payment)
 app.register_blueprint(search.search_bp)
 app.register_blueprint(statement.statement_bp)

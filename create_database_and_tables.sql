@@ -8,9 +8,14 @@ CREATE TABLE account_statement (
     withdraw DECIMAL(10,2) DEFAULT 0.00,
     deposit DECIMAL(10,2) DEFAULT 0.00,
     reference_number VARCHAR(20),
+    loan_amount FLOAT DEFAULT NULL,           -- Add loan amount
+    loan_type VARCHAR(50) DEFAULT NULL,      -- Add loan type
+    interest_rate DECIMAL(10,2) DEFAULT NULL, -- Add interest rate
+    tenure INT DEFAULT NULL,                  -- Add tenure
     PRIMARY KEY (account_number, date),
     INDEX (account_number)
 );
+
 
 CREATE TABLE account (
     account_number INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -38,6 +43,18 @@ CREATE TABLE `AdminUser` (
   is_admin tinyint(1) DEFAULT '0'
 );
 
+
+-- Create the loans table
+CREATE TABLE loans (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(10) UNSIGNED ZEROFILL NOT NULL,
+    loan_amount DECIMAL(10, 2) NOT NULL,
+    interest_rate FLOAT NOT NULL,
+    tenure INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(account_number)
+);
+
 -- Sample entry for the AdminUser table
 INSERT INTO AdminUser (username, password, is_admin) VALUES ('user1', SHA1('password'), 0);
 
@@ -60,3 +77,9 @@ INSERT INTO account_statement (account_number, description, amount, balance, wit
 (1821014501, 'Initial Deposit', 5000.00, 5000.00, 0, 0, 'REF123456'),
 (1821014502, 'Initial Deposit', 10000.00, 10000.00, 0, 0, 'REF345678'),
 (1821014503, 'Initial Deposit', 7500.00, 7500.00, 0, 0, 'REF901234');
+
+-- Sample entry for the loans table
+INSERT INTO loans (user_id, loan_amount, interest_rate, tenure) VALUES
+(1821014501, 1500.00, 5.5, 12),
+(1821014502, 2500.00, 6.0, 24),
+(1821014503, 3000.00, 4.5, 36);
