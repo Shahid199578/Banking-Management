@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, flash
 from .models import Users, Account, Transactions
 from . import db
 import random
+from datetime import timedelta
 
 def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
@@ -37,7 +38,17 @@ def loan_account_statement(account_number):
     loan_transactions = Transactions.query.filter_by(account_number=account_number).all()
 
     # Calculate remaining loan amount
-    remaining_loan_amount = sum(float(t.loan_amount) for t in loan_transactions if t.loan_amount)  # Adjust logic as needed
-    last_emi = loan_transactions[-1] if loan_transactions else None  # Get the last transaction if exists
+    total_paid = sum(float(t.deposit) for t in loan_transactions if t.description == "EMI Payment")
+    remaining_loan_amount = loan_amount - total_paid
 
-    return render_template('loan_account_statement.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi, emi=emi, tenure=tenure)
+    # Fetch the last EMI payment
+    last_emi = Transactions.query.filter_by(account_number=account_number, description="EMI Payment").order_by(Transactions.date.desc()).first()
+
+    # Calculate pending EMIs
+    paid_emi_count = Transactions.query.filter_by(account_number=account_number, description="EMI Payment").count()
+    pending_emi_count = tenure - paid_emi_count
+   
+
+    
+
+    return render_template('loan_account_statement.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi, emi=emi, tenure=tenure, pending_emi_count=pending_emi_count, paid_emi_count=paid_emi_count, timedelta=timedelta)

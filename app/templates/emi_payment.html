@@ -12,10 +12,10 @@
     <div class="container">
         <h2>EMI Payment for {{ user.first_name }} {{ user.last_name }}</h2>
         <p>Account Number: {{ user.account_number }}</p>
-        <p>Current Balance: {{ account.balance }}</p>
+        <p>Remaining Loan Amount: {{ remaining_loan_amount }}</p>
         <form method="POST" action="{{ url_for('emi_payment', account_number=user.account_number) }}">
             <label for="emi_amount">EMI Amount:</label>
-            <input type="number" id="emi_amount" name="emi_amount" required>
+            <input type="number" id="emi_amount" name="emi_amount" value="{{ emi }}" readonly required>
             <input type="submit" value="Pay EMI" class="button">
         </form>
     </div>

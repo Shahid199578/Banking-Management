@@ -32,3 +32,4 @@ services:
 
 volumes:
   db_data:
+  web_data:

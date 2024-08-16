@@ -9,25 +9,27 @@
 <body>
 {% include 'navbar.html' %}
 <h1>Loan Account Statement for Account Number: {{ account.account_number }}</h1><br>
-<h2>Remaining Loan Amount: {{ remaining_loan_amount | round(2) if remaining_loan_amount is not none else 'N/A' }}</h2>
+<h2>Remaining Loan Amount: {{ remaining_loan_amount }}</h2>
 
 <!-- EMI Summary -->
 <h3>EMI Summary</h3>
 <table>
     <tr>
         <th>Monthly EMI</th>
-        <th>Remaining Tenure (Months)</th>
+        <th>Tenure (Months)</th>
         <th>Last EMI Submitted</th>
+        <th>Pending EMI Count</th>
     </tr>
     <tr>
         <td>{{ emi | round(2) if emi is not none else 'N/A' }}</td>
         <td>{{ tenure if tenure > 0 else 'N/A' }}</td>
-        <td>{{ last_emi.amount if last_emi else 'N/A' }}</td>
+        <td>{{ last_emi.date.strftime('%Y-%m-%d') if last_emi else 'N/A' }}</td>
+        <td>{{ pending_emi_count }} out of {{ tenure }}</td>
     </tr>
 </table>
 
 <!-- Loan Transaction Table -->
-<h3>Loan Transaction History</h3>
+<h3>Loan Transactions</h3>
 <table>
     <thead>
         <tr>
@@ -35,7 +37,7 @@
             <th>Date</th>
             <th>Description</th>
             <th>Loan Amount</th>
-            <th>Interest Rate (%)</th>
+            <th>Interest Rate</th>
             <th>Balance</th>
         </tr>
     </thead>
@@ -43,14 +45,44 @@
         {% for transaction in loan_transactions %}
         <tr>
             <td>{{ transaction.reference_number }}</td>
-            <td>{{ transaction.date.strftime('%Y-%m-%d') if transaction.date else 'N/A' }}</td>
+            <td>{{ transaction.date }}</td>
             <td>{{ transaction.description }}</td>
-            <td>{{ transaction.loan_amount | round(2) if transaction.loan_amount else 'N/A' }}</td>
-            <td>{{ transaction.interest_rate | round(2) if transaction.interest_rate else 'N/A' }}</td>
-            <td>{{ transaction.balance | round(2) if transaction.balance else 'N/A' }}</td>
+            <td>{{ transaction.loan_amount }}</td>
+            <td>{{ transaction.interest_rate }}</td>
+            <td>{{ transaction.balance }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<!-- EMI Schedule -->
+<h3>EMI Schedule</h3>
+<table>
+    <thead>
+        <tr>
+            <th>EMI Number</th>
+            <th>Due Date</th>
+            <th>EMI Amount</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in range(1, tenure + 1) %}
+        <tr>
+            <td>{{ i }}</td>
+            <td>{{ (loan_transactions[0].date + timedelta(days=(i-1) * 30)).strftime('%Y-%m-%d') }}</td>
+            <td>{{ emi | round(2) }}</td>
+            <td>
+                {% if i <= paid_emi_count %}
+                Paid
+                {% else %}
+                Pending
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 </body>
 </html>
