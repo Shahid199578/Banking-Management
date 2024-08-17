@@ -29,12 +29,17 @@
                 <td>{{ user.mobile_number }}</td>
                 <td>{{ user.aadhaar_number }}</td>
                 <td>{{ user.pan_number }}</td>
-		<td>
+		        <td>
+                    {% if account.account_type == 'Loan' %}
+                    <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a>
+                    <a href="{{ url_for('loan_account_statement', account_number=account.account_number) }}" class="button">View Loan Statement</a>
+                    {% else %}
                     <a href="{{ url_for('deposit', account_number=account.account_number) }}" class="button">Deposit</a>
                     <a href="{{ url_for('withdraw', account_number=account.account_number) }}" class="button">Withdraw</a>
-		    <a href="{{ url_for('statement.account_statement', account_number=user.account_number) }}" class="button">View Statement</a>
-
+		            <a href="{{ url_for('statement.account_statement', account_number=user.account_number) }}" class="button">View Statement</a>
+                    {% endif %}
                 </td>
+                
 
                 <!-- Add more table cells for additional user details -->
             </tr>

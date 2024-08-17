@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/emi.css') }}">
     <title>Loan Account Statement</title>
 </head>
 <body>
@@ -11,6 +13,7 @@
 <h1>Loan Account Statement for Account Number: {{ account.account_number }}</h1><br>
 <h2>Remaining Loan Amount: {{ remaining_loan_amount }}</h2>
 
+<div class="container">
 <!-- EMI Summary -->
 <h3>EMI Summary</h3>
 <table>
@@ -19,12 +22,18 @@
         <th>Tenure (Months)</th>
         <th>Last EMI Submitted</th>
         <th>Pending EMI Count</th>
+        <th><div class="button-group">
+            <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a></div>
+        </th>
+
     </tr>
     <tr>
         <td>{{ emi | round(2) if emi is not none else 'N/A' }}</td>
         <td>{{ tenure if tenure > 0 else 'N/A' }}</td>
         <td>{{ last_emi.date.strftime('%Y-%m-%d') if last_emi else 'N/A' }}</td>
         <td>{{ pending_emi_count }} out of {{ tenure }}</td>
+        <td><a href="{{ url_for('emi_schedule', account_number=account.account_number) }}" class="button">View EMI Schedule</a>
+        </div></td>
     </tr>
 </table>
 
@@ -54,35 +63,6 @@
         {% endfor %}
     </tbody>
 </table>
-
-<!-- EMI Schedule -->
-<h3>EMI Schedule</h3>
-<table>
-    <thead>
-        <tr>
-            <th>EMI Number</th>
-            <th>Due Date</th>
-            <th>EMI Amount</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for i in range(1, tenure + 1) %}
-        <tr>
-            <td>{{ i }}</td>
-            <td>{{ (loan_transactions[0].date + timedelta(days=(i-1) * 30)).strftime('%Y-%m-%d') }}</td>
-            <td>{{ emi | round(2) }}</td>
-            <td>
-                {% if i <= paid_emi_count %}
-                Paid
-                {% else %}
-                Pending
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+</div>
 </body>
 </html>

@@ -9,6 +9,7 @@ from .deposit import deposit
 from .withdraw import withdraw
 from .emi_payment import emi_payment
 from .loan_account_statement import loan_account_statement
+from .emi_schedule import emi_schedule
 from . import search
 from . import statement
 from .open_account import open_account
@@ -145,6 +146,7 @@ def view_user_details(account_number):
 
 
 app.route('/loan_account_statement/<int:account_number>', methods=['GET' , 'POST'])(loan_account_statement)
+app.route('/emi_schedule/<int:account_number>', methods=['GET' , 'POST'])(emi_schedule)
 
 
 @app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
