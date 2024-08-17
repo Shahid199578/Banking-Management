@@ -1,7 +1,23 @@
 version: '3.8'
 
 services:
+  db:
+    image: mysql:5.7
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./create_database_and_tables.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Shahid
+      - MYSQL_DATABASE=flask_app
+    expose:
+      - 3306
+      - 33060
+
   web:
+    depends_on:
+      - db
     build: .
     volumes:
       - .:/app
@@ -9,16 +25,10 @@ services:
     ports:
       - "80:5000"
     environment:
-      - USE_RDS=true
-      - RDS_HOST=flask-app.c6benyjuoknd.us-east-1.rds.amazonaws.com
-      - RDS_DATABASE=flask_app
-      - RDS_USER=root
-      - RDS_PASSWORD=Shahid#123
-# simple service to test RDS connection
-  test-rds:
-    image: mysql:5.7
-    environment:
-      - MYSQL_HOST=flask-app.c6benyjuoknd.us-east-1.rds.amazonaws.com
+      - MYSQL_HOST=db
       - MYSQL_DATABASE=flask_app
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=Shahid#123
+      - MYSQL_PASSWORD=Shahid
+
+volumes:
+  db_data:

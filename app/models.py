@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from datetime import datetime
 
 class Account(db.Model):
-    account_number = db.Column(db.Integer, primary_key=True)
+    account_number = db.Column(db.BigInteger, primary_key=True, autoincrement=True)  # Changed to BigInteger
     name = db.Column(db.String(100), nullable=False)
     account_type = db.Column(db.String(50), nullable=False)
     balance = db.Column(db.Float, nullable=False)
@@ -11,7 +11,7 @@ class Account(db.Model):
 class Users(db.Model):
     __tablename__ = 'users'
 
-    account_number = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    account_number = db.Column(db.BigInteger, primary_key=True, autoincrement=True)  # Changed to BigInteger
     first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(100))
     dob = db.Column(db.String(10))
@@ -27,7 +27,7 @@ class Users(db.Model):
 class Transactions(db.Model):
     __tablename__ = 'account_statement'
     
-    account_number = db.Column(db.Integer, db.ForeignKey('account.account_number'), primary_key=True)
+    account_number = db.Column(db.BigInteger, db.ForeignKey('account.account_number'), primary_key=True)  # Changed to BigInteger
     date = db.Column(db.Date, nullable=False, primary_key=True, default=datetime.now)
     description = db.Column(db.Text, nullable=False)
     amount = db.Column(db.Numeric(10, 2), nullable=True)

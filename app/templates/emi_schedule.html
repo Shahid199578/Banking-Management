@@ -11,6 +11,9 @@
 {% include 'navbar.html' %}
 <h1>Loan Account Statement for Account Number: {{ account.account_number }}</h1><br>
 <h2>Remaining Loan Amount: {{ remaining_loan_amount }}</h2>
+<th><div class="button-group">
+    <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a></div>
+</th>
 <!-- EMI Schedule -->
 <h3>EMI Schedule</h3>
 <table>
@@ -27,7 +30,7 @@
         <tr>
             <td>{{ i }}</td>
             <td>{{ (loan_transactions[0].date + timedelta(days=(i-1) * 30)).strftime('%Y-%m-%d') }}</td>
-            <td>{{ emi | round(2) }}</td>
+            <td>{{ emi | int }}</td>
             <td>
                 {% if i <= paid_emi_count %}
                 Paid

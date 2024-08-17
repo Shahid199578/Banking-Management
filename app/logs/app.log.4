@@ -1,130 +1,68 @@
-2024-08-15 14:30:29,904 - ERROR - Exception on /loan_account_statement/1821014505 [GET]
+2024-08-17 11:40:51,254 - ERROR - Exception on /emi_payment/1821014504 [GET]
 Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/views.py", line 27, in decorated_function
-    return f(*args, **kwargs)
-  File "/app/app/views.py", line 158, in loan_account_statement
-    account_statement.loan_amount,
-NameError: name 'account_statement' is not defined
-2024-08-15 14:50:37,665 - ERROR - Exception on /loan_account_statement/1821014505 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/views.py", line 27, in decorated_function
-    return f(*args, **kwargs)
-  File "/app/app/views.py", line 173, in loan_account_statement
-    emi = (loan_amount * monthly_interest_rate * (1 + monthly_interest_rate) ** tenure) / ((1 + monthly_interest_rate) ** tenure - 1)
-TypeError: unsupported operand type(s) for *: 'float' and 'decimal.Decimal'
-2024-08-15 14:55:19,684 - ERROR - Exception on /loan_account_statement/1821014505 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/mysql/connector/connection_cext.py", line 705, in cmd_query
-    self._cmysql.query(
-_mysql_connector.MySQLInterfaceError: FUNCTION flask_app.is_not does not exist
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1815, in _execute_context
+    context = constructor(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1418, in _init_compiled
+    self.cursor = self.create_cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1752, in create_cursor
+    return self.create_default_cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1758, in create_default_cursor
+    return self._dbapi_connection.cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1485, in cursor
+    return self.dbapi_connection.cursor(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 772, in cursor
+    raise OperationalError("MySQL Connection not available.")
+mysql.connector.errors.OperationalError: MySQL Connection not available.
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
-    cursor.execute(statement, parameters)
-  File "/usr/local/lib/python3.9/site-packages/mysql/connector/cursor_cext.py", line 357, in execute
-    result = self._connection.cmd_query(
-  File "/usr/local/lib/python3.9/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
-    return method(cnx, *args, **kwargs)
-  File "/usr/local/lib/python3.9/site-packages/mysql/connector/connection_cext.py", line 713, in cmd_query
-    raise get_mysql_exception(
-mysql.connector.errors.ProgrammingError: 1305 (42000): FUNCTION flask_app.is_not does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
     rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/views.py", line 27, in decorated_function
-    return f(*args, **kwargs)
-  File "/app/app/views.py", line 157, in loan_account_statement
-    loan_transaction = Transactions.query.filter_by(account_number=account_number, loan_amount=db.func.is_not(None)).order_by(Transactions.date.desc()).first()
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2728, in first
+  File "/app/app/emi_payment.py", line 11, in emi_payment
+    user = Users.query.filter_by(account_number=account_number).first()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2728, in first
     return self.limit(1)._iter().first()  # type: ignore
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2362, in execute
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2362, in execute
     return self._execute_internal(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2247, in _execute_internal
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2247, in _execute_internal
     result: Result[Any] = compile_state_cls.orm_execute_statement(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
     result = conn.execute(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
     return meth(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
     return connection._execute_clauseelement(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
     ret = self._execute_context(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1821, in _execute_context
     self._handle_dbapi_exception(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "/usr/local/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
-    cursor.execute(statement, parameters)
-  File "/usr/local/lib/python3.9/site-packages/mysql/connector/cursor_cext.py", line 357, in execute
-    result = self._connection.cmd_query(
-  File "/usr/local/lib/python3.9/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
-    return method(cnx, *args, **kwargs)
-  File "/usr/local/lib/python3.9/site-packages/mysql/connector/connection_cext.py", line 713, in cmd_query
-    raise get_mysql_exception(
-sqlalchemy.exc.ProgrammingError: (mysql.connector.errors.ProgrammingError) 1305 (42000): FUNCTION flask_app.is_not does not exist
-[SQL: SELECT account_statement.account_number AS account_statement_account_number, account_statement.date AS account_statement_date, account_statement.description AS account_statement_description, account_statement.amount AS account_statement_amount, account_statement.balance AS account_statement_balance, account_statement.withdraw AS account_statement_withdraw, account_statement.deposit AS account_statement_deposit, account_statement.reference_number AS account_statement_reference_number, account_statement.loan_amount AS account_statement_loan_amount, account_statement.loan_type AS account_statement_loan_type, account_statement.interest_rate AS account_statement_interest_rate, account_statement.tenure AS account_statement_tenure 
-FROM account_statement 
-WHERE account_statement.account_number = %(account_number_1)s AND account_statement.loan_amount = is_not(NULL) ORDER BY account_statement.date DESC 
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1815, in _execute_context
+    context = constructor(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1418, in _init_compiled
+    self.cursor = self.create_cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1752, in create_cursor
+    return self.create_default_cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1758, in create_default_cursor
+    return self._dbapi_connection.cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1485, in cursor
+    return self.dbapi_connection.cursor(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 772, in cursor
+    raise OperationalError("MySQL Connection not available.")
+sqlalchemy.exc.OperationalError: (mysql.connector.errors.OperationalError) MySQL Connection not available.
+[SQL: SELECT users.account_number AS users_account_number, users.first_name AS users_first_name, users.last_name AS users_last_name, users.dob AS users_dob, users.address AS users_address, users.profile_picture AS users_profile_picture, users.signature AS users_signature, users.mobile_number AS users_mobile_number, users.aadhaar_number AS users_aadhaar_number, users.pan_number AS users_pan_number 
+FROM users 
+WHERE users.account_number = %(account_number_1)s 
  LIMIT %(param_1)s]
-[parameters: {'account_number_1': '1821014505', 'param_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-2024-08-15 14:59:41,922 - ERROR - Exception on /loan_account_statement/1821014505 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/views.py", line 27, in decorated_function
-    return f(*args, **kwargs)
-  File "/app/app/views.py", line 183, in loan_account_statement
-    return render_template('loan_account_statement.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi, emi=emi)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/loan_account_statement.html", line 24, in top-level template code
-    <td>{{ account.tenure * 12 }}</td>
-jinja2.exceptions.UndefinedError: 'app.models.Account object' has no attribute 'tenure'
+[parameters: [{}]]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
