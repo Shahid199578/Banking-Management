@@ -1,4 +1,4 @@
-2024-08-16 04:58:17,496 - ERROR - Exception on /loan_account_statement/1821014504 [GET]
+2024-09-01 11:42:29,834 - ERROR - Exception on /loan_account_statement/gAAAAABm1FMjD2rTMxMVvxmIpktBxqVNIW5HZ5c_-l2_8AmRO_i7FBuhnG8RpLGodZD0LTVHEZLMoo1NVQnTD6G6ntqHLXetOw== [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -8,20 +8,10 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/loan_account_statement.py", line 53, in loan_account_statement
-    return render_template('loan_account_statement.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi, emi=emi, tenure=tenure, pending_emi_count=pending_emi_count, timedelta=timedelta)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/loan_account_statement.html", line 76, in top-level template code
-    #    {% if i <= emi_payment_count %}
-jinja2.exceptions.UndefinedError: 'emi_payment_count' is undefined
-2024-08-16 05:05:08,567 - ERROR - Exception on /loan_account_statement/1821014504 [GET]
+  File "/app/app/loan_account_statement.py", line 44, in loan_account_statement
+    remaining_loan_amount_entry = AccountStatement.query.filter_by(account_number=account_number).order_by(AccountStatement.date.desc()).first()
+NameError: name 'AccountStatement' is not defined
+2024-09-01 11:58:36,526 - ERROR - Exception on /emi_schedule/gAAAAABm1FbqCZEsL7xFZ1ZgyVq8SpGsqJ2dkvG2GFnBKDlweSzihT3NT9HlpXRXbLk9JeQKsK7Drui9pWXfryfpTNHcojwe0g== [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -31,16 +21,71 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/loan_account_statement.py", line 53, in loan_account_statement
-    return render_template('loan_account_statement.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi, emi=emi, tenure=tenure, pending_emi_count=pending_emi_count, timedelta=timedelta)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/loan_account_statement.html", line 27, in top-level template code
-    <td>{{ tenure - paid_emi_count }} out of {{ tenure }}</td>
-jinja2.exceptions.UndefinedError: 'paid_emi_count' is undefined
+  File "/app/app/emi_schedule.py", line 49, in emi_schedule
+    remaining_loan_amount = loan_amount1 - total_paid
+TypeError: unsupported operand type(s) for -: 'float' and 'decimal.Decimal'
+2024-09-01 12:01:53,840 - ERROR - Exception on /emi_schedule/gAAAAABm1FevhiG6rEDDC4hQRT9-sFc8_XFLeTN1AyXZF0Iu4ZehyP8CMqfMTuKP03PiPoq84b0OyFpbd2qwb3EsXEOgyamWCQ== [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/emi_schedule.py", line 27, in emi_schedule
+    interest_rate = Decimal(loan_transaction.interest_rate) / 100
+NameError: name 'Decimal' is not defined
+2024-09-01 13:30:18,192 - ERROR - Exception on /loan_account_statement/gAAAAABm1GxnXi8a-ernQfonk4JfZVCOKt12loBsHdBmhL7DuOvRpi7wiPVt27uM_W3BKt_kTWcQwN6H-Mq-cRKGU5tbynyTVg== [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/loan_account_statement.py", line 61, in loan_account_statement
+    interest_payment = float(transaction.amount) * monthly_interest_rate
+TypeError: float() argument must be a string or a number, not 'NoneType'
+2024-09-01 13:30:22,244 - ERROR - Exception on /loan_account_statement/gAAAAABm1GxnBOuII3WUgMFoKUyYSjPnExVb0y3549YwXGb0mVT0ifdLU_jNR2NJe-D9u5MgznH6K2poQpnDLd9hgHtrlZu4aQ== [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/loan_account_statement.py", line 61, in loan_account_statement
+    interest_payment = float(transaction.amount) * monthly_interest_rate
+TypeError: float() argument must be a string or a number, not 'NoneType'
+2024-09-01 13:33:55,986 - ERROR - Exception on /loan_account_statement/gAAAAABm1G1CDvQKEL872MiYoa7v55lVsWrbh-n4sMj1sYgaIA-sjcQ2Nzj5x3UdTbU_EcvbzhDtME09GEFCZmvNmQvJjkBSCg== [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/loan_account_statement.py", line 61, in loan_account_statement
+    interest_payment = float(transaction.amount) * monthly_interest_rate
+TypeError: float() argument must be a string or a number, not 'NoneType'
+2024-09-01 13:39:16,568 - ERROR - Exception on /loan_account_statement/gAAAAABm1G6C8hwOKQ-MvJGgdedilGlevzMzz-c_RSZgt8ugTmLJKusSQIJCbMJDgPyFOfulE3I7q6DQGz8NKpJIbRLJg88L6g== [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/loan_account_statement.py", line 62, in loan_account_statement
+    last_emi_amount = emi if pending_emi_count > 1 else remaining_loan_amount + total_paid - (emi * (tenure - 1))
+NameError: name 'transaction' is not defined

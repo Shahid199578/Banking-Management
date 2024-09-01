@@ -1,4 +1,4 @@
-2024-08-31 09:49:52,645 - ERROR - Exception on /loan_account_statement/1821014504 [GET]
+2024-08-28 05:07:04,536 - ERROR - Exception on /view_user_details/gAAAAABmzrA0T_MR286cdl9QKUMEElzOYFhllY74Se-RLL2ZHa5fuNXHPL672-a7yctcUQmeZkhwvfOrAEGmkowScSBLqpAVNQ== [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -8,21 +8,10 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/loan_account_statement.py", line 10, in loan_account_statement
-    account_number = decrypt_account_number(encrypted_account_number)
-NameError: name 'decrypt_account_number' is not defined
-2024-08-31 09:56:07,659 - ERROR - Exception on /loan_account_statement/gAAAAABm0ui1mQGb4dqLaVc8YAVqLu0oLSTRD_PB01Hpvo21CsZdjhayJvYE1hbMAz2mF6nREFbkqJTmppdBHw8cPwDMGYoLQA== [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/loan_account_statement.py", line 58, in loan_account_statement
-    return render_template(
+  File "/app/app/views.py", line 42, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 156, in view_user_details
+    return render_template('view_user_details.html', user=user, account=account)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
     return _render(app, template, context)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
@@ -31,16 +20,12 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/loan_account_statement.html", line 26, in top-level template code
-    <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a></div>
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
-    return self.handle_url_build_error(error, endpoint, values)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
-    rv = url_adapter.build(  # type: ignore[union-attr]
-  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'emi_payment' with values ['account_number']. Did you forget to specify values ['encrypted_account_number']?
-2024-08-31 09:57:58,009 - ERROR - Exception on /emi_schedule/gAAAAABm0ukipArekrd3g0uaU6dqV9DE0CIPtiJwSWQWobUnau8VlDDaqvlXamYjwsblbEomRfP206kywVdHP3hE964QY9cA5A== [GET]
+  File "/app/app/templates/view_user_details.html", line 98, in top-level template code
+    <a href="{{ url_for('withdraw', account_number=user.account_number) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a>
+  File "/usr/local/lib/python3.8/site-packages/jinja2/utils.py", line 83, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+jinja2.exceptions.UndefinedError: 'encrypt' is undefined
+2024-08-28 05:07:05,620 - ERROR - Exception on /view_user_details/gAAAAABmzrA0T_MR286cdl9QKUMEElzOYFhllY74Se-RLL2ZHa5fuNXHPL672-a7yctcUQmeZkhwvfOrAEGmkowScSBLqpAVNQ== [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -50,8 +35,10 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/emi_schedule.py", line 54, in emi_schedule
-    return render_template('emi_schedule.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi, emi=emi, tenure=tenure, pending_emi_count=pending_emi_count, paid_emi_count=paid_emi_count, timedelta=timedelta, encrypt=encrypt)
+  File "/app/app/views.py", line 42, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 156, in view_user_details
+    return render_template('view_user_details.html', user=user, account=account)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
     return _render(app, template, context)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
@@ -60,16 +47,12 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/emi_schedule.html", line 15, in top-level template code
-    <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a></div>
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
-    return self.handle_url_build_error(error, endpoint, values)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
-    rv = url_adapter.build(  # type: ignore[union-attr]
-  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'emi_payment' with values ['account_number']. Did you forget to specify values ['encrypted_account_number']?
-2024-08-31 09:58:36,815 - ERROR - Exception on /emi_payment/gAAAAABm0ukifBHHlvD6PW9nuE_rsSD6hJxdwAlxOYqqwXnALfaVU84Dksxr-ocXHdtRIaDtMxQ89yy0vdMTS0oZW6bhjeVlRw== [GET]
+  File "/app/app/templates/view_user_details.html", line 98, in top-level template code
+    <a href="{{ url_for('withdraw', account_number=user.account_number) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a>
+  File "/usr/local/lib/python3.8/site-packages/jinja2/utils.py", line 83, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+jinja2.exceptions.UndefinedError: 'encrypt' is undefined
+2024-08-28 05:07:06,402 - ERROR - Exception on /view_user_details/gAAAAABmzrA0T_MR286cdl9QKUMEElzOYFhllY74Se-RLL2ZHa5fuNXHPL672-a7yctcUQmeZkhwvfOrAEGmkowScSBLqpAVNQ== [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -79,19 +62,10 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-TypeError: emi_payment() got an unexpected keyword argument 'encrypted_account_number'
-2024-08-31 10:00:50,948 - ERROR - Exception on /emi_schedule/gAAAAABm0ukipArekrd3g0uaU6dqV9DE0CIPtiJwSWQWobUnau8VlDDaqvlXamYjwsblbEomRfP206kywVdHP3hE964QY9cA5A== [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/emi_schedule.py", line 54, in emi_schedule
-    return render_template('emi_schedule.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi, emi=emi, tenure=tenure, pending_emi_count=pending_emi_count, paid_emi_count=paid_emi_count, timedelta=timedelta, encrypt=encrypt)
+  File "/app/app/views.py", line 42, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 156, in view_user_details
+    return render_template('view_user_details.html', user=user, account=account)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
     return _render(app, template, context)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
@@ -100,12 +74,39 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/emi_schedule.html", line 15, in top-level template code
-    <a href="{{ url_for('emi_payment', encrypted_account_number=encrypt(account.account_number)) }}" class="button">Pay EMI</a></div>
+  File "/app/app/templates/view_user_details.html", line 98, in top-level template code
+    <a href="{{ url_for('withdraw', account_number=user.account_number) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a>
+  File "/usr/local/lib/python3.8/site-packages/jinja2/utils.py", line 83, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+jinja2.exceptions.UndefinedError: 'encrypt' is undefined
+2024-08-28 05:07:31,617 - ERROR - Exception on /view_user_details/gAAAAABmzrCSc8Frqn_Ysrxn4pzon_4YUINQp4Z1Q7YJ8mp8dgVZGdeyDE7PPEurs3oAMDWP33scXorVeMP9viDU56Nm2U4HxQ== [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/views.py", line 42, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 156, in view_user_details
+    return render_template('view_user_details.html', user=user, account=account)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/view_user_details.html", line 98, in top-level template code
+    <a href="{{ url_for('withdraw', account_number=user.account_number) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a>
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
     return self.handle_url_build_error(error, endpoint, values)
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
     rv = url_adapter.build(  # type: ignore[union-attr]
   File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'emi_payment' with values ['account_number']. Did you forget to specify values ['encrypted_account_number']?
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'withdraw' with values ['account_number']. Did you forget to specify values ['encrypted_account_number']?

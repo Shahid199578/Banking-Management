@@ -88,17 +88,17 @@
                 </td>
                 <td>
                     {% if account.account_type == 'Loan' %}
-                    <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a>
+                    <a href="{{ url_for('emi_payment', encrypted_account_number=encrypt(user.account_number)) }}" class="button">Pay EMI</a>
                 </td>
                 <td>
-                    <a href="{{ url_for('loan_account_statement', account_number=account.account_number) }}" class="button">View Loan Statement</a>
+                    <a href="{{ url_for('loan_account_statement', encrypted_account_number=encrypt(user.account_number)) }}" class="button">View Loan Statement</a>
                 </td>
                 <td>
                 {% else %}
-                    <a href="{{ url_for('withdraw', account_number=user.account_number) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a>
+                    <a href="{{ url_for('withdraw', encrypted_account_number=encrypt(user.account_number)) }}" class="button"><i class="fas fa-money-bill-wave"></i> Withdraw</a>
                 </td>
                 <td>
-                    <a href="{{ url_for('deposit', account_number=user.account_number) }}" class="button"><i class="fas fa-money-check-alt"></i> Deposit</a>
+                    <a href="{{ url_for('deposit', encrypted_account_number=encrypt(user.account_number)) }}" class="button"><i class="fas fa-money-check-alt"></i> Deposit</a>
                 {% endif %}
                 </td>
             </tr>

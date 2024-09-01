@@ -28,8 +28,8 @@ services:
       - MYSQL_HOST=db
       - MYSQL_DATABASE=flask_app
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=Shahid
+      - MYSQL_PASSWORD=Shahid 
 
 volumes:
   db_data:
-  web_data:
+  

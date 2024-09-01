@@ -1,25 +1,36 @@
+#view.py
 from flask import render_template, request, redirect, url_for, flash, session
 from werkzeug.utils import secure_filename
-from app import app, db, encrypt, decrypt
+from app import app, db, cipher_suite, encrypt, decrypt
 from .models import Users, Account, Transactions, AdminUser
-import os
+from functools import wraps
+import hashlib
 import random
-from sqlalchemy import update
+import os
 from .deposit import deposit
 from .withdraw import withdraw
 from .emi_payment import emi_payment
 from .loan_account_statement import loan_account_statement
+from .emi_schedule import emi_schedule
 from . import search
 from . import statement
 from .open_account import open_account
-#from .create_loan_account import create_loan_account
 from functools import wraps
-import hashlib
-
 
 # Function to generate a random 15-digit number
 def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
+
+# Encrypt account number using cipher
+def encrypt(account_number):
+    return cipher_suite.encrypt(str(account_number).encode()).decode()
+
+def decrypt(encrypted_account_number):
+    try:
+        return cipher_suite.decrypt(encrypted_account_number.encode()).decode()
+    except Exception as e:
+        print(f"Decryption error: {e}")  # Log the error for debugging
+        return None
 
 def login_required(f):
     @wraps(f)
@@ -28,13 +39,6 @@ def login_required(f):
             return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
-
-# Apply login_required to all routes except login and logout
-#@app.before_request
-#def require_login():
- #   if request.endpoint and request.endpoint != 'login' and request.endpoint != 'logout':
-  #      if 'logged_in' not in session:
-   #         return redirect(url_for('login', next=request.url))
 
 @app.before_request
 def require_login():
@@ -99,11 +103,18 @@ def dashboard():
     total_balance = db.session.query(db.func.sum(Account.balance)).scalar() or 0
     return render_template('dashboard.html', total_accounts=total_accounts, total_balance=total_balance, username=session['username'])
     
+# @app.route('/all_accounts')
+# @login_required
+# def all_accounts():
+#     accounts = Account.query.all()
+#     return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
+
 @app.route('/all_accounts')
 @login_required
 def all_accounts():
     accounts = Account.query.all()
-    return render_template('all_accounts.html', accounts=accounts)
+    return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
+
 
 
 @app.route('/all_transaction')
@@ -123,29 +134,19 @@ def all_users():
     # Render the HTML template and pass the users
     return render_template('all_users.html', users=users, encrypt=encrypt)
 
-@app.route('/view_user_details/<account_number>', methods=['GET', 'POST'])
+@app.route('/view_user_details/<encrypted_account_number>', methods=['GET'])
 @login_required
-def view_user_details(account_number):
+def view_user_details(encrypted_account_number):
+    account_number = decrypt(encrypted_account_number)  # Decrypt the account number
+    print(f"Encrypted Account Number from URL: {encrypted_account_number}")
+    print(f"Decrypted Account Number: {account_number}")
     user = Users.query.filter_by(account_number=account_number).first()
     if not user:
         return "User not found"
-    
     account = Account.query.filter_by(account_number=user.account_number).first()
     if not account:
         return "Account not found"
-    
-    if request.method == 'POST':
-        # Update user details logic can be implemented here (if needed)
-        return redirect(url_for('view_user_details', account_number=account_number))
-
-    # Render the standard user details page if the account is not a loan
-    return render_template('view_user_details.html', user=user, account=account)
-
-
-
-
-app.route('/loan_account_statement/<int:account_number>', methods=['GET' , 'POST'])(loan_account_statement)
-
+    return render_template('view_user_details.html', user=user, account=account, encrypt=encrypt, decrypt=decrypt)
 
 @app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
 @login_required
@@ -187,12 +188,15 @@ def edit_user(user_id):
             db.session.commit()
         
         # Redirect to the user details page
-        return redirect(url_for('view_user_details', account_number=user.account_number))
+        return redirect(url_for('view_user_details', encrypted_account_number=encrypt(user.account_number)))
     
     # If the request method is GET, render the edit form
     return render_template('edit_user.html', user=user)
-app.route('/deposit/<int:account_number>', methods=['GET', 'POST'])(deposit)
-app.route('/withdraw/<int:account_number>', methods=['GET', 'POST'])(withdraw)
-app.route('/emi_payment/<int:account_number>', methods=['GET', 'POST'])(emi_payment)
+
+app.route('/deposit/<encrypted_account_number>', methods=['GET', 'POST'])(deposit)
+app.route('/withdraw/<encrypted_account_number>', methods=['GET', 'POST'])(withdraw)
+app.route('/emi_payment/<encrypted_account_number>', methods=['GET', 'POST'])(emi_payment)
+app.route('/loan_account_statement/<encrypted_account_number>', methods=['GET', 'POST'])(loan_account_statement)
+app.route('/emi_schedule/<encrypted_account_number>', methods=['GET' , 'POST'])(emi_schedule)
 app.register_blueprint(search.search_bp)
 app.register_blueprint(statement.statement_bp)

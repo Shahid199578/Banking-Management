@@ -14,7 +14,7 @@
     <h2>Withdraw Amount for {{ user.first_name }} {{ user.last_name }}</h2>
     <p>Account Number: {{ user.account_number }}</p>
     <p>Current Balance: {{ account.balance }}</p>
-    <form method="POST" action="{{ url_for('withdraw', account_number=user.account_number) }}">
+    <form method="POST" action="{{ url_for('withdraw', encrypted_account_number=encrypt(user.account_number)) }}">
         <label for="amount">Amount:</label>
         <input type="number" id="amount" name="amount" required>
         <input type="submit" value="Withdraw" class="button">
