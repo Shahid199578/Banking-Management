@@ -37,11 +37,6 @@ CREATE TABLE users (
     profile_picture VARCHAR(255),
     signature VARCHAR(255)
 ) AUTO_INCREMENT = 182101505134;
-<<<<<<< HEAD
-
-=======
-);
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 CREATE TABLE `AdminUser` (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username varchar(50) NOT NULL,
@@ -60,11 +55,7 @@ INSERT INTO account (account_number, name, account_type, balance) VALUES
 (1821014501, 'John Doe', 'Savings', 5000.00),
 (1821014502, 'Jane Smith', 'Current', 10000.00),
 (1821014503, 'Alice Johnson', 'Savings', 7500.00),
-<<<<<<< HEAD
-(1821014504, 'Farzi Loan', 'Loan', 0.00);
-=======
-(1821014504, 'Farzi Loan', 'Loan', 0);
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
+(1821014504, 'Farzi Loan', 'Loan', 15409.00);
 
 -- Sample entry for the users table
 INSERT INTO users (account_number, first_name, last_name, dob, address, mobile_number, aadhaar_number, pan_number, profile_picture, signature) VALUES
@@ -79,5 +70,5 @@ INSERT INTO account_statement (account_number, date, description, amount, balanc
 (1821014501, NOW(), 'Initial Deposit', 5000.00, 5000.00, 0, 0, 'REF123456', NULL, NULL, NULL, NULL),
 (1821014502, NOW(), 'Initial Deposit', 10000.00, 10000.00, 0, 0, 'REF345678', NULL, NULL, NULL, NULL),
 (1821014503, NOW(), 'Initial Deposit', 7500.00, 7500.00, 0, 0, 'REF901234', NULL, NULL, NULL, NULL),
-(1821014504, NOW(), 'Loan granted', 0.00, 15000.00, 0, 0, 'LOAN123456', 15000.00, 'Personal Loan', 5.00, 12);
+(1821014504, NOW(), 'Loan granted', 15000.00, 15409.00, 0, 0, 'LOAN123456', 15000.00, 'Personal Loan', 5.00, 12);
 
