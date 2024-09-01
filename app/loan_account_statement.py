@@ -102,6 +102,5 @@ def loan_account_statement(encrypted_account_number):
         interest_rate=interest_rate,
         total_interest_payable=round(total_interest_payable),
         loan_amount=loan_amount,
-        last_emi_amount=last_emi_amount,  # Pass last EMI amount for display
-        timedelta=timedelta
+        last_emi_amount=last_emi_amount  # Pass last EMI amount for display
     )
