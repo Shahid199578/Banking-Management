@@ -41,17 +41,7 @@ handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 app.logger.setLevel(logging.ERROR)
 
-# # Encryption functions
-# def encrypt(text):
-#     if isinstance(text, int):
-#         text = str(text)
-#     return hashlib.sha1(text.encode()).hexdigest()
-
-<<<<<<< HEAD
-# def decrypt(text):
-#     return None  # SHA1 is one-way, cannot decrypt
-
-# Encrypt account number using serializer
+# Encrypt account number using scipher_suite
 def encrypt(account_number):
     return cipher_suite.encrypt(str(account_number).encode()).decode()
 
@@ -62,23 +52,9 @@ def decrypt(encrypted_account_number):
         print(f"Decryption error: {e}")  # Log the error for debugging
         return None
 
-=======
-def decrypt(text):
-    return None  # SHA1 is one-way, cannot decrypt
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
-
 # Import views and models
 from . import views, models
 
 # Ensure all models are created in the database
 with app.app_context():
-<<<<<<< HEAD
     db.create_all()
-=======
-    db.create_all()
-
-# Set a secret key for Flask
-import secrets
-app.secret_key = secrets.token_hex(16)
-
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b

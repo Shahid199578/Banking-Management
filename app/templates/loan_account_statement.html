@@ -13,8 +13,6 @@
     <div class="container">
         <h1>Loan Account Statement for Account Number: {{ account.account_number }}</h1>
         <h2>Remaining Loan Amount: ₹{{ remaining_loan_amount }}</h2>
-
-<<<<<<< HEAD
         <!-- EMI Summary -->
         <h3>EMI Summary</h3>
         <table>
@@ -130,58 +128,5 @@
                 }
             });
         </script>        
-=======
-<div class="container">
-<!-- EMI Summary -->
-<h3>EMI Summary</h3>
-<table>
-    <tr>
-        <th>Monthly EMI</th>
-        <th>Tenure (Months)</th>
-        <th>Last EMI Submitted</th>
-        <th>Pending EMI Count</th>
-        <th><div class="button-group">
-            <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a></div>
-        </th>
-
-    </tr>
-    <tr>
-        <td>{{ emi | round(2) if emi is not none else 'N/A' }}</td>
-        <td>{{ tenure if tenure > 0 else 'N/A' }}</td>
-        <td>{{ last_emi.date.strftime('%Y-%m-%d') if last_emi else 'N/A' }}</td>
-        <td>{{ pending_emi_count }} out of {{ tenure }}</td>
-        <td><a href="{{ url_for('emi_schedule', account_number=account.account_number) }}" class="button">View EMI Schedule</a>
-        </div></td>
-    </tr>
-</table>
-
-<!-- Loan Transaction Table -->
-<h3>Loan Transactions</h3>
-<table>
-    <thead>
-        <tr>
-            <th>Transaction Number</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Loan Amount</th>
-            <th>Interest Rate</th>
-            <th>Balance</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for transaction in loan_transactions %}
-        <tr>
-            <td>{{ transaction.reference_number }}</td>
-            <td>{{ transaction.date }}</td>
-            <td>{{ transaction.description }}</td>
-            <td>{{ transaction.loan_amount }}</td>
-            <td>{{ transaction.interest_rate }}</td>
-            <td>{{ transaction.balance }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-</div>
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 </body>
 </html>

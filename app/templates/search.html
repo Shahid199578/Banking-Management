@@ -31,21 +31,12 @@
                 <td>{{ user.pan_number }}</td>
 		        <td>
                     {% if account.account_type == 'Loan' %}
-<<<<<<< HEAD
                     <a href="{{ url_for('emi_payment', encrypted_account_number=encrypt(account.account_number)) }}" class="button">Pay EMI</a>
                     <a href="{{ url_for('loan_account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Loan Statement</a>
                     {% else %}
                     <a href="{{ url_for('deposit', encrypted_account_number=encrypt(account.account_number)) }}" class="button">Deposit</a>
                     <a href="{{ url_for('withdraw', encrypted_account_number=encrypt(account.account_number)) }}" class="button">Withdraw</a>
 		            <a href="{{ url_for('statement.account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Statement</a>
-=======
-                    <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a>
-                    <a href="{{ url_for('loan_account_statement', account_number=account.account_number) }}" class="button">View Loan Statement</a>
-                    {% else %}
-                    <a href="{{ url_for('deposit', account_number=account.account_number) }}" class="button">Deposit</a>
-                    <a href="{{ url_for('withdraw', account_number=account.account_number) }}" class="button">Withdraw</a>
-		            <a href="{{ url_for('statement.account_statement', account_number=user.account_number) }}" class="button">View Statement</a>
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
                     {% endif %}
                 </td>
                 

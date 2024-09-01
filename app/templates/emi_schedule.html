@@ -12,11 +12,7 @@
 <h1>Loan Account Statement for Account Number: {{ account.account_number }}</h1><br>
 <h2>Remaining Loan Amount: {{ remaining_loan_amount }}</h2>
 <th><div class="button-group">
-<<<<<<< HEAD
     <a href="{{ url_for('emi_payment', encrypted_account_number=encrypt(account.account_number)) }}" class="button">Pay EMI</a></div>
-=======
-    <a href="{{ url_for('emi_payment', account_number=account.account_number) }}" class="button">Pay EMI</a></div>
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 </th>
 <!-- EMI Schedule -->
 <h3>EMI Schedule</h3>
@@ -48,7 +44,3 @@
 </table>
 </body>
 </html>
-<<<<<<< HEAD
-
-=======
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
