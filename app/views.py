@@ -146,24 +146,7 @@ def view_user_details(encrypted_account_number):
     account = Account.query.filter_by(account_number=user.account_number).first()
     if not account:
         return "Account not found"
-<<<<<<< HEAD
     return render_template('view_user_details.html', user=user, account=account, encrypt=encrypt, decrypt=decrypt)
-=======
-    
-    if request.method == 'POST':
-        # Update user details logic can be implemented here (if needed)
-        return redirect(url_for('view_user_details', account_number=account_number))
-
-    # Render the standard user details page if the account is not a loan
-    return render_template('view_user_details.html', user=user, account=account)
-
-
-
-
-app.route('/loan_account_statement/<int:account_number>', methods=['GET' , 'POST'])(loan_account_statement)
-app.route('/emi_schedule/<int:account_number>', methods=['GET' , 'POST'])(emi_schedule)
-
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 
 @app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
 @login_required
