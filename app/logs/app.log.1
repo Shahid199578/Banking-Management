@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2024-08-31 11:50:50,883 - ERROR - Exception on /all_accounts [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
@@ -77,6 +78,55 @@ Traceback (most recent call last):
     return getattr(obj, attribute)
 jinja2.exceptions.UndefinedError: 'loan_transaction' is undefined
 2024-08-31 13:33:05,686 - ERROR - Exception on /loan_account_statement/gAAAAABm0xuPl0MNYzFaVtT5DTIOFYW6Vlw3TrYzvuAI_CMIYchjrGtFKmKnl7jYSf5hCaZ2mzkXMctTQSXo294C9Dk7U3QmZw== [GET]
+=======
+2024-08-17 11:40:55,116 - ERROR - Exception on /emi_payment/1821014504 [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 334, in _open_connection
+    self._cmysql.connect(**cnx_kwargs)
+_mysql_connector.MySQLInterfaceError: Can't connect to MySQL server on 'db:3306' (111)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+    self._dbapi_connection = engine.raw_connection()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 3302, in raw_connection
+    return self.pool.connect()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 718, in checkout
+    rec._checkin_failed(err, _fairy_was_created=False)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+    dbapi_connection = rec.get_connection()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 837, in get_connection
+    self.__connect()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 901, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/create.py", line 643, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 621, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/pooling.py", line 322, in connect
+    return CMySQLConnection(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 151, in __init__
+    self.connect(**kwargs)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/abstracts.py", line 1399, in connect
+    self._open_connection()
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 339, in _open_connection
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 2003 (HY000): Can't connect to MySQL server on 'db:3306' (111)
+
+The above exception was the direct cause of the following exception:
+
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -86,6 +136,7 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+<<<<<<< HEAD
   File "/app/app/loan_account_statement.py", line 69, in loan_account_statement
     return render_template(
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
@@ -130,3 +181,64 @@ Traceback (most recent call last):
   File "/app/app/templates/loan_account_statement.html", line 36, in template
     {% endfor %}
 jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+=======
+  File "/app/app/emi_payment.py", line 11, in emi_payment
+    user = Users.query.filter_by(account_number=account_number).first()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2362, in execute
+    return self._execute_internal(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2237, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2106, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+  File "<string>", line 2, in _connection_for_bind
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1189, in _connection_for_bind
+    conn = bind.connect()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 3278, in connect
+    return self._connection_cls(self)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2442, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+    self._dbapi_connection = engine.raw_connection()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 3302, in raw_connection
+    return self.pool.connect()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 718, in checkout
+    rec._checkin_failed(err, _fairy_was_created=False)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+    dbapi_connection = rec.get_connection()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 837, in get_connection
+    self.__connect()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 901, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/create.py", line 643, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 621, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/pooling.py", line 322, in connect
+    return CMySQLConnection(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 151, in __init__
+    self.connect(**kwargs)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/abstracts.py", line 1399, in connect
+    self._open_connection()
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 339, in _open_connection
+    raise get_mysql_exception(
+sqlalchemy.exc.DatabaseError: (mysql.connector.errors.DatabaseError) 2003 (HY000): Can't connect to MySQL server on 'db:3306' (111)
+(Background on this error at: https://sqlalche.me/e/20/4xp6)
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2024-08-31 09:09:29,022 - ERROR - Exception on /withdraw/gAAAAABm0t3C6nDrAmt3golUrrYxoq2RmBVbxBQvYYK9hkcwpiprvTVCHanpeVOnxDmaB_u0xD4kJp5tMbuN3yAO3duZxvnolw== [POST]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
@@ -107,3 +108,122 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
     raise BuildError(endpoint, values, method, self)
 werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
+=======
+2024-08-15 13:04:35,442 - ERROR - Error occurred while opening the account: 'loan_amount' is an invalid keyword argument for Transactions
+2024-08-15 13:09:49,646 - ERROR - Error occurred while opening the account: 'loan_amount' is an invalid keyword argument for Transactions
+2024-08-15 13:20:26,188 - ERROR - Error occurred while opening the account: (mysql.connector.errors.ProgrammingError) 1054 (42S22): Unknown column 'loan_amount' in 'field list'
+[SQL: INSERT INTO account_statement (account_number, date, description, amount, balance, withdraw, deposit, reference_number, loan_amount, loan_type, interest_rate, tenure) VALUES (%(account_number)s, %(date)s, %(description)s, %(amount)s, %(balance)s, %(withdraw)s, %(deposit)s, %(reference_number)s, %(loan_amount)s, %(loan_type)s, %(interest_rate)s, %(tenure)s)]
+[parameters: {'account_number': 1821014504, 'date': datetime.datetime(2024, 8, 15, 13, 20, 26, 183344), 'description': 'Loan granted', 'amount': 1000.0, 'balance': 1000.0, 'withdraw': 0, 'deposit': 0, 'reference_number': 929834250283304, 'loan_amount': 1000.0, 'loan_type': None, 'interest_rate': 5.0, 'tenure': 2}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2024-08-15 13:38:10,803 - ERROR - Exception on /account_statement/1821014504 [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/statement.py", line 16, in account_statement
+    return render_template('account_statement.html', account=account, account_statement=account_statement)
+  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/account_statement.html", line 18, in top-level template code
+    <p>Remaining Amount: {{ account.loan_amount - (account.balance if account.balance < account.loan_amount else 0) }}</p>
+jinja2.exceptions.UndefinedError: 'app.models.Account object' has no attribute 'loan_amount'
+2024-08-15 13:38:16,210 - ERROR - Exception on /account_statement/1821014505 [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/statement.py", line 16, in account_statement
+    return render_template('account_statement.html', account=account, account_statement=account_statement)
+  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/account_statement.html", line 18, in top-level template code
+    <p>Remaining Amount: {{ account.loan_amount - (account.balance if account.balance < account.loan_amount else 0) }}</p>
+jinja2.exceptions.UndefinedError: 'app.models.Account object' has no attribute 'loan_amount'
+2024-08-15 13:38:24,629 - ERROR - Exception on /account_statement/1821014504 [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/statement.py", line 16, in account_statement
+    return render_template('account_statement.html', account=account, account_statement=account_statement)
+  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/account_statement.html", line 18, in top-level template code
+    <p>Remaining Amount: {{ account.loan_amount - (account.balance if account.balance < account.loan_amount else 0) }}</p>
+jinja2.exceptions.UndefinedError: 'app.models.Account object' has no attribute 'loan_amount'
+2024-08-15 14:24:31,750 - ERROR - Exception on /loan_account_statement/1821014504 [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/views.py", line 27, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 163, in loan_account_statement
+    return render_template('loan_account_statement.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi)
+  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/loan_account_statement.html", line 23, in top-level template code
+    <td>{{ emi | round(2) }}</td>
+  File "/usr/local/lib/python3.9/site-packages/jinja2/filters.py", line 1169, in do_round
+    return round(value, precision)
+TypeError: type Undefined doesn't define __round__ method
+2024-08-15 14:28:06,597 - ERROR - Exception on /loan_account_statement/1821014504 [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/views.py", line 27, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 163, in loan_account_statement
+    loan_amount = account.loan_amount  # Adjust according to where you store loan amount
+AttributeError: 'Account' object has no attribute 'loan_amount'
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b

@@ -32,4 +32,7 @@ services:
 
 volumes:
   db_data:
+<<<<<<< HEAD
   
+=======
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b

@@ -37,7 +37,11 @@ CREATE TABLE users (
     profile_picture VARCHAR(255),
     signature VARCHAR(255)
 ) AUTO_INCREMENT = 182101505134;
+<<<<<<< HEAD
 
+=======
+);
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 CREATE TABLE `AdminUser` (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username varchar(50) NOT NULL,
@@ -56,7 +60,11 @@ INSERT INTO account (account_number, name, account_type, balance) VALUES
 (1821014501, 'John Doe', 'Savings', 5000.00),
 (1821014502, 'Jane Smith', 'Current', 10000.00),
 (1821014503, 'Alice Johnson', 'Savings', 7500.00),
+<<<<<<< HEAD
 (1821014504, 'Farzi Loan', 'Loan', 0.00);
+=======
+(1821014504, 'Farzi Loan', 'Loan', 0);
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 
 -- Sample entry for the users table
 INSERT INTO users (account_number, first_name, last_name, dob, address, mobile_number, aadhaar_number, pan_number, profile_picture, signature) VALUES
