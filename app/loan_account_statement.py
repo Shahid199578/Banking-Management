@@ -1,6 +1,3 @@
-
-#loan_account_statement.py
-
 from flask import render_template
 from .models import Users, Account, Transactions
 from . import db
@@ -11,6 +8,7 @@ def loan_account_statement(encrypted_account_number):
     account_number = decrypt(encrypted_account_number)
     if not account_number:
         return "Invalid account number"
+    
     user = Users.query.filter_by(account_number=account_number).first()
     if not user:
         return "User not found"
@@ -20,72 +18,61 @@ def loan_account_statement(encrypted_account_number):
         return "Account not found"
 
     # Fetch the latest loan transaction details
-    loan_transaction = Transactions.query.filter_by(account_number=account_number).filter(Transactions.loan_amount.isnot(None)).order_by(Transactions.date.desc()).first()
+    loan_transaction = Transactions.query.filter_by(account_number=account_number, description="Loan granted").order_by(Transactions.date.desc()).first()
     if not loan_transaction:
         return "Loan transaction details not found"
 
-    # Extract loan amount, interest rate, and tenure
+    # Extract loan details
     loan_amount = float(loan_transaction.loan_amount)
-    interest_rate = float(loan_transaction.interest_rate)  # Convert to decimal
-    tenure = int(loan_transaction.tenure)  # Ensure tenure is an integer
+    interest_rate = float(loan_transaction.interest_rate)
+    tenure = int(loan_transaction.tenure)
 
     # EMI Calculation
     if interest_rate > 0 and tenure > 0:
         monthly_interest_rate = (interest_rate / 100) / 12
         emi = (loan_amount * monthly_interest_rate * (1 + monthly_interest_rate) ** tenure) / \
               ((1 + monthly_interest_rate) ** tenure - 1)
-
-    # Calculate the EMI and round to the nearest integer
-    if interest_rate > 0 and tenure > 0:  # Ensure tenure is greater than 0
-        monthly_interest_rate = interest_rate / 12
-        emi = (loan_amount * monthly_interest_rate * (1 + monthly_interest_rate) ** tenure) / ((1 + monthly_interest_rate) ** tenure - 1)
-
     else:
         emi = loan_amount / tenure if tenure > 0 else 0
-
-    emi = round(emi)  # Round EMI to the nearest integer
-
-    emi = round(emi)  # Round the EMI to the nearest integer
+    
+    emi = round(emi)
 
     # Fetch all loan transactions related to this account
     loan_transactions = Transactions.query.filter_by(account_number=account_number).all()
 
-    # Calculate the total amount paid through EMIs from transactions
+    # Total Paid Calculation
     total_paid = sum(float(t.deposit) for t in loan_transactions if t.description == "EMI Payment")
 
+      #fetch total remaining amount
 
-    #fetch total remaining amount
     loan_amount1 = float(loan_transaction.balance)
+
     # Calculate the remaining loan amount
+
     remaining_loan_amount = loan_amount1 - total_paid
 
-    # Update the account balance only if it is out of sync
-    if abs(remaining_loan_amount - account.balance) > 0.01:  # Tolerance for floating point comparison
+    # Correct account balance if needed
+    if abs(remaining_loan_amount - account.balance) > 0.01:
         account.balance = remaining_loan_amount
         db.session.commit()
 
-    # Calculate pending EMIs
-
+    # Pending EMIs Calculation
     paid_emi_count = Transactions.query.filter_by(account_number=account_number, description="EMI Payment").count()
     pending_emi_count = tenure - paid_emi_count
 
-    # Last EMI adjustment
-    last_emi_amount = emi if pending_emi_count > 1 else remaining_loan_amount + total_paid - (emi * (tenure - 1))
+    # Last EMI Adjustment
+    if pending_emi_count == 1:
+        last_emi_amount = remaining_loan_amount
+    else:
+        last_emi_amount = emi
 
-
-    # Fetch the last EMI payment
-    last_emi = Transactions.query.filter_by(account_number=account_number, description="EMI Payment")\
-                                 .order_by(Transactions.date.desc()).first()
-    
-    # Fetch total_interest_payable
+    # Total Interest Payable Calculation
     total_interest_payable = (emi * tenure) - loan_amount
 
-    # Render the template with all required data
-
-
-    # Fetch the last EMI payment
+    # Fetch last EMI payment
     last_emi = Transactions.query.filter_by(account_number=account_number, description="EMI Payment").order_by(Transactions.date.desc()).first()
 
+    # Render the template with all required data
     return render_template(
         'loan_account_statement.html',
         user=user,

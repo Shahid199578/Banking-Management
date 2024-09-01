@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-2024-08-31 10:01:16,706 - ERROR - Exception on /emi_payment/gAAAAABm0ukifBHHlvD6PW9nuE_rsSD6hJxdwAlxOYqqwXnALfaVU84Dksxr-ocXHdtRIaDtMxQ89yy0vdMTS0oZW6bhjeVlRw== [GET]
+2024-08-31 11:50:50,883 - ERROR - Exception on /all_accounts [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -9,8 +9,12 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-TypeError: emi_payment() got an unexpected keyword argument 'encrypted_account_number'
-2024-08-31 10:01:29,227 - ERROR - Exception on /emi_payment/gAAAAABm0ukgOgODIS4EQI0yc5EwGqz0Am34cPzHOjPGrzCH1atEQlW0sSztIZ9ME-FxU-mnuajjWCMZmwlXent3Yf0drH85oQ== [GET]
+  File "/app/app/views.py", line 40, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 125, in all_accounts
+    remaining_amount -= transaction.withdraw
+TypeError: unsupported operand type(s) for -=: 'float' and 'decimal.Decimal'
+2024-08-31 13:16:30,787 - ERROR - Exception on /loan_account_statement/gAAAAABm0xesTMbzDFvW0vpe9nGJybuo98fh8dRsmeh4bXVEoAGazeexAN8Z7nLXHTJ80cQp5IaLlk48NBd3lrn3mHrXM5nm-Q== [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -20,10 +24,62 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-TypeError: emi_payment() got an unexpected keyword argument 'encrypted_account_number'
-2024-08-31 10:02:19,819 - ERROR - Exception on /emi_payment/gAAAAABm0uoovM8cdGtWiGB9l4enplrBd5ZW4U9upi7b2VeWJtX_-p1iP5vOUR87Ys0M74VchRHgqWZEqg6BEygUwSGQ2LRPJQ== [GET]
+  File "/app/app/loan_account_statement.py", line 80, in loan_account_statement
+    total_interest_payable=round(total_interest_payable),
+NameError: name 'total_interest_payable' is not defined
+2024-08-31 13:20:04,062 - ERROR - Exception on /loan_account_statement/gAAAAABm0xiCEXleButaH2KyLh4t2Me2b9uyqS0t-O3szPLw91EeWAinp2ZbqY0ZIl32DOcVjKhUNeKU6tEVvbvoKzvk50PtvA== [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/loan_account_statement.py", line 69, in loan_account_statement
+    return render_template(
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/loan_account_statement.html", line 28, in top-level template code
+    <td>{{ transaction.balance }}</td>
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 487, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'transaction' is undefined
+2024-08-31 13:29:06,604 - ERROR - Exception on /loan_account_statement/gAAAAABm0xqgVBzWCFMJzLbru1O3KTCf-jTTKj60MUVm58xsh2g-j14_G5q786qW_txjQstNHmc_tgKmxfLZDn2H3lREo8aItg== [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/loan_account_statement.py", line 69, in loan_account_statement
+    return render_template(
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/loan_account_statement.html", line 28, in top-level template code
+    <td>{{ loan_transaction.loan_amount }}</td>
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 487, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'loan_transaction' is undefined
+2024-08-31 13:33:05,686 - ERROR - Exception on /loan_account_statement/gAAAAABm0xuPl0MNYzFaVtT5DTIOFYW6Vlw3TrYzvuAI_CMIYchjrGtFKmKnl7jYSf5hCaZ2mzkXMctTQSXo294C9Dk7U3QmZw== [GET]
 =======
-2024-08-17 11:40:54,216 - ERROR - Exception on /emi_payment/1821014504 [GET]
+2024-08-17 11:40:55,116 - ERROR - Exception on /emi_payment/1821014504 [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 334, in _open_connection
     self._cmysql.connect(**cnx_kwargs)
@@ -81,8 +137,8 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
 <<<<<<< HEAD
-  File "/app/app/emi_payment.py", line 86, in emi_payment
-    return render_template('emi_payment.html', user=user, account=account, remaining_loan_amount=remaining_loan_amount, emi=emi, encrypt=encrypt)
+  File "/app/app/loan_account_statement.py", line 69, in loan_account_statement
+    return render_template(
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
     return _render(app, template, context)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
@@ -91,16 +147,12 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/emi_payment.html", line 16, in top-level template code
-    <form method="POST" action="{{ url_for('emi_payment', account_number=user.account_number) }}">
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
-    return self.handle_url_build_error(error, endpoint, values)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
-    rv = url_adapter.build(  # type: ignore[union-attr]
-  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'emi_payment' with values ['account_number']. Did you forget to specify values ['encrypted_account_number']?
-2024-08-31 10:07:02,315 - ERROR - Exception on /search [GET]
+  File "/app/app/templates/loan_account_statement.html", line 28, in top-level template code
+    <td>{{ loan_transaction.loan_amount }}</td>
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 487, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'loan_transaction' is undefined
+2024-08-31 13:46:56,348 - ERROR - Exception on /loan_account_statement/gAAAAABm0x7OD7TBaxbREcVM6eIsbp8spNhQmWmPvCbDLi1WsAEVI1-JjP9t3N5lnY60QRZz_3xsA3tRYE3F39ptPqIrbN5BLw== [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -110,78 +162,25 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/search.py", line 25, in search
-    return render_template('search.html', users=users, account=account)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
+  File "/app/app/loan_account_statement.py", line 69, in loan_account_statement
+    return render_template(
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1084, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.8/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
   File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/search.html", line 37, in top-level template code
-    <a href="{{ url_for('deposit', account_number=account.account_number) }}" class="button">Deposit</a>
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
-    return self.handle_url_build_error(error, endpoint, values)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
-    rv = url_adapter.build(  # type: ignore[union-attr]
-  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'deposit' with values ['account_number']. Did you forget to specify values ['encrypted_account_number']?
-2024-08-31 10:14:19,940 - ERROR - Exception on /search [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/search.py", line 25, in search
-    return render_template('search.html', users=users, account=account)
-UnboundLocalError: local variable 'account' referenced before assignment
-2024-08-31 10:14:31,780 - ERROR - Exception on /search [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/search.py", line 25, in search
-    return render_template('search.html', users=users, account=account)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/search.html", line 37, in top-level template code
-    <a href="{{ url_for('deposit', encrypted_account_number=encrypt(account.account_number)) }}" class="button">Deposit</a>
-  File "/usr/local/lib/python3.8/site-packages/jinja2/utils.py", line 83, in from_obj
-    if hasattr(obj, "jinja_pass_arg"):
-jinja2.exceptions.UndefinedError: 'encrypt' is undefined
-2024-08-31 11:49:11,957 - ERROR - Exception on /all_accounts [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/views.py", line 40, in decorated_function
-    return f(*args, **kwargs)
-  File "/app/app/views.py", line 125, in all_accounts
-    remaining_amount -= transaction.withdraw
-TypeError: unsupported operand type(s) for -=: 'float' and 'decimal.Decimal'
+  File "/app/app/templates/loan_account_statement.html", line 36, in template
+    {% endfor %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
 =======
   File "/app/app/emi_payment.py", line 11, in emi_payment
     user = Users.query.filter_by(account_number=account_number).first()

@@ -1,5 +1,25 @@
 <<<<<<< HEAD
-2024-08-31 09:09:29,022 - ERROR - Exception on /withdraw/gAAAAABm0t3C6nDrAmt3golUrrYxoq2RmBVbxBQvYYK9hkcwpiprvTVCHanpeVOnxDmaB_u0xD4kJp5tMbuN3yAO3duZxvnolw== [POST]
+2024-08-31 09:42:54,187 - ERROR - Exception on /all_accounts [GET]
+=======
+2024-08-17 11:40:51,254 - ERROR - Exception on /emi_payment/1821014504 [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1815, in _execute_context
+    context = constructor(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1418, in _init_compiled
+    self.cursor = self.create_cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1752, in create_cursor
+    return self.create_default_cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1758, in create_default_cursor
+    return self._dbapi_connection.cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1485, in cursor
+    return self.dbapi_connection.cursor(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 772, in cursor
+    raise OperationalError("MySQL Connection not available.")
+mysql.connector.errors.OperationalError: MySQL Connection not available.
+
+The above exception was the direct cause of the following exception:
+
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -9,8 +29,11 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/withdraw.py", line 69, in withdraw
-    return render_template('withdraw.html', user=user, account_number=account_number)
+<<<<<<< HEAD
+  File "/app/app/views.py", line 40, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 110, in all_accounts
+    return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
     return _render(app, template, context)
   File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
@@ -19,65 +42,78 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/withdraw.html", line 16, in top-level template code
-    <p>Current Balance: {{ account.balance }}</p>
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 487, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'account' is undefined
-2024-08-31 09:14:52,296 - ERROR - Exception on /emi_payment/1821014504 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-TypeError: emi_payment() got an unexpected keyword argument 'encrypted_account_number'
-2024-08-31 09:14:56,979 - ERROR - Exception on /loan_account_statement/1821014504 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/loan_account_statement.py", line 10, in loan_account_statement
-    account_number = decrypt_account_number(encrypted_account_number)
-NameError: name 'decrypt_account_number' is not defined
-2024-08-31 09:37:07,928 - ERROR - Exception on /search [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/search.py", line 25, in search
-    return render_template('search.html', users=users, account=account)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/search.html", line 37, in top-level template code
-    <a href="{{ url_for('deposit', account_number=account.account_number) }}" class="button">Deposit</a>
+  File "/app/app/templates/all_accounts.html", line 35, in top-level template code
+    <a href="{{ url_for('statement.account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Statement</a>
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
     return self.handle_url_build_error(error, endpoint, values)
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
     rv = url_adapter.build(  # type: ignore[union-attr]
   File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'deposit' with values ['account_number']. Did you forget to specify values ['encrypted_account_number']?
-2024-08-31 09:39:06,144 - ERROR - Exception on /all_accounts [GET]
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
+2024-08-31 09:43:59,369 - ERROR - Exception on /all_accounts [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/views.py", line 40, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 110, in all_accounts
+    return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/all_accounts.html", line 35, in top-level template code
+    <a href="{{ url_for('statement.account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Statement</a>
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
+2024-08-31 09:44:05,280 - ERROR - Exception on /all_accounts [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/views.py", line 40, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 110, in all_accounts
+    return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/all_accounts.html", line 35, in top-level template code
+    <a href="{{ url_for('statement.account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Statement</a>
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
+2024-08-31 09:46:16,730 - ERROR - Exception on /all_accounts [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -109,121 +145,45 @@ Traceback (most recent call last):
     raise BuildError(endpoint, values, method, self)
 werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
 =======
-2024-08-15 13:04:35,442 - ERROR - Error occurred while opening the account: 'loan_amount' is an invalid keyword argument for Transactions
-2024-08-15 13:09:49,646 - ERROR - Error occurred while opening the account: 'loan_amount' is an invalid keyword argument for Transactions
-2024-08-15 13:20:26,188 - ERROR - Error occurred while opening the account: (mysql.connector.errors.ProgrammingError) 1054 (42S22): Unknown column 'loan_amount' in 'field list'
-[SQL: INSERT INTO account_statement (account_number, date, description, amount, balance, withdraw, deposit, reference_number, loan_amount, loan_type, interest_rate, tenure) VALUES (%(account_number)s, %(date)s, %(description)s, %(amount)s, %(balance)s, %(withdraw)s, %(deposit)s, %(reference_number)s, %(loan_amount)s, %(loan_type)s, %(interest_rate)s, %(tenure)s)]
-[parameters: {'account_number': 1821014504, 'date': datetime.datetime(2024, 8, 15, 13, 20, 26, 183344), 'description': 'Loan granted', 'amount': 1000.0, 'balance': 1000.0, 'withdraw': 0, 'deposit': 0, 'reference_number': 929834250283304, 'loan_amount': 1000.0, 'loan_type': None, 'interest_rate': 5.0, 'tenure': 2}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-2024-08-15 13:38:10,803 - ERROR - Exception on /account_statement/1821014504 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/statement.py", line 16, in account_statement
-    return render_template('account_statement.html', account=account, account_statement=account_statement)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/account_statement.html", line 18, in top-level template code
-    <p>Remaining Amount: {{ account.loan_amount - (account.balance if account.balance < account.loan_amount else 0) }}</p>
-jinja2.exceptions.UndefinedError: 'app.models.Account object' has no attribute 'loan_amount'
-2024-08-15 13:38:16,210 - ERROR - Exception on /account_statement/1821014505 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/statement.py", line 16, in account_statement
-    return render_template('account_statement.html', account=account, account_statement=account_statement)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/account_statement.html", line 18, in top-level template code
-    <p>Remaining Amount: {{ account.loan_amount - (account.balance if account.balance < account.loan_amount else 0) }}</p>
-jinja2.exceptions.UndefinedError: 'app.models.Account object' has no attribute 'loan_amount'
-2024-08-15 13:38:24,629 - ERROR - Exception on /account_statement/1821014504 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/statement.py", line 16, in account_statement
-    return render_template('account_statement.html', account=account, account_statement=account_statement)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/account_statement.html", line 18, in top-level template code
-    <p>Remaining Amount: {{ account.loan_amount - (account.balance if account.balance < account.loan_amount else 0) }}</p>
-jinja2.exceptions.UndefinedError: 'app.models.Account object' has no attribute 'loan_amount'
-2024-08-15 14:24:31,750 - ERROR - Exception on /loan_account_statement/1821014504 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/views.py", line 27, in decorated_function
-    return f(*args, **kwargs)
-  File "/app/app/views.py", line 163, in loan_account_statement
-    return render_template('loan_account_statement.html', user=user, account=account, loan_transactions=loan_transactions, remaining_loan_amount=remaining_loan_amount, last_emi=last_emi)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-  File "/usr/local/lib/python3.9/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/usr/local/lib/python3.9/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/app/app/templates/loan_account_statement.html", line 23, in top-level template code
-    <td>{{ emi | round(2) }}</td>
-  File "/usr/local/lib/python3.9/site-packages/jinja2/filters.py", line 1169, in do_round
-    return round(value, precision)
-TypeError: type Undefined doesn't define __round__ method
-2024-08-15 14:28:06,597 - ERROR - Exception on /loan_account_statement/1821014504 [GET]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/app/app/views.py", line 27, in decorated_function
-    return f(*args, **kwargs)
-  File "/app/app/views.py", line 163, in loan_account_statement
-    loan_amount = account.loan_amount  # Adjust according to where you store loan amount
-AttributeError: 'Account' object has no attribute 'loan_amount'
+  File "/app/app/emi_payment.py", line 11, in emi_payment
+    user = Users.query.filter_by(account_number=account_number).first()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2362, in execute
+    return self._execute_internal(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+    return meth(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1821, in _execute_context
+    self._handle_dbapi_exception(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1815, in _execute_context
+    context = constructor(
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1418, in _init_compiled
+    self.cursor = self.create_cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1752, in create_cursor
+    return self.create_default_cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1758, in create_default_cursor
+    return self._dbapi_connection.cursor()
+  File "/usr/local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1485, in cursor
+    return self.dbapi_connection.cursor(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/mysql/connector/connection_cext.py", line 772, in cursor
+    raise OperationalError("MySQL Connection not available.")
+sqlalchemy.exc.OperationalError: (mysql.connector.errors.OperationalError) MySQL Connection not available.
+[SQL: SELECT users.account_number AS users_account_number, users.first_name AS users_first_name, users.last_name AS users_last_name, users.dob AS users_dob, users.address AS users_address, users.profile_picture AS users_profile_picture, users.signature AS users_signature, users.mobile_number AS users_mobile_number, users.aadhaar_number AS users_aadhaar_number, users.pan_number AS users_pan_number 
+FROM users 
+WHERE users.account_number = %(account_number_1)s 
+ LIMIT %(param_1)s]
+[parameters: [{}]]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
 >>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
