@@ -3,10 +3,6 @@ Flask-SQLAlchemy
 Flask-Migrate
 mysql-connector-python
 flask-login
-<<<<<<< HEAD
 prometheus-flask-exporter
 cryptography
 itsdangerous
-=======
-
->>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
