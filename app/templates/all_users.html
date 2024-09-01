@@ -37,7 +37,7 @@
             <td>{{ user.pan_number }}</td>
             <td><img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Profile Picture" width="30" height="50"></td>
             <td><img src="{{ url_for('static', filename='uploads/' + user.signature) }}" alt="Profile Picture" width="30" height="50"></td>
-            <td><a href="{{ url_for('view_user_details',account_number=user.account_number) }}" class ="button">view Details</a></td> <!-- Link to the edit page -->
+            <td><a href="{{ url_for('view_user_details', encrypted_account_number=encrypt(user.account_number)) }}" class="button">View Details</a></td> <!-- Link to the edit page -->
             <!-- Add more columns if needed --> <!-- Add more columns if needed -->
         </tr>
         {% endfor %}

@@ -27,4 +27,8 @@ EXPOSE 5000
 # Command to run on container start
 # If using wait-for-it, adjust the CMD to include the wait-for-it script
 CMD ["flask", "run", "--host=0.0.0.0"]
+<<<<<<< HEAD
+#CMD ["db:3306", "--", "flask", "run", "--host=0.0.0.0"]
+=======
 #CMD ["db:3606", "--", "flask", "run", "--host=0.0.0.0"]
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b

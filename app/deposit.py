@@ -4,12 +4,27 @@ from flask import render_template, request, redirect, url_for, flash
 from .models import Users, Account, Transactions
 from . import db
 import random
+from app import encrypt, decrypt
+from functools import wraps
 
 def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
 
+# # Encrypt account number using serializer
+# def encrypt_account_number(account_number):
+#     return serializer.dumps(str(account_number))
 
-def deposit(account_number):
+# def decrypt_account_number(encrypted_account_number):
+#     try:
+#         return serializer.loads(encrypted_account_number)
+#     except Exception:
+#         return None
+
+def deposit(encrypted_account_number):
+    account_number = decrypt(encrypted_account_number)
+    if not account_number:
+        return "Invalid account number"
+
     user = Users.query.filter_by(account_number=account_number).first()
     if not user:
         return "User not found"
@@ -45,9 +60,9 @@ def deposit(account_number):
                 print(f"Exception occurred: {str(e)}")
                 db.session.rollback()
                 flash('Transaction failed. Please try again later.', 'error')
-                return redirect(url_for('deposit', account_number=account_number))
+                return redirect(url_for('deposit', encrypted_account_number=encrypted_account_number))
         else:
             flash('Invalid deposit amount', 'error')
 
-    return render_template('deposit.html', user=user, account=account)
+    return render_template('deposit.html', user=user, account=account, encrypt=encrypt)
 

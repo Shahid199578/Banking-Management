@@ -1,3 +1,5 @@
+#open_account.py
+
 from flask import request, redirect, url_for, render_template, flash
 from werkzeug.utils import secure_filename
 from app import app, db
@@ -20,7 +22,6 @@ if not os.path.exists(UPLOAD_FOLDER):
 # Configure the upload folder in app.config
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Define the open_account route
 @app.route('/open_account', methods=['GET', 'POST'])
 def open_account():
     if request.method == 'POST':
@@ -38,7 +39,7 @@ def open_account():
 
         # Check if the account type is 'Loan' and set initial_balance accordingly
         if account_type == "Loan":
-            initial_balance = 0  # Set to 0 as it won't be used for loan accounts
+            initial_balance = 0  # Initial balance is not used for loan accounts
         else:
             initial_balance = float(request.form.get('balance'))
 
@@ -93,8 +94,8 @@ def open_account():
             new_user.account_number = new_account.account_number
             db.session.commit()
 
-            # Create initial deposit transaction if not a loan
             if account_type != "Loan":
+                # Create initial deposit transaction if not a loan
                 initial_deposit = Transactions(
                     account_number=new_account.account_number,
                     date=datetime.now(),
@@ -110,16 +111,24 @@ def open_account():
             else:
                 # Handle loan account specifics
                 loan_amount = float(request.form.get('loan_amount'))  # Get loan amount
-                interest_rate = float(request.form.get('interest_rate'))  # Get interest rate
-                tenure = int(request.form.get('tenure'))  # Get tenure
+                interest_rate = float(request.form.get('interest_rate'))  # Get interest rate (as a percentage)
+                tenure = int(request.form.get('tenure'))  # Get tenure in months
 
-                # Create a loan record in Transactions (modify as needed)
+                # Calculate total amount with interest (simple interest)
+                total_interest = loan_amount * (interest_rate / 100) * (tenure / 12)
+                total_amount_due = loan_amount + total_interest
+
+                # Update the account balance with the total amount including interest
+                new_account.balance = total_amount_due
+                db.session.commit()
+
+                # Create a loan record in Transactions
                 loan_transaction = Transactions(
                     account_number=new_account.account_number,
                     date=datetime.now(),
                     description="Loan granted",
                     amount=loan_amount,
-                    balance=loan_amount,  # or balance update logic
+                    balance=new_account.balance,  # Updated balance with interest
                     loan_amount=loan_amount,
                     interest_rate=interest_rate,
                     tenure=tenure,

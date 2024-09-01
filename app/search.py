@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request
 from app import app, db
-from .models import Users, Account, Transactions
+from .models import Users, Account
 search_bp = Blueprint('search', __name__)
+from app import encrypt, decrypt
+
 
 @search_bp.route('/search', methods=['GET'])
 def search():
@@ -22,5 +24,5 @@ def search():
         if account:
             accounts[user.account_number] = account
 
-    return render_template('search.html', users=users, account=account)
+    return render_template('search.html', users=users, account=account, encrypt=encrypt, decrypt=decrypt )
 

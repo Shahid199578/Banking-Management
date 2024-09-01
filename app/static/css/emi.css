@@ -1,3 +1,117 @@
+<<<<<<< HEAD
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Button Styles */
+.button-group {
+    margin-bottom: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #f8f8f8;
+}
+
+/* Loan Details Styles */
+.loan-details {
+    margin-bottom: 20px;
+}
+
+.loan-details h3 {
+    margin: 5px 0;
+}
+
+/* Chart Container */
+.chart-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.chart-container canvas {
+    max-width: 100%;
+    height: auto;
+}
+/* Flex Container to align Loan Details and Chart horizontally */
+.flex-container {
+    display: flex;
+    justify-content: space-between; /* Aligns items with space between them */
+    align-items: center; /* Aligns items vertically centered */
+    gap: 20px; /* Adds space between loan details and chart */
+}
+
+/* Loan Details Styling */
+.loan-details {
+    flex: 1; /* Loan details will take equal space */
+}
+
+/* Chart Container Styling */
+.chart-container {
+    flex: 1; /* Chart container will take equal space */
+    max-width: 400px; /* Ensure chart container doesn't expand too much */
+    text-align: center;
+=======
 /* General body and container styles */
 body {
     font-family: Arial, sans-serif;
@@ -85,4 +199,5 @@ table tr:hover {
 
 .button-group a:hover {
     background-color: #0056b3;
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 }

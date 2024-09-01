@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+2024-08-31 09:42:54,187 - ERROR - Exception on /all_accounts [GET]
+=======
 2024-08-17 11:40:51,254 - ERROR - Exception on /emi_payment/1821014504 [GET]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1815, in _execute_context
@@ -16,6 +19,7 @@ mysql.connector.errors.OperationalError: MySQL Connection not available.
 
 The above exception was the direct cause of the following exception:
 
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
 Traceback (most recent call last):
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -25,6 +29,122 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+<<<<<<< HEAD
+  File "/app/app/views.py", line 40, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 110, in all_accounts
+    return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/all_accounts.html", line 35, in top-level template code
+    <a href="{{ url_for('statement.account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Statement</a>
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
+2024-08-31 09:43:59,369 - ERROR - Exception on /all_accounts [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/views.py", line 40, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 110, in all_accounts
+    return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/all_accounts.html", line 35, in top-level template code
+    <a href="{{ url_for('statement.account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Statement</a>
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
+2024-08-31 09:44:05,280 - ERROR - Exception on /all_accounts [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/views.py", line 40, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 110, in all_accounts
+    return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/all_accounts.html", line 35, in top-level template code
+    <a href="{{ url_for('statement.account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Statement</a>
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
+2024-08-31 09:46:16,730 - ERROR - Exception on /all_accounts [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/app/views.py", line 40, in decorated_function
+    return f(*args, **kwargs)
+  File "/app/app/views.py", line 110, in all_accounts
+    return render_template('all_accounts.html', accounts=accounts, encrypt=encrypt, decrypt=decrypt)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.8/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/app/app/templates/all_accounts.html", line 35, in top-level template code
+    <a href="{{ url_for('statement.account_statement', encrypted_account_number=encrypt(account.account_number)) }}" class="button">View Statement</a>
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1084, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1073, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/usr/local/lib/python3.8/site-packages/werkzeug/routing/map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'statement.account_statement' with values ['encrypted_account_number']. Did you forget to specify values ['account_number']?
+=======
   File "/app/app/emi_payment.py", line 11, in emi_payment
     user = Users.query.filter_by(account_number=account_number).first()
   File "/usr/local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2728, in first
@@ -66,3 +186,4 @@ WHERE users.account_number = %(account_number_1)s
  LIMIT %(param_1)s]
 [parameters: [{}]]
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
+>>>>>>> 8ad0b0d965202959e06c4474165d2b5f64ee123b
