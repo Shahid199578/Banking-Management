@@ -2,23 +2,14 @@
 
 from flask import render_template, request, redirect, url_for, flash
 from .models import Users, Account, Transactions
-from . import db
+from app import db, app, encrypt, decrypt
 import random
-from app import encrypt, decrypt
 from functools import wraps
+from .notification_service import notify_user_of_transaction
 
 def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
 
-# # Encrypt account number using serializer
-# def encrypt_account_number(account_number):
-#     return serializer.dumps(str(account_number))
-
-# def decrypt_account_number(encrypted_account_number):
-#     try:
-#         return serializer.loads(encrypted_account_number)
-#     except Exception:
-#         return None
 
 def deposit(encrypted_account_number):
     account_number = decrypt(encrypted_account_number)
@@ -53,6 +44,13 @@ def deposit(encrypted_account_number):
                 db.session.add(new_transaction)
                 db.session.commit()
 
+                 # Send SMS notification using the utility function
+                try:
+                    notify_user_of_transaction(user, amount, 'deposit', updated_balance=updated_balance, reference_number=reference_number)
+                except Exception as notification_error:
+                    app.logger.error(f"Notification error: {notification_error}")
+                    flash('Notification failed. Please check your contact details.', 'error')
+
                 # After committing transaction, redirect with reference number as query parameter
                 flash(f'{transaction_type} successful. Reference number: {reference_number}', 'success')
                 return redirect(url_for('all_accounts'))
@@ -60,7 +58,7 @@ def deposit(encrypted_account_number):
                 print(f"Exception occurred: {str(e)}")
                 db.session.rollback()
                 flash('Transaction failed. Please try again later.', 'error')
-                return redirect(url_for('deposit', encrypted_account_number=encrypted_account_number))
+                return redirect(url_for('all_accounts'))
         else:
             flash('Invalid deposit amount', 'error')
 

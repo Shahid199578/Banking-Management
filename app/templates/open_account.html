@@ -1,14 +1,28 @@
+<!-- open_account.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Opening</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/account.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 {% include 'navbar.html' %}
+
+<!-- Flash Messages Block -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    <ul class="flashes">
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+<!-- End Flash Messages Block -->
 
 <div class="container">
     <h2>Account Opening Form</h2>
@@ -18,43 +32,83 @@
                 <tr>
                     <td>
                         <label for="first_name">First Name:</label>
-                        <input type="text" id="first_name" name="first_name" required>
+                        <input type="text" id="first_name" name="first_name" title="Enter a valid First Name" required>
                     </td>
                     <td>
                         <label for="last_name">Last Name:</label>
-                        <input type="text" id="last_name" name="last_name" required>
+                        <input type="text" id="last_name" name="last_name" title="Enter a valid Last Name" required>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="dob">Date of Birth:</label>
-                        <input type="date" id="dob" name="dob" required>
+                        <input type="date" id="dob" name="dob" title="Enter a valid Date of Birth" required>
                     </td>
                     <td>
                         <label for="pan_number">PAN Number:</label>
-                        <input type="text" id="pan_number" name="pan_number" required>
+                        <!-- <input type="text" id="pan_number" name="pan_number" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Enter a valid PAN number (e.g., ABCDE1234F)" required> -->
+                            <div class="input-container">
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[A-Z]" title="Enter a valid PAN number" placeholder="A" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[A-Z]" title="Enter a valid PAN number" placeholder="B" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[A-Z]" title="Enter a valid PAN number" placeholder="C" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[A-Z]" title="Enter a valid PAN number" placeholder="D" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[A-Z]" title="Enter a valid PAN number" placeholder="E" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid PAN number" placeholder="1" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid PAN number" placeholder="2" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid PAN number" placeholder="3" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid PAN number" placeholder="4" required>
+                                <input type="text" id="pan_number" name="pan_number[]" class="digit-block" maxlength="1" pattern="[A-Z]" title="Enter a valid PAN number" placeholder="F" required>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <label for="address">Address:</label><br>
-                        <textarea id="address" name="address" rows="4" required></textarea>
+                    <td>
+                        <label for="address">Address:</label>
+                    </td>
+                    <td>
+                        <textarea id="address" name="address" rows="4" title="Enter Full Address" required></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="mobile_number">Mobile Number:</label><br>
-                        <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" required><br>
+                        <!-- <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" title="Enter a valid Mobile number (e.g., 9900099000)" required><br> -->
+                        <div class="input-container">
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="9" required>
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="9" required>
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="0" required>
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="0" required>
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="0" required>
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="0" required>
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="0" required>
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="0" required>
+                            <input type="text" id="mobile_number" name="mobile_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Mobile number" placeholder="0" required>
+                        </div>
                     </td>
                     <td>
                         <label for="aadhaar_number">Aadhaar Number:</label><br>
-                        <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" required><br>
+                        <!-- <input type="text" id="aadhaar_number" name="aadhaar_number" pattern="[0-9]{12}" title="Enter a valid Aadhar number (e.g., 123456781234)" required><br> -->
+                        <div class="input-container">
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="1" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="2" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="3" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="4" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="5" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="6" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="7" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="8" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="1" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="2" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="3" required>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number[]" class="digit-block" maxlength="1" pattern="[0-9]" title="Enter a valid Aadhaar number" placeholder="4" required>
+                        </div>                        
                     </td>
                 </tr>
                 <tr>    
                     <td>
                         <label for="profile_picture">Profile Picture:</label>
-                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" required>
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" title="Photo is required" required>
                     </td>
                     <td>
                         <img id="profile_picture_preview" src="#" alt="Profile Picture Preview" style="max-width: 75px; max-height: 100px;">
@@ -64,7 +118,7 @@
                 <tr>
                     <td>
                         <label for="signature">Signature:</label>
-                        <input type="file" id="signature" name="signature" accept="image/*" required>
+                        <input type="file" id="signature" name="signature" accept="image/*" title="Signature is Required" required>
                     </td>
                     <td>
                         <img id="signature_preview" src="#" alt="Signature Preview" style="max-width: 75px; max-height: 100px;">
@@ -74,7 +128,7 @@
                     <td>
                         <label for="account_type">Account Type:</label><br>
                         <select id="account_type" name="account_type" required onchange="toggleLoanFields()">
-                            <option value="Regular">Regular</option>
+                            <option value="----">----</option>
                             <option value="Savings">Savings</option>
                             <option value="Current">Current</option>
                             <option value="Loan">Loan</option>
@@ -82,23 +136,23 @@
                     </td>
                     <td id="balance_container">
                         <label for="balance">Initial Balance:</label><br>
-                        <input type="number" id="balance" name="balance" min="0" step="0.01" required><br>
+                        <input type="number" id="balance" name="balance" min="0" step="0.01" title="Enter Account Opening Amount" required><br>
                     </td>
                 </tr>
                 <tr id="loan_fields" style="display:none;">
                     <td>
                         <label for="loan_amount">Loan Amount:</label>
-                        <input type="number" id="loan_amount" name="loan_amount" min="0">
+                        <input type="number" id="loan_amount" name="loan_amount" title="Enter Loan Amount" min="0" required>
                     </td>
                     <td>
                         <label for="interest_rate">Interest Rate (%):</label>
-                        <input type="number" id="interest_rate" name="interest_rate" step="0.01">
+                        <input type="number" id="interest_rate" name="interest_rate" title="Enter yearly Interest Rate" step="0.01" required>
                     </td>
                 </tr>
                 <tr id="tenure_field" style="display:none;">
                     <td>
                         <label for="tenure">Tenure (months):</label>
-                        <input type="number" id="tenure" name="tenure" min="1">
+                        <input type="number" id="tenure" name="tenure" title="Enter Loan tanure" min="1" required>
                     </td>
                 </tr>
                 
@@ -131,25 +185,48 @@
         previewImage(this, 'signature_preview');
     });
 
+    document.addEventListener('input', function (e) {
+            if (e.target.classList.contains('digit-block')) {
+                if (e.target.value.length === e.target.maxLength) {
+                    let next = e.target.nextElementSibling;
+                    if (next && next.classList.contains('digit-block')) {
+                        next.focus();
+                    }
+                }
+            }
+        });
+
     function toggleLoanFields() {
     var accountType = document.getElementById("account_type").value;
     var loanFields = document.getElementById("loan_fields");
     var tenureField = document.getElementById("tenure_field");
     var balanceContainer = document.getElementById("balance_container");
     var balanceInput = document.getElementById("balance");
+    var loaninput = document.getElementById("loan_amount");
+    var interestinput = document.getElementById("interest_rate");
+    var tanureinput = document.getElementById("tenure");
 
     if (accountType === "Loan") {
         loanFields.style.display = "table-row"; // Show loan fields
         tenureField.style.display = "table-row"; // Show tenure field
         balanceContainer.style.display = "none"; // Hide balance field
         balanceInput.removeAttribute("required"); // Remove required attribute
+        loaninput.setAttribute("required", "required"); // Add required attribute
+        interestinput.setAttribute("required", "required"); // Add required attribute
+        tanureinput.setAttribute("required", "required"); // Add required attribute
     } else {
         loanFields.style.display = "none"; // Hide loan fields
         tenureField.style.display = "none"; // Hide tenure field
         balanceContainer.style.display = "table-cell"; // Show balance field
         balanceInput.setAttribute("required", "required"); // Add required attribute
+        loaninput.removeAttribute("required"); // Remove required attribute
+        interestinput.removeAttribute("required"); // Remove required attribute
+        tanureinput.removeAttribute("required"); // Remove required attribute
     }
 }
+ // Event listener for account type change
+ document.getElementById("account_type").addEventListener("change", toggleLoanFields);
+ 
 </script>
 </body>
 </html>

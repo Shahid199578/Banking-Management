@@ -66,34 +66,6 @@
                 <canvas id="emiChart"></canvas>
             </div>
         </div>
-        
-            <!-- Loan Transactions Table -->
-            <div class="loan-transactions">
-                <h3>Loan Transactions</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Transaction Number</th>
-                            <th>Date</th>
-                            <th>Description</th>
-                            <!-- <th>Loan Amount</th> -->
-                            <th>Remaining Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for transaction in loan_transactions %}
-                        <tr>
-                            <td>{{ transaction.reference_number }}</td>
-                            <td>{{ transaction.date }}</td>
-                            <td>{{ transaction.description }}</td>
-                            <!-- <td>{{ transaction.loan_amount }}</td> -->
-                            <td>{{ transaction.balance }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             // Chart.js script to create the EMI chart
@@ -115,10 +87,10 @@
                         },
                         tooltip: {
                             callbacks: {
-                                label: function(tooltipItem) {
-                                    let label = tooltipItem.label || '';
+                                label: function(context) {
+                                    let label = context.label || '';
                                     if (label) {
-                                        label += ': ₹' + tooltipItem.raw;
+                                        label += ': ₹' + context.raw;
                                     }
                                     return label;
                                 }

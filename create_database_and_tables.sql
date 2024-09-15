@@ -44,7 +44,22 @@ CREATE TABLE `AdminUser` (
   is_admin tinyint(1) DEFAULT '0'
 );
 
-
+-- CREATE TABLE emi_schedule (
+--     account_number INT(10) UNSIGNED ZEROFILL NOT NULL,
+--     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     description TEXT NOT NULL,
+--     amount DECIMAL(10,2),
+--     balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+--     withdraw DECIMAL(10,2) DEFAULT 0.00,
+--     deposit DECIMAL(10,2) DEFAULT 0.00,
+--     reference_number VARCHAR(20),
+--     loan_amount FLOAT DEFAULT NULL,           -- Add loan amount
+--     loan_type VARCHAR(50) DEFAULT NULL,      -- Add loan type
+--     interest_rate DECIMAL(10,2) DEFAULT NULL, -- Add interest rate
+--     tenure INT DEFAULT NULL,                  -- Add tenure
+--     PRIMARY KEY (account_number, date),
+--     INDEX (account_number)
+-- );
 
 
 -- Sample entry for the AdminUser table

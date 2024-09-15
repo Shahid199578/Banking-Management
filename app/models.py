@@ -49,3 +49,15 @@ class AdminUser(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
     def __repr__(self):
         return f"User('{self.username}')"
+
+class EMISchedule(db.Model):
+    __tablename__ = 'emi_schedule'
+
+    id = db.Column(db.Integer, primary_key=True)
+    account_number = db.Column(db.String(20), nullable=False)
+    emi_number = db.Column(db.Integer, nullable=False)
+    due_date = db.Column(db.Date, nullable=False)
+    emi_amount = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String(10), nullable=False, default="Pending")  # 'Paid' or 'Pending'
+    created_at = db.Column(db.Date, nullable=False, default=datetime.now())
+    payment_date = db.Column(db.Date, nullable=True, default=None)  # Date when EMI was paid

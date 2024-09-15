@@ -1,0 +1,180 @@
+/* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set body font and background color */
+body {
+    font-family: 'Poppins', Arial, sans-serif; /* Use modern font */
+    background-color: #f0f2f5; /* Softer background color */
+    color: #333; /* Neutral text color */
+    line-height: 1.6; /* Improve readability with line height */
+}
+
+/* Style the container for the dashboard */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e6e6e6; /* Add a light border for more definition */
+    transition: transform 0.3s ease; /* Smooth scaling effect */
+}
+
+.container:hover {
+    transform: scale(1.01); /* Slightly enlarge on hover */
+}
+
+/* Style headings */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #4a4a4a; /* Darker, professional color for headings */
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2rem; /* Larger size for primary heading */
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+/* Style the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+}
+
+table th, table td {
+    border: 1px solid #e6e6e6;
+    padding: 15px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+table tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+table tr:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+/* Styles for image containers */
+.image-container {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #e6e6e6;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-container img:hover {
+    transform: scale(1.1); /* Zoom in on hover */
+}
+
+/* Button styles */
+.button, .change-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    margin-bottom: 15px;
+    background-color: #007bff;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover, .change-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Lift button on hover */
+}
+
+/* Input container for PAN Number */
+.input-container {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+/* Style for digit blocks */
+.digit-block {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.digit-block:hover {
+    background-color: #f1f1f1;
+}
+
+/* Full-line class */
+.full-line {
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .image-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    .digit-block {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+
+    table th, table td {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Additional Styling for Enhanced Interaction */
+.button:active, .change-button:active {
+    transform: translateY(1px); /* Button pressed effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}

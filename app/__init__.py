@@ -1,10 +1,12 @@
 #__init__.py
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import logging
 from logging.handlers import RotatingFileHandler
 import os
 from itsdangerous import URLSafeSerializer
+# import boto3
 # Set a secret key for Flask
 import secrets
 SECRET_KEY = secrets.token_hex(16)
@@ -52,8 +54,11 @@ def decrypt(encrypted_account_number):
         print(f"Decryption error: {e}")  # Log the error for debugging
         return None
 
+# Define SNS Topic ARN
+SNS_TOPIC_ARN = os.getenv('SNS_TOPIC_ARN', 'arn:aws:sns:us-east-1:007012129510:MySMSTopic')
+
 # Import views and models
-from . import views, models
+from app import views, models
 
 # Ensure all models are created in the database
 with app.app_context():

@@ -2,22 +2,11 @@
 
 from flask import render_template, request, redirect, url_for, flash
 from .models import Users, Account, Transactions
-from . import db
-from app import encrypt, decrypt
+from app import db, app, encrypt, decrypt
 import random
 from functools import wraps
+from .notification_service import notify_user_of_transaction
 
-
-# # Encrypt account number using cipher
-# def encrypt(account_number):
-#     return cipher_suite.encrypt(str(account_number).encode()).decode()
-
-# def decrypt(encrypted_account_number):
-#     try:
-#         return cipher_suite.decrypt(encrypted_account_number.encode()).decode()
-#     except Exception as e:
-#         print(f"Decryption error: {e}")  # Log the error for debugging
-#         return None
 
 def generate_random_15_digit_number():
     return random.randint(10**14, 10**15 - 1)
@@ -53,6 +42,14 @@ def withdraw(encrypted_account_number):
                     )
                     db.session.add(new_transaction)
                     db.session.commit()
+
+                    # Send SMS notification using the utility function
+                    try:
+                        notify_user_of_transaction(user, amount, 'withdrawal', updated_balance=account.balance, reference_number=reference_number)
+                    except Exception as notification_error:
+                        app.logger.error(f"Notification error: {notification_error}")
+                        flash('Notification failed. Please check your contact details.', 'error')
+
                     flash(f'{transaction_type} successful. Reference number: {reference_number}', 'success')
                     return redirect(url_for('all_accounts'))
                 else:
@@ -66,6 +63,6 @@ def withdraw(encrypted_account_number):
             print(f"Exception occurred: {str(e)}")
             db.session.rollback()
             flash('Transaction failed. Please try again later.', 'error')
-            return redirect(url_for('withdraw', encrypted_account_number=encrypted_account_number))
+            return redirect(url_for('all_accounts'))
 
     return render_template('withdraw.html', user=user, account=account, encrypt=encrypt)

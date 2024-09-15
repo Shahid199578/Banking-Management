@@ -3,10 +3,13 @@
 from flask import request, redirect, url_for, render_template, flash
 from werkzeug.utils import secure_filename
 from app import app, db
-from .models import Users, Account, Transactions
-from datetime import datetime
+from .models import Users, Account, Transactions, EMISchedule
+from datetime import datetime, timedelta
 import os
 import random
+from .notification_service import notify_user_of_account_opening
+from decimal import Decimal, ROUND_HALF_UP
+from sqlalchemy.exc import SQLAlchemyError
 
 # Function to generate a random 15-digit number
 def generate_random_15_digit_number():
@@ -32,16 +35,33 @@ def open_account():
         address = request.form.get('address')
         profile_picture = request.files.get('profile_picture')
         signature = request.files.get('signature')
-        mobile_number = request.form.get('mobile_number')
-        aadhaar_number = request.form.get('aadhaar_number')
-        pan_number = request.form.get('pan_number')
+        mobile_number_digits = request.form.getlist('mobile_number[]')
+        mobile_number = ''.join(mobile_number_digits)
+        # mobile_number = request.form.get('mobile_number')
+        aadhaar_number_digits = request.form.getlist('aadhaar_number[]')
+        aadhaar_number = ''.join(aadhaar_number_digits)
+        # aadhaar_number = request.form.get('aadhaar_number')
+        pan_number_digits = request.form.getlist('pan_number[]')
+        pan_number = ''.join(pan_number_digits)
+        # pan_number = request.form.get('pan_number')
         account_type = request.form.get('account_type')
+
+        # Check if a user with the same Aadhaar number, PAN number, or mobile number already exists
+        existing_user = Users.query.filter(
+            (Users.aadhaar_number == aadhaar_number) | 
+            (Users.pan_number == pan_number) | 
+            (Users.mobile_number == mobile_number)
+        ).first()
+
+        if existing_user:
+            flash("Alert: User with the same Aadhaar number, PAN number, or mobile number already exists.", 'error')
+            return redirect(url_for('all_accounts'))
 
         # Check if the account type is 'Loan' and set initial_balance accordingly
         if account_type == "Loan":
-            initial_balance = 0  # Initial balance is not used for loan accounts
+            initial_balance = Decimal('0')  # Initial balance is not used for loan accounts
         else:
-            initial_balance = float(request.form.get('balance'))
+            initial_balance = Decimal(request.form.get('balance', '0'))
 
         # Ensure both profile picture and signature are uploaded
         if not (profile_picture and signature):
@@ -63,7 +83,11 @@ def open_account():
         profile_picture.save(profile_picture_path)
         signature.save(signature_path)
 
+
+
         try:
+            # Start a new transaction
+
             # Create a new user object with the form data
             new_user = Users(
                 first_name=first_name,
@@ -78,7 +102,7 @@ def open_account():
             )
 
             db.session.add(new_user)
-            db.session.commit()
+            db.session.flush()
 
             # Create a new account object for the user
             new_account = Account(
@@ -88,7 +112,7 @@ def open_account():
             )
 
             db.session.add(new_account)
-            db.session.commit()
+            db.session.flush()
 
             # Update the account number in the Users table
             new_user.account_number = new_account.account_number
@@ -110,13 +134,20 @@ def open_account():
                 db.session.commit()
             else:
                 # Handle loan account specifics
-                loan_amount = float(request.form.get('loan_amount'))  # Get loan amount
-                interest_rate = float(request.form.get('interest_rate'))  # Get interest rate (as a percentage)
-                tenure = int(request.form.get('tenure'))  # Get tenure in months
+                loan_amount = Decimal(request.form.get('loan_amount', '0.00'))  # Get loan amount
+                interest_rate = Decimal(request.form.get('interest_rate', '0'))  # Get interest rate (as a percentage)
+                tenure = int(request.form.get('tenure', '0'))  # Get tenure in months
+
+
+                # Calculate EMI amount using formula for EMI calculation
+
+                monthly_interest_rate = (interest_rate / Decimal('100')) / Decimal('12')
+
+                emi_amount = (loan_amount * monthly_interest_rate * (Decimal('1') + monthly_interest_rate) ** tenure) / ((Decimal('1') + monthly_interest_rate) ** tenure - Decimal('1'))
 
                 # Calculate total amount with interest (simple interest)
-                total_interest = loan_amount * (interest_rate / 100) * (tenure / 12)
-                total_amount_due = loan_amount + total_interest
+
+                total_amount_due = emi_amount * Decimal(tenure)
 
                 # Update the account balance with the total amount including interest
                 new_account.balance = total_amount_due
@@ -128,21 +159,50 @@ def open_account():
                     date=datetime.now(),
                     description="Loan granted",
                     amount=loan_amount,
-                    balance=new_account.balance,  # Updated balance with interest
+                    balance=total_amount_due,  # Updated balance with interest
                     loan_amount=loan_amount,
                     interest_rate=interest_rate,
                     tenure=tenure,
                     reference_number=generate_random_15_digit_number()
                 )
-
                 db.session.add(loan_transaction)
                 db.session.commit()
 
+                # Generate EMI schedule and save to database
+
+                emi_due_date = datetime.now()
+                
+
+                for month in range(1, tenure + 1):  # Loop from 1 to tenure
+                    emi_due_date += timedelta(days=30)  # Increment due date by one month
+                    emi_schedule_entry = EMISchedule(
+                        account_number=new_account.account_number,
+                        emi_number=month,  # Assign sequential EMI number starting from 1
+                        due_date=emi_due_date,
+                        emi_amount=emi_amount,
+                    )
+                    db.session.add(emi_schedule_entry)
+                    
+
+                db.session.commit()
+                    
+
+
+            try:
+                notify_user_of_account_opening(new_user, new_account.account_number)
+            except Exception as notification_error:
+                app.logger.error(f"Notification error: {notification_error}")
+                flash("Account opened, but there was an issue notifying the user.", 'warning')
+
             flash('Account opened successfully', 'success')
             return redirect(url_for('all_accounts'))
+        except SQLAlchemyError as e:
+            app.logger.error(f"Database error occurred while opening the account: {e}")  # Log the error
+            flash(f"Database error occurred while opening the account: {e}", 'error')
+            db.session.rollback()  # Rollback in case of an error
         except Exception as e:
-            app.logger.error(f"Error occurred while opening the account: {e}")  # Log the error
-            flash(f"Error occurred while opening the account: {e}", 'error')
+            app.logger.error(f"Unexpected error while opening the account: {e}")  # Log the error
+            flash(f"Unexpected Error occurred while opening the account: {e}", 'error')
             db.session.rollback()  # Rollback in case of an error
 
     # If the request method is GET, render the form template
